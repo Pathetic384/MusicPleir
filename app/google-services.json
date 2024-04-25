@@ -1,0 +1,87 @@
+{
+  "project_info": {
+    "project_number": "28445450733",
+    "firebase_url": "https://serverside-7a675-default-rtdb.firebaseio.com",
+    "project_id": "serverside-7a675",
+    "storage_bucket": "serverside-7a675.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:28445450733:android:e997deb8f4baafffed87e4",
+        "android_client_info": {
+          "package_name": "com.example.musicapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAR_d86zdlOjTACJ91lJNVyqiUNEiPjeIA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:28445450733:android:c1f1b4c5c03a7139ed87e4",
+        "android_client_info": {
+          "package_name": "com.example.musicappp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAR_d86zdlOjTACJ91lJNVyqiUNEiPjeIA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:28445450733:android:17fc6bdd71b382a6ed87e4",
+        "android_client_info": {
+          "package_name": "com.example.musicpleir"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAR_d86zdlOjTACJ91lJNVyqiUNEiPjeIA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:28445450733:android:c3636df7b36060a2ed87e4",
+        "android_client_info": {
+          "package_name": "com.example.musicthingy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAR_d86zdlOjTACJ91lJNVyqiUNEiPjeIA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
