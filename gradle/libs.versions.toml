@@ -12,6 +12,8 @@ firebaseDatabase = "20.3.1"
 firebaseStorage = "20.3.0"
 glide = "5.0.0-rc01"
 palette = "1.0.0"
+media = "1.7.0"
+firebaseAuth = "22.3.1"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -26,6 +28,8 @@ firebase-database = { group = "com.google.firebase", name = "firebase-database",
 firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 palette = { group = "androidx.palette", name = "palette", version.ref = "palette" }
+media = { group = "androidx.media", name = "media", version.ref = "media" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

@@ -1,5 +1,12 @@
 package com.example.musicpleir;
 
+
+import static com.example.musicpleir.MainActivity.musicFiles;
+
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -11,10 +18,15 @@ import android.graphics.drawable.GradientDrawable;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.support.v4.media.session.MediaSessionCompat;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -26,6 +38,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -34,10 +47,11 @@ import androidx.palette.graphics.Palette;
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnCompletionListener, ActionPlaying, ServiceConnection {
+public class PlayerActivity extends AppCompatActivity implements  ActionPlaying, ServiceConnection {
 
     TextView song_name, artist_name, duration_played, duration_total;
     ImageView cover_art, nextBtn, prevBtn, backBtn, shuffleBtn, repeatBtn;
@@ -45,17 +59,25 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
     SeekBar seekBar;
     int position = -1;
     static Uri uri;
-    //static MediaPlayer mediaPlayer;
     static ArrayList<MusicFiles> listSongs = new ArrayList<>();
     private Handler handler = new Handler();
     private Thread playThread, prevThread, nextThread;
     MusicService musicService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        MainActivity.showable = true;
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_player);
+        getSupportActionBar().hide();
         initViews();
-        getIntentMethod();
+        try {
+            getIntentMethod();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -63,15 +85,12 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
                     musicService.seekTo(progress * 1000);
                 }
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
             }
         });
         PlayerActivity.this.runOnUiThread(new Runnable() {
@@ -137,7 +156,11 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
                 prevBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        prevBtnClicked();
+                        try {
+                            prevBtnClicked();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 });
             }
@@ -145,7 +168,7 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
         prevThread.start();
     }
 
-    public void prevBtnClicked() {
+    public void prevBtnClicked() throws IOException {
         if(musicService.isPlaying()) {
             musicService.stop();
             musicService.release();
@@ -169,6 +192,7 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
                 }
             } );
             musicService.onCompleted();
+            musicService.showNotification(R.drawable.ic_pause);
             playpauseBtn.setBackgroundResource(R.drawable.ic_pause);
             musicService.start();
         }
@@ -194,6 +218,7 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
                 }
             } );
             musicService.onCompleted();
+            musicService.showNotification(R.drawable.ic_play);
             playpauseBtn.setBackgroundResource(R.drawable.ic_play);
         }
     }
@@ -206,7 +231,11 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
                 nextBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        nextBtnClicked();
+                        try {
+                            nextBtnClicked();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 });
             }
@@ -214,7 +243,7 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
         nextThread.start();
     }
 
-    public void nextBtnClicked() {
+    public void nextBtnClicked() throws IOException {
         if(musicService.isPlaying()) {
             musicService.stop();
             musicService.release();
@@ -237,6 +266,7 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
                 }
             } );
             musicService.onCompleted();
+            musicService.showNotification(R.drawable.ic_pause);
             playpauseBtn.setBackgroundResource(R.drawable.ic_pause);
             musicService.start();
         }
@@ -262,6 +292,7 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
                 }
             } );
             musicService.onCompleted();
+            musicService.showNotification(R.drawable.ic_play);
             playpauseBtn.setBackgroundResource(R.drawable.ic_play);
         }
     }
@@ -279,7 +310,11 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
                 playpauseBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        playPauseBtnClicked();
+                        try {
+                            playPauseBtnClicked();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 });
             }
@@ -287,9 +322,10 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
         playThread.start();
     }
 
-    public void playPauseBtnClicked() {
+    public void playPauseBtnClicked() throws IOException {
         if(musicService.isPlaying()) {
             playpauseBtn.setImageResource(R.drawable.ic_play);
+            musicService.showNotification(R.drawable.ic_play);
             musicService.pause();
             seekBar.setMax(musicService.getDuration() / 1000);
             PlayerActivity.this.runOnUiThread( () -> {
@@ -300,6 +336,7 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
             } );
         }
         else {
+            musicService.showNotification(R.drawable.ic_pause);
             playpauseBtn.setImageResource(R.drawable.ic_pause);
             musicService.start();
             seekBar.setMax(musicService.getDuration() / 1000);
@@ -326,11 +363,15 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
         else return totalout;
     }
 
-    private void getIntentMethod() {
+    private void getIntentMethod() throws IOException {
         position = getIntent().getIntExtra("position",-1);
         String sender = getIntent().getStringExtra("sender");
         if(sender!= null && sender.equals("albumDetails")) {
             listSongs = AlbumDetailsAdapter.albumFiles;
+        }
+        else if(sender != null && sender.equals("local")) {
+            listSongs = LocalMusicAdapter.mFiles;
+            Log.e("hêllu", String.valueOf(LocalMusicAdapter.mFiles));
         }
         else {
             listSongs = MusicAdapter.mFiles;
@@ -363,7 +404,6 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
         MediaMetadataRetriever retriever = new MediaMetadataRetriever();
         retriever.setDataSource(uri.toString());
         int durationTotal = Integer.parseInt( listSongs.get(position).getSongDuration() ) / 1000;
-        //Log.e("eee", durationTotal)
         duration_total.setText(formattedTime(durationTotal));
         byte[] art = retriever.getEmbeddedPicture();
         Bitmap bitmap;
@@ -452,30 +492,26 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnC
         imageView.startAnimation(animOut);
     }
 
-    @Override
-    public void onCompletion(MediaPlayer mp) {
-        nextBtnClicked();
-        if(musicService != null) {
-            musicService.createMediaPlayer(position);
-            musicService.start();
-            musicService.onCompleted();
-        }
-    }
 
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
         MusicService.MyBinder myBinder = (MusicService.MyBinder) service;
         musicService = myBinder.getService();
+        musicService.setCallBack(this);
         Toast.makeText(musicService, "connected", Toast.LENGTH_SHORT).show();
         seekBar.setMax(musicService.getDuration() / 1000);
         metaData(uri);
         song_name.setText(listSongs.get(position).getSongTitle());
         artist_name.setText(listSongs.get(position).getArtist());
         musicService.onCompleted();
+        try {musicService.showNotification(R.drawable.ic_pause);} catch (IOException e) {}
     }
 
     @Override
     public void onServiceDisconnected(ComponentName name) {
         musicService = null;
     }
+
+
+
 }

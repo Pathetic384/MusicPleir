@@ -42,7 +42,7 @@ public class AlbumDetails extends AppCompatActivity {
             }
         }
         try {
-            byte[] image = getAlbumArt(albumSongs.get(0).getAlbum_art());
+            byte[] image = getAlbumArt(albumSongs.get(0).getSongLink());
             if(image!=null) {
                 Glide.with(this).load(image).into(albumPhoto);
             }

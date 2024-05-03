@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,28 +24,29 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder> {
-
+public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.MyViewHolder>{
     private Context mContext;
     static ArrayList<MusicFiles> mFiles;
 
-    MusicAdapter(Context context, ArrayList<MusicFiles> mFiles) {
+    LocalMusicAdapter(Context context, ArrayList<MusicFiles> mFiles) {
         this.mContext = context;
         this.mFiles = mFiles;
     }
 
     @NonNull
     @Override
-    public MusicAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public LocalMusicAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.music_items, parent, false);
-        return new MyViewHolder(view);
+        return new LocalMusicAdapter.MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MusicAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull LocalMusicAdapter.MyViewHolder holder, int position) {
         holder.file_name.setText(mFiles.get(position).getSongTitle());
         try {
-            byte[] image = getAlbumArt(mFiles.get(position).getSongLink());
+            if(mFiles.get(position).getSongLink() == null) return;
+            byte[] image = null;
+            //getAlbumArt(mFiles.get(position).getSongLink());
             if(image!=null) {
                 Glide.with(mContext).asBitmap().load(image).into(holder.album_art);
             }
@@ -56,6 +58,8 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
                 public void onClick(View v) {
                     Intent i = new Intent(mContext, PlayerActivity.class);
                     i.putExtra("position", position);
+                    i.putExtra("sender", "local");
+                    Log.e("4345345345", String.valueOf(position));
                     mContext.startActivity(i);
                 }
             });
@@ -76,7 +80,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
                     }));
                 }
             });
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -112,17 +116,17 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
             menu = itemView.findViewById(R.id.menuMore);
         }
     }
-        private byte[] getAlbumArt (String uri) throws IOException {
-            MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-            retriever.setDataSource(uri);
-            byte[] art = retriever.getEmbeddedPicture();
-            retriever.release();
-            return art;
-        }
+    private byte[] getAlbumArt (String uri) throws IOException {
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        retriever.setDataSource(uri);
+        byte[] art = retriever.getEmbeddedPicture();
+        retriever.release();
+        return art;
+    }
 
-        void updateList(ArrayList<MusicFiles> musicFilesArrayList) {
+    void updateList(ArrayList<MusicFiles> musicFilesArrayList) {
         mFiles = new ArrayList<>();
         mFiles.addAll(musicFilesArrayList);
         notifyDataSetChanged();
-        }
+    }
 }

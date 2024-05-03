@@ -1,15 +1,14 @@
 package com.example.musicpleir;
 
 public class MusicFiles {
-    String songsCategory, songTitle, artist, album_art, songDuration, songLink, mKey;
+    String songsCategory, songTitle, artist, songDuration, songLink, mKey;
     //String path, title, artist, album, duration, mKey;
 
 
-    public MusicFiles(String songsCategory, String songTitle, String artist, String album_art, String songDuration, String songLink) {
+    public MusicFiles(String songsCategory, String songTitle, String artist,  String songDuration, String songLink) {
         this.songsCategory = songsCategory;
         this.songTitle = songTitle;
         this.artist = artist;
-        this.album_art = album_art;
         this.songDuration = songDuration;
         this.songLink = songLink;
     }
@@ -38,13 +37,6 @@ public class MusicFiles {
         this.artist = artist;
     }
 
-    public String getAlbum_art() {
-        return album_art;
-    }
-
-    public void setAlbum_art(String album_art) {
-        this.album_art = album_art;
-    }
 
     public String getSongDuration() {
         return songDuration;

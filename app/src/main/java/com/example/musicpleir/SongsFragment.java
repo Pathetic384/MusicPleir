@@ -16,8 +16,8 @@ public class SongsFragment extends Fragment {
     RecyclerView recyclerView;
     static MusicAdapter musicAdapter;
 
-    public SongsFragment() {
 
+    public SongsFragment() {
         // Required empty public constructor
     }
 
@@ -25,15 +25,17 @@ public class SongsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_songs, container, false);
-        recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
-        if(!MainActivity.musicFiles.isEmpty()) {
-            musicAdapter = new MusicAdapter(getContext(), MainActivity.musicFiles);
-            recyclerView.setAdapter(musicAdapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-        }
-        return view;
+            // Inflate the layout for this fragment
+            View view = inflater.inflate(R.layout.fragment_songs, container, false);
+            recyclerView = view.findViewById(R.id.recyclerView);
+            recyclerView.setHasFixedSize(true);
+            if (!MainActivity.musicFiles.isEmpty()) {
+                musicAdapter = new MusicAdapter(getContext(), MainActivity.musicFiles);
+                recyclerView.setAdapter(musicAdapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+            }
+            return view;
+
+
     }
 }

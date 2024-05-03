@@ -1,15 +1,28 @@
 package com.example.musicpleir;
 
+import static com.example.musicpleir.MusicService.Artist_Name;
+import static com.example.musicpleir.MusicService.Music_File;
+import static com.example.musicpleir.MusicService.Music_Last_Played;
+import static com.example.musicpleir.MusicService.Song_Name;
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
-
+import android.net.Uri;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,44 +31,120 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
+    private static final int REQUEST_PERMISSION_CODE = 10;
     static ArrayList<MusicFiles> musicFiles = new ArrayList<>();
+    static ArrayList<MusicFiles> localMusicFiles = new ArrayList<>();
     DatabaseReference databaseReference;
     ValueEventListener valueEventListener;
     ProgressBar progressBar;
+    FrameLayout bottom;
     static boolean shuffleBoolean = false, repeatBoolean = false;
     static ArrayList<MusicFiles> albums = new ArrayList<>();
-    private String sort_pref = "SORT_ORDER";
-
+    public static boolean Show_Mini_Player = false;
+    public static String Path_To_Mini = null;
+    public static String Song_To_Mini = null;
+    public static String Artist_To_Mini = null;
+    public static boolean showable = false;
+    FirebaseAuth auth;
+    Button button;
+    TextView textView;
+    FirebaseUser user;
+    ViewPager viewPager;
+    TabLayout tabLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        progressBar = findViewById(R.id.progressBar);
-        musicFiles = getAllAudio();
-    }
+        //permission();
 
-    private void initViewPager() {
-        ViewPager viewPager = findViewById(R.id.viewpager);
-        TabLayout tabLayout = findViewById(R.id.tab_layout);
+        progressBar = findViewById(R.id.progressBar);
+        bottom = findViewById(R.id.frag_bottom);
+        auth = FirebaseAuth.getInstance();
+        button = findViewById(R.id.logout);
+        textView = findViewById(R.id.info);
+        user = auth.getCurrentUser();
+
+        viewPager = findViewById(R.id.viewpager);
+        tabLayout = findViewById(R.id.tab_layout);
+
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragments(new SongsFragment(), "Songs");
         viewPagerAdapter.addFragments(new AlbumFragment(), "Albums");
+        viewPagerAdapter.addFragments(new LocalSongFragment(), "Playlist");
+
+        viewPager.setOffscreenPageLimit(3);
+        viewPager.setAdapter(viewPagerAdapter);
+        tabLayout.setupWithViewPager(viewPager);
+
+        localMusicFiles = getAllLocalAudio(this);
+        musicFiles = getAllAudio();
+
+        if(user == null) {
+            Intent i = new Intent(getApplicationContext(), Login.class);
+            startActivity(i);
+            finish();
+        }
+        else {
+            textView.setText(user.getEmail());
+        }
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent i = new Intent(getApplicationContext(), Login.class);
+                startActivity(i);
+                finish();
+            }
+        });
+    }
+
+    void permission() {
+        if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+            String[] permission = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            requestPermissions(permission, REQUEST_PERMISSION_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_PERMISSION_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+            }
+            else {
+                String[] permission = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                requestPermissions(permission, REQUEST_PERMISSION_CODE);
+            }
+        }
+    }
+
+    private void initViewPager() {
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPagerAdapter.addFragments(new SongsFragment(), "Songs");
+        viewPagerAdapter.addFragments(new AlbumFragment(), "Albums");
+        viewPagerAdapter.addFragments(new LocalSongFragment(), "Playlist");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
@@ -122,6 +211,98 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         return tmp;
     }
 
+    public ArrayList<MusicFiles> getAllLocalAudio (Context context) {
+        //ArrayList<String>  duplicates = new ArrayList<>();
+        ArrayList<MusicFiles> tmp2 = new ArrayList<>();
+        Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+        String[] projection = {
+                MediaStore.Audio.Media.ALBUM,
+                MediaStore.Audio.Media.TITLE,
+                MediaStore.Audio.Media.DURATION,
+                MediaStore.Audio.Media.DATA,
+                MediaStore.Audio.Media.ARTIST
+        };
+        Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
+        int x=0;
+        if(cursor != null) {
+            Log.e("áda", String.valueOf(cursor.getCount()));
+            while(cursor.moveToNext()) {
+                String album = cursor.getString(0);
+                if(Objects.equals(album, "")) album = "no album";
+                String title = cursor.getString(1);
+                if(Objects.equals(title, "")) title = "no title";
+                String duration = cursor.getString(2);
+                String path = cursor.getString(3);
+                String artist = cursor.getString(4);
+                if(artist == null) artist = "no artist";
+
+                MusicFiles musicFiles1 = new MusicFiles(album, title , artist, duration, path);
+                Log.e("album", album);
+                Log.e("tit", title);
+                Log.e("ar", artist);
+                Log.e("1du", duration);
+                Log.e("pa", path);
+                x++;
+                tmp2.add(musicFiles1);
+            }
+            cursor.close();
+            Log.e("123123", String.valueOf(x));
+        }
+
+
+//        Cursor cursor = context.getContentResolver().query(
+//                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null, null,
+//                MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
+//        if (cursor == null) {
+//            return null;
+//        }
+
+
+//        for (int i = 0; i < cursor.getCount(); i++) {
+//            cursor.moveToNext();
+//
+//
+//            int isMusic = cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media.IS_MUSIC));
+//
+//            if (isMusic != 0) {
+//                MusicFiles music = new MusicFiles();
+//
+//
+//                music.songLink = cursor.getString(cursor
+//                        .getColumnIndexOrThrow(MediaStore.Audio.Media.DATA));
+//
+//                if (!new File(music.songLink).exists()) {
+//                    continue;
+//                }
+//
+//
+//               // music.songId = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID));
+//
+//                music.songTitle = cursor.getString(cursor
+//                        .getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE));
+//
+//
+//                music.songTitle = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME));
+//
+//
+//                music.songsCategory = cursor.getString(cursor
+//                        .getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM));
+//
+//
+//                music.artist = cursor.getString(cursor
+//                        .getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST));
+//
+//                music.songDuration = String.valueOf(cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)));
+//
+//
+//
+//                tmp2.add(music);
+//            }
+//        }
+
+        return tmp2;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search, menu);
@@ -149,5 +330,29 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         return true;
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences preferences = getSharedPreferences(Music_Last_Played, MODE_PRIVATE);
+        if(preferences == null) return;
+        String path = preferences.getString(Music_File, null);
+        String artist = preferences.getString(Artist_Name, null);
+        String song_name = preferences.getString(Song_Name, null);
+        if(path != null) {
+            Show_Mini_Player = true;
+            Path_To_Mini = path;
+            Artist_To_Mini = artist;
+            Song_To_Mini = song_name;
+        }
+        else {
+            Show_Mini_Player = false;
+            Path_To_Mini = null;
+            Artist_To_Mini = null;
+            Song_To_Mini = null;
+        }
+        if(Show_Mini_Player && showable) {
+            bottom.setVisibility(View.VISIBLE);
+        }
+        else bottom.setVisibility(View.GONE);
+    }
 }
