@@ -30,7 +30,7 @@
             android:text="Now Playing"
             android:textColor="@color/black"
             android:layout_toEndOf="@id/back_btn"
-            android:layout_toStartOf="@id/menu_btn"
+            android:layout_toStartOf="@id/addAlbum"
             android:gravity="center_horizontal"
             android:background="@color/transparent"
             android:textSize="18sp"
@@ -38,7 +38,7 @@
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:id="@+id/menu_btn"
+            android:id="@+id/addAlbum"
             android:src="@drawable/ic_menu"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true" />

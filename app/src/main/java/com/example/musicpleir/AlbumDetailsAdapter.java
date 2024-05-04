@@ -3,6 +3,7 @@ package com.example.musicpleir;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaMetadataRetriever;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ public class AlbumDetailsAdapter extends RecyclerView.Adapter<AlbumDetailsAdapte
     public AlbumDetailsAdapter(Context mContext, ArrayList<MusicFiles> albumFiles) {
         this.albumFiles = albumFiles;
         this.mContext = mContext;
+        Log.e("lalalal", String.valueOf(albumFiles));
     }
 
     @NonNull

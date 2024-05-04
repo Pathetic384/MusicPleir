@@ -3,6 +3,7 @@ package com.example.musicpleir;
 
 import static com.example.musicpleir.MainActivity.musicFiles;
 
+import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -14,6 +15,7 @@ import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
@@ -24,14 +26,19 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +53,8 @@ import androidx.palette.graphics.Palette;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,7 +63,7 @@ import java.util.Random;
 public class PlayerActivity extends AppCompatActivity implements  ActionPlaying, ServiceConnection {
 
     TextView song_name, artist_name, duration_played, duration_total;
-    ImageView cover_art, nextBtn, prevBtn, backBtn, shuffleBtn, repeatBtn;
+    ImageView cover_art, nextBtn, prevBtn, backBtn, shuffleBtn, repeatBtn, addAlbum;
     FloatingActionButton playpauseBtn;
     SeekBar seekBar;
     int position = -1;
@@ -63,6 +72,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
     private Handler handler = new Handler();
     private Thread playThread, prevThread, nextThread;
     MusicService musicService;
+    static String selectedAlbum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +140,69 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
                 }
             }
         });
+
+        addAlbum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFeedbackDialog(Gravity.CENTER);
+            }
+        });
+    }
+
+    void openFeedbackDialog(int gravity) {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.layout_dialog);
+
+        Window window = dialog.getWindow();
+        if(window == null) return;
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = gravity;
+        window.setAttributes(windowAttributes);
+
+        dialog.setCancelable(true);
+
+        Button heya = dialog.findViewById(R.id.heyya);
+        Button back = dialog.findViewById(R.id.back);
+        Spinner spinner = dialog.findViewById(R.id.albumSpinner);
+        heya.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseReference mDatabase;
+                mDatabase = FirebaseDatabase.getInstance().getReference();
+                mDatabase.child("users").child(MainActivity.userID).child(selectedAlbum)
+                        .child(listSongs.get(position).songTitle).setValue(listSongs.get(position));
+                Toast.makeText(PlayerActivity.this, "aaaccc", Toast.LENGTH_SHORT).show();
+            }
+        });
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String item = parent.getItemAtPosition(position).toString();
+                selectedAlbum = item;
+                Toast.makeText(PlayerActivity.this, "hehe" + item, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, MainActivity.albums);
+        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+        spinner.setAdapter(adapter);
+
+        dialog.show();
     }
 
     @Override
@@ -398,6 +471,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         repeatBtn = findViewById(R.id.id_repeat);
         playpauseBtn = findViewById(R.id.play_pause);
         seekBar = findViewById(R.id.seekBar);
+        addAlbum = findViewById(R.id.addAlbum);
     }
 
     private void metaData (Uri uri) {

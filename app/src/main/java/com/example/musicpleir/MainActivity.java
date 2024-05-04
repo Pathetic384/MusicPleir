@@ -47,6 +47,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     ProgressBar progressBar;
     FrameLayout bottom;
     static boolean shuffleBoolean = false, repeatBoolean = false;
-    static ArrayList<MusicFiles> albums = new ArrayList<>();
+    static ArrayList<String> albums = new ArrayList<>();
     public static boolean Show_Mini_Player = false;
     public static String Path_To_Mini = null;
     public static String Song_To_Mini = null;
@@ -69,8 +70,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     Button button;
     TextView textView;
     FirebaseUser user;
-    ViewPager viewPager;
-    TabLayout tabLayout;
+    public static ViewPager viewPager;
+    public static TabLayout tabLayout;
+    public static String userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         localMusicFiles = getAllLocalAudio(this);
         musicFiles = getAllAudio();
+        getAllAlbum();
 
         if(user == null) {
             Intent i = new Intent(getApplicationContext(), Login.class);
@@ -106,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
         else {
             textView.setText(user.getEmail());
+            userID = user.getUid();
         }
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -140,7 +144,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
     }
 
-    private void initViewPager() {
+    public void initViewPager() {
+        //Log.e("321389283239", String.valueOf(musicFiles.size()));
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragments(new SongsFragment(), "Songs");
         viewPagerAdapter.addFragments(new AlbumFragment(), "Albums");
@@ -181,8 +186,47 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
     }
 
+    public ArrayList<String> getAllAlbum () {
+        ArrayList<String> tmp = new ArrayList<>();
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                collectPhoneNumbers((Map<String,Object>) snapshot.child(userID).getValue());
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+//                progressBar.setVisibility(View.GONE);
+//                initViewPager();
+            }
+        });
+        Log.e("1223", String.valueOf(tmp));
+        return tmp;
+    }
+
+    private void collectPhoneNumbers(Map<String,Object> users) {
+
+        ArrayList<String> phoneNumbers = new ArrayList<>();
+
+        //iterate through each user, ignoring their UID
+//        for (Map.Entry<String, Object> entry : users.entrySet()){
+//
+//            //Get user map
+//            Map singleUser = (Map) entry.getValue();
+            for(String key : users.keySet()) {
+                phoneNumbers.add(key);
+            }
+            //Get phone field and append to list
+//            phoneNumbers.add((String) singleUser.get("name"));
+//        }
+
+        albums = phoneNumbers;Log.e("dhdhdh", String.valueOf(albums));
+    }
+
     public ArrayList<MusicFiles> getAllAudio () {
-        ArrayList<String>  duplicates = new ArrayList<>();
+//        ArrayList<String>  duplicates = new ArrayList<>();
         ArrayList<MusicFiles> tmp = new ArrayList<>();
 
         databaseReference = FirebaseDatabase.getInstance().getReference("songs");
@@ -194,10 +238,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                     MusicFiles getSongs = dss.getValue(MusicFiles.class);
                     if(getSongs.getSongsCategory() == null) getSongs.setSongsCategory("no title");
                     tmp.add(getSongs);
-                    if(!duplicates.contains(getSongs.getSongsCategory())) {
-                        albums.add(getSongs);
-                        duplicates.add(getSongs.getSongsCategory());
-                    }
+                   // Log.e("spôp", String.valueOf(getSongs));
+//                    if(!duplicates.contains(getSongs.getSongsCategory())) {
+//                        albums.add(getSongs);
+//                        duplicates.add(getSongs.getSongsCategory());
+//                    }
                 }
                 progressBar.setVisibility(View.GONE);
                 initViewPager();
@@ -208,6 +253,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 initViewPager();
             }
         });
+        Log.e("spôgfgggp", String.valueOf(tmp.size()));
         return tmp;
     }
 
@@ -223,9 +269,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 MediaStore.Audio.Media.ARTIST
         };
         Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
-        int x=0;
+        //int x=0;
         if(cursor != null) {
-            Log.e("áda", String.valueOf(cursor.getCount()));
+            //Log.e("áda", String.valueOf(cursor.getCount()));
             while(cursor.moveToNext()) {
                 String album = cursor.getString(0);
                 if(Objects.equals(album, "")) album = "no album";
@@ -237,16 +283,16 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 if(artist == null) artist = "no artist";
 
                 MusicFiles musicFiles1 = new MusicFiles(album, title , artist, duration, path);
-                Log.e("album", album);
-                Log.e("tit", title);
-                Log.e("ar", artist);
-                Log.e("1du", duration);
-                Log.e("pa", path);
-                x++;
+//                Log.e("album", album);
+//                Log.e("tit", title);
+//                Log.e("ar", artist);
+//                Log.e("1du", duration);
+//                Log.e("pa", path);
+               // x++;
                 tmp2.add(musicFiles1);
             }
             cursor.close();
-            Log.e("123123", String.valueOf(x));
+            //Log.e("123123", String.valueOf(x));
         }
 
 

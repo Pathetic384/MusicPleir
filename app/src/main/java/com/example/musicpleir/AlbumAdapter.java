@@ -20,11 +20,12 @@ import java.util.Objects;
 
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyHolder> {
     private Context mContext;
-    private ArrayList<MusicFiles> albumFiles;
+    private ArrayList<String> albumNames;
+    //private ArrayList<MusicFiles> albumFiles;
     View view;
 
-    public AlbumAdapter(Context mContext, ArrayList<MusicFiles> albumFiles) {
-        this.albumFiles = albumFiles;
+    public AlbumAdapter(Context mContext, ArrayList<String> albumNames) {
+        this.albumNames = albumNames;
         this.mContext = mContext;
     }
 
@@ -37,30 +38,31 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull AlbumAdapter.MyHolder holder, int position) {
-        holder.album_name.setText(albumFiles.get(position).getSongsCategory());
+        //holder.album_name.setText(albumFiles.get(position).getSongsCategory());
+        holder.album_name.setText(albumNames.get(position));
         try {
-            byte[] image = getAlbumArt(albumFiles.get(position).getSongLink());
-            if (image != null) {
-                Glide.with(mContext).asBitmap().load(image).into(holder.album_image);
-            } else {
+            //byte[] image = getAlbumArt(albumFiles.get(position).getSongLink());
+            //if (image != null) {
+               // Glide.with(mContext).asBitmap().load(image).into(holder.album_image);
+          //  } else {
                 Glide.with(mContext).asBitmap().load(R.drawable.pic).into(holder.album_image);
-            }
+           // }
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i =new Intent(mContext, AlbumDetails.class);
-                    i.putExtra("albumName", albumFiles.get(position).getSongsCategory());
+                    i.putExtra("albumName", albumNames.get(position));
                     mContext.startActivity(i);
                 }
             });
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
     public int getItemCount() {
-        return albumFiles.size();
+        return albumNames.size();
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {
