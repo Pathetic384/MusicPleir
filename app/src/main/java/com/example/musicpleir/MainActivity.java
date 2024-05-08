@@ -209,6 +209,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private void collectPhoneNumbers(Map<String,Object> users) {
 
         ArrayList<String> phoneNumbers = new ArrayList<>();
+        if(users == null) return;
 
         //iterate through each user, ignoring their UID
 //        for (Map.Entry<String, Object> entry : users.entrySet()){
