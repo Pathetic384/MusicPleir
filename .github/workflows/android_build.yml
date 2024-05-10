@@ -1,30 +1,30 @@
-name: Android Build
+# name: Android Build
 
-on: 
-  pull_request:
-    branches: [ main ]
-  push:
-    branches: [ main ]
+# on: 
+#   pull_request:
+#     branches: [ main ]
+#   push:
+#     branches: [ main ]
 
-jobs:
-  build:
+# jobs:
+#   build:
 
-    runs-on: ubuntu-latest
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v1
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v1
 
-      - name: Set Up JDK
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.8
+#       - name: Set Up JDK
+#         uses: actions/setup-java@v1
+#         with:
+#           java-version: 1.8
 
-      - name: Build with gradle
-        run: ./gradlew build
+#       - name: Build with gradle
+#         run: ./gradlew build
 
-      - name: Upload a build artifact
-        uses: actions/upload-artifact@v3.1.3
-        with:
-          name: music.apk
-          path: app/build/outputs/apk/app-debug.apk
+#       - name: Upload a build artifact
+#         uses: actions/upload-artifact@v3.1.3
+#         with:
+#           name: music.apk
+#           path: app/build/outputs/apk/app-debug.apk
