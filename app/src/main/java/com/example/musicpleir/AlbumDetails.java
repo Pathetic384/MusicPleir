@@ -88,7 +88,7 @@ public class AlbumDetails extends AppCompatActivity {
                     tmp.add(getSongs);
                     Log.e("síisisis", String.valueOf(getSongs));
                 }
-                //idk();
+                idk();
                 albumSongs = tmp;
             }
             @Override
