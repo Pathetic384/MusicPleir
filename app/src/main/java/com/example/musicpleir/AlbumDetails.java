@@ -84,16 +84,16 @@ public class AlbumDetails extends AppCompatActivity {
                 tmp.clear();
                 for (DataSnapshot dss : snapshot.getChildren()) {
                     MusicFiles getSongs = dss.getValue(MusicFiles.class);
-                    //if(getSongs.getSongsCategory() == null) getSongs.setSongsCategory("no title");
+                    if(getSongs.getSongsCategory() == null) getSongs.setSongsCategory("no title");
                     tmp.add(getSongs);
-        //            Log.e("síisisis", String.valueOf(getSongs));
+                    Log.e("síisisis", String.valueOf(getSongs));
                 }
               //  idk();
                 albumSongs = tmp;
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // idk();
+                 idk();
                 albumSongs = tmp;
             }
         });
