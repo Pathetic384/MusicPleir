@@ -45,7 +45,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyHolder> {
             //if (image != null) {
                // Glide.with(mContext).asBitmap().load(image).into(holder.album_image);
           //  } else {
-                Glide.with(mContext).asBitmap().load(R.drawable.pic).into(holder.album_image);
+             //   Glide.with(mContext).asBitmap().load(R.drawable.pic).into(holder.album_image);
            // }
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

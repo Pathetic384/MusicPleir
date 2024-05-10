@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
@@ -27,6 +28,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private static final int REQUEST_PERMISSION_CODE = 10;
     static ArrayList<MusicFiles> musicFiles = new ArrayList<>();
     static ArrayList<MusicFiles> localMusicFiles = new ArrayList<>();
+    String songItem[];
     DatabaseReference databaseReference;
     ValueEventListener valueEventListener;
     ProgressBar progressBar;
@@ -78,6 +81,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //permission();
+        ActivityCompat.requestPermissions( this,
+                new String[]{
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.MANAGE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_MEDIA_AUDIO
+                }, 1
+        );
 
         progressBar = findViewById(R.id.progressBar);
         bottom = findViewById(R.id.frag_bottom);
@@ -209,7 +219,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private void collectPhoneNumbers(Map<String,Object> users) {
 
         ArrayList<String> phoneNumbers = new ArrayList<>();
-        if(users == null) return;
+        if(users == null)
+            return;
 
         //iterate through each user, ignoring their UID
 //        for (Map.Entry<String, Object> entry : users.entrySet()){
@@ -263,11 +274,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         ArrayList<MusicFiles> tmp2 = new ArrayList<>();
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         String[] projection = {
-                MediaStore.Audio.Media.ALBUM,
-                MediaStore.Audio.Media.TITLE,
-                MediaStore.Audio.Media.DURATION,
-                MediaStore.Audio.Media.DATA,
-                MediaStore.Audio.Media.ARTIST
+                MediaStore.Audio.AudioColumns.ALBUM,
+                MediaStore.Audio.AudioColumns.TITLE,
+                MediaStore.Audio.AudioColumns.DURATION,
+                MediaStore.Audio.AudioColumns.DATA,
+                MediaStore.Audio.AudioColumns.ARTIST
         };
         Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
         //int x=0;
@@ -289,66 +300,18 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 //                Log.e("ar", artist);
 //                Log.e("1du", duration);
 //                Log.e("pa", path);
-               // x++;
-                tmp2.add(musicFiles1);
+                //x++;
+                if(!Objects.equals(musicFiles1.getSongLink(), "tone.mp3")) {
+                    tmp2.add(musicFiles1);
+                }
             }
             cursor.close();
             //Log.e("123123", String.valueOf(x));
         }
 
-
-//        Cursor cursor = context.getContentResolver().query(
-//                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null, null,
-//                MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
-//        if (cursor == null) {
-//            return null;
-//        }
-
-
-//        for (int i = 0; i < cursor.getCount(); i++) {
-//            cursor.moveToNext();
-//
-//
-//            int isMusic = cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media.IS_MUSIC));
-//
-//            if (isMusic != 0) {
-//                MusicFiles music = new MusicFiles();
-//
-//
-//                music.songLink = cursor.getString(cursor
-//                        .getColumnIndexOrThrow(MediaStore.Audio.Media.DATA));
-//
-//                if (!new File(music.songLink).exists()) {
-//                    continue;
-//                }
-//
-//
-//               // music.songId = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID));
-//
-//                music.songTitle = cursor.getString(cursor
-//                        .getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE));
-//
-//
-//                music.songTitle = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME));
-//
-//
-//                music.songsCategory = cursor.getString(cursor
-//                        .getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM));
-//
-//
-//                music.artist = cursor.getString(cursor
-//                        .getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST));
-//
-//                music.songDuration = String.valueOf(cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)));
-//
-//
-//
-//                tmp2.add(music);
-//            }
-//        }
-
         return tmp2;
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

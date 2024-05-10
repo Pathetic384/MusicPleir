@@ -32,7 +32,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class MusicService extends Service implements MediaPlayer.OnCompletionListener{
-    private static final String CHANNEL_ID = "channel2";
+
     private static final String NOTIFICATION_CHANNEL_ID_SERVICE = "123";
     private static final String NOTIFICATION_CHANNEL_ID_INFO = "456";
     IBinder mBinder = new MyBinder();
@@ -46,6 +46,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
     public static final String Music_File = "Stored_Music";
     public static final String Artist_Name = "Artist Name";
     public static final String Song_Name = "Song Name";
+
 
     @Override
     public void onCreate() {
@@ -75,24 +76,21 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if(intent == null) return START_STICKY;
         int myPos = intent.getIntExtra("servicePosition", -1);
         String actionName = intent.getStringExtra("ActionName");
-        //musicFiles = listSongs;
         if(myPos != -1) {
             playMedia(myPos);
         }
         if(actionName!= null && actionPlaying!=null) {
             switch(actionName) {
                 case "playPause":
-                    Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
                     try {playPauseBtnClicked();} catch (Exception e) {}
                     break;
                 case "next":
-                    Toast.makeText(this, "2", Toast.LENGTH_SHORT).show();
                     try {nextBtnClicked();} catch (IOException e) {}
                     break;
                 case "previous":
-                    Toast.makeText(this, "3", Toast.LENGTH_SHORT).show();
                     try {prevBtnClicked();} catch (IOException e) {}
                     break;
             }
@@ -100,8 +98,8 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
         return START_STICKY;
     }
 
+
     private void playMedia(int startPosition) {
-        //musicFiles = listSongs;
         position = startPosition;
         if(mediaPlayer != null) {
             mediaPlayer.stop();
@@ -136,24 +134,27 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
         mediaPlayer.seekTo(pos);
     }
     int getCurrentPosition() {
+        //if(mediaPlayer == null) return 0;
+        if(PlayerActivity.loading) return 0;
         return mediaPlayer.getCurrentPosition();
     }
     void createMediaPlayer(int pos) {
-        //musicFiles = listSongs;
-        Log.d("ádkjhsdfnjkjklsdfji", String.valueOf(listSongs));
+   //     Log.d("ádkjhsdfnjkjklsdfji", String.valueOf(listSongs));
         position = pos;
-        Log.e("pos", String.valueOf(position));
-        Log.e("12123", String.valueOf(listSongs.get(position)));
-        Log.e("12123", String.valueOf(listSongs.get(position).getSongLink()));
+//        Log.e("pos", String.valueOf(position));
+//        Log.e("12123", String.valueOf(listSongs.get(position)));
+//        Log.e("12123", String.valueOf(listSongs.get(position).getSongLink()));
         uri = Uri.parse(listSongs.get(position).getSongLink());
-        Log.e("12123333", String.valueOf(uri));
+ //       Log.e("song link", String.valueOf(uri));
+
         SharedPreferences.Editor editor = getSharedPreferences(Music_Last_Played, MODE_PRIVATE).edit();
         editor.putString(Music_File, uri.toString());
         editor.putString(Artist_Name, listSongs.get(position).getArtist());
         editor.putString(Song_Name, listSongs.get(position).getSongTitle());
         editor.apply();
-//        mediaPlayer = new MediaPlayer();
+
         mediaPlayer = MediaPlayer.create(getBaseContext(), uri);
+
     }
     void pause() {
         mediaPlayer.pause();
@@ -161,6 +162,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
     void onCompleted() {
         mediaPlayer.setOnCompletionListener(this);
     }
+
     @Override
     public void onCompletion(MediaPlayer mp) {
         if(actionPlaying != null) {

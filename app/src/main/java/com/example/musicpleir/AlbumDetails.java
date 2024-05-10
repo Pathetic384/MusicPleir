@@ -43,18 +43,16 @@ public class AlbumDetails extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         albumPhoto = findViewById(R.id.albumPhoto);
         albumName = getIntent().getStringExtra("albumName");
-  //      Log.d("dhdhdhd", albumName);
-//        int j = 0;
-//        for(int i=0;i< MainActivity.musicFiles.size();i++) {
-//            assert albumName != null;
-//            if(albumName.equals(MainActivity.musicFiles.get(i).getSongsCategory()) ) {
-//                albumSongs.add(j, MainActivity.musicFiles.get(i));
-//                j++;
-//            }
-//        }
 
-        albumSongs = getMusicFiles();
-       // Log.e("áddasdasd", String.valueOf(albumSongs.size()));
+        Runnable myRunnable = new Runnable(){
+            public void run(){
+                albumSongs = getMusicFiles();
+            }
+        };
+
+        Thread thread = new Thread(myRunnable);
+        thread.start();
+
 
     }
 
@@ -90,12 +88,12 @@ public class AlbumDetails extends AppCompatActivity {
                     tmp.add(getSongs);
         //            Log.e("síisisis", String.valueOf(getSongs));
                 }
-                idk();
+                //idk();
                 albumSongs = tmp;
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                idk();
+                // idk();
                 albumSongs = tmp;
             }
         });
