@@ -44,13 +44,13 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
     public void onBindViewHolder(@NonNull MusicAdapter.MyViewHolder holder, int position) {
         holder.file_name.setText(mFiles.get(position).getSongTitle());
         try {
-//            byte[] image = getAlbumArt(mFiles.get(position).getSongLink());
-//            if(image!=null) {
-//                Glide.with(mContext).asBitmap().load(image).into(holder.album_art);
-//            }
-//            else {
-//                Glide.with(mContext).asBitmap().load(R.drawable.pic).into(holder.album_art);
-//            }
+            byte[] image = getAlbumArt(mFiles.get(position).getSongLink());
+            if(image!=null) {
+                Glide.with(mContext).asBitmap().load(image).into(holder.album_art);
+            }
+            else {
+                Glide.with(mContext).asBitmap().load(R.drawable.pic).into(holder.album_art);
+            }
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

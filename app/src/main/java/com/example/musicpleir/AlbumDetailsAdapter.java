@@ -41,12 +41,12 @@ public class AlbumDetailsAdapter extends RecyclerView.Adapter<AlbumDetailsAdapte
     public void onBindViewHolder(@NonNull AlbumDetailsAdapter.MyHolder holder, int position) {
         holder.album_name.setText(albumFiles.get(position).getSongTitle());
         try {
-//            byte[] image = getAlbumArt(albumFiles.get(position).getSongLink());
-//            if (image != null) {
-//                Glide.with(mContext).asBitmap().load(image).into(holder.album_image);
-//            } else {
-//                Glide.with(mContext).asBitmap().load(R.drawable.pic).into(holder.album_image);
-//            }
+            byte[] image = getAlbumArt(albumFiles.get(position).getSongLink());
+            if (image != null) {
+                Glide.with(mContext).asBitmap().load(image).into(holder.album_image);
+            } else {
+                Glide.with(mContext).asBitmap().load(R.drawable.pic).into(holder.album_image);
+            }
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
