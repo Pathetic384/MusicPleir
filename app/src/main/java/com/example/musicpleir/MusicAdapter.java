@@ -55,7 +55,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(mContext, PlayerActivity.class);
-                    i.putExtra("position", position);
+                    i.putExtra("position", holder.getAdapterPosition());
                     mContext.startActivity(i);
                 }
             });
@@ -68,7 +68,8 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
                     popupMenu.setOnMenuItemClickListener((item -> {
                         switch(item.getItemId()) {
                             case R.id.download:
-                                downloading(mFiles.get(position).songLink.trim(), mFiles.get(position).songTitle, mFiles.get(position).artist);
+                                downloading(mFiles.get(holder.getAdapterPosition()).songLink.trim(), mFiles.get(holder.getAdapterPosition()).songTitle
+                                        , mFiles.get(holder.getAdapterPosition()).artist);
                                 Toast.makeText(mContext, "Download clicked", Toast.LENGTH_SHORT).show();
                                 break;
                         }

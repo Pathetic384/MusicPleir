@@ -42,9 +42,9 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.My
 
     @Override
     public void onBindViewHolder(@NonNull LocalMusicAdapter.MyViewHolder holder, int position) {
-        holder.file_name.setText(mFiles.get(position).getSongTitle());
+        holder.file_name.setText(mFiles.get(holder.getAdapterPosition()).getSongTitle());
         try {
-            if(mFiles.get(position).getSongLink() == null) return;
+            if(mFiles.get(holder.getAdapterPosition()).getSongLink() == null) return;
             byte[] image = null;
             //getAlbumArt(mFiles.get(position).getSongLink());
             if(image!=null) {
@@ -57,9 +57,9 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.My
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(mContext, PlayerActivity.class);
-                    i.putExtra("position", position);
+                    i.putExtra("position", holder.getAdapterPosition());
                     i.putExtra("sender", "local");
-                    Log.e("4345345345", String.valueOf(position));
+                    Log.e("4345345345", String.valueOf(holder.getAdapterPosition()));
                     mContext.startActivity(i);
                 }
             });
@@ -72,7 +72,7 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.My
                     popupMenu.setOnMenuItemClickListener((item -> {
                         switch(item.getItemId()) {
                             case R.id.download:
-                                downloading(mFiles.get(position).songLink.trim(), mFiles.get(position).songTitle, mFiles.get(position).artist);
+                                downloading(mFiles.get(holder.getAdapterPosition()).songLink.trim(), mFiles.get(holder.getAdapterPosition()).songTitle, mFiles.get(holder.getAdapterPosition()).artist);
                                 Toast.makeText(mContext, "Download clicked", Toast.LENGTH_SHORT).show();
                                 break;
                         }

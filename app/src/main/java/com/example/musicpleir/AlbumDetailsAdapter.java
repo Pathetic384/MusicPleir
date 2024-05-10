@@ -39,9 +39,9 @@ public class AlbumDetailsAdapter extends RecyclerView.Adapter<AlbumDetailsAdapte
 
     @Override
     public void onBindViewHolder(@NonNull AlbumDetailsAdapter.MyHolder holder, int position) {
-        holder.album_name.setText(albumFiles.get(position).getSongTitle());
+        holder.album_name.setText(albumFiles.get(holder.getAdapterPosition()).getSongTitle());
         try {
-            byte[] image = getAlbumArt(albumFiles.get(position).getSongLink());
+            byte[] image = getAlbumArt(albumFiles.get(holder.getAdapterPosition()).getSongLink());
             if (image != null) {
                 Glide.with(mContext).asBitmap().load(image).into(holder.album_image);
             } else {
@@ -52,7 +52,7 @@ public class AlbumDetailsAdapter extends RecyclerView.Adapter<AlbumDetailsAdapte
                 public void onClick(View v) {
                     Intent i = new Intent(mContext, PlayerActivity.class);
                     i.putExtra("sender", "albumDetails");
-                    i.putExtra("position", position);
+                    i.putExtra("position", holder.getAdapterPosition());
                     mContext.startActivity(i);
                 }
             });

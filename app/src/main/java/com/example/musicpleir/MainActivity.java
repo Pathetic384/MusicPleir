@@ -227,9 +227,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 //
 //            //Get user map
 //            Map singleUser = (Map) entry.getValue();
-            for(String key : users.keySet()) {
-                phoneNumbers.add(key);
-            }
+        for(String key : users.keySet()) {
+            phoneNumbers.add(key);
+        }
             //Get phone field and append to list
 //            phoneNumbers.add((String) singleUser.get("name"));
 //        }
