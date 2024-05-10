@@ -86,7 +86,7 @@ public class AlbumDetails extends AppCompatActivity {
                     MusicFiles getSongs = dss.getValue(MusicFiles.class);
                     if(getSongs.getSongsCategory() == null) getSongs.setSongsCategory("no title");
                     tmp.add(getSongs);
-        //            Log.e("síisisis", String.valueOf(getSongs));
+                    Log.e("síisisis", String.valueOf(getSongs));
                 }
                 idk();
                 albumSongs = tmp;
