@@ -1,0 +1,28 @@
+name: Android Build
+
+on:
+  pull_request:
+    branches : [ master ]
+  push :
+    branches : [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.0
+
+      - name: Set Up JDK
+        uses: actions/setup-java@v3.13.0
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Upload a build Artifact
+        uses: actions/upload-artifacts@v3.1.3
+        with:
+          name: MusicPleir.apk
+          path: app/build/outputs/apk/app-debug.apk
