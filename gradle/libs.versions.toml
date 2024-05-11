@@ -14,6 +14,8 @@ glide = "5.0.0-rc01"
 palette = "1.0.0"
 media = "1.7.0"
 firebaseAuth = "22.3.1"
+runner = "1.6.0-alpha07"
+rules = "1.6.0-alpha04"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -30,6 +32,8 @@ glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "gl
 palette = { group = "androidx.palette", name = "palette", version.ref = "palette" }
 media = { group = "androidx.media", name = "media", version.ref = "media" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
+rules = { group = "androidx.test", name = "rules", version.ref = "rules" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
