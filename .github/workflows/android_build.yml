@@ -83,7 +83,7 @@ jobs:
         run: ./gradlew build
 
       - name: Run espresso tests
-        uses: ReactiveCircus/android-emulator-runner@v2.30.1
+        uses: ReactiveCircus/android-emulator-runner@6b0df4b0efb23bb0ec63d881db79aefbc976e4b2
         with:
           api-level: 29
           script: ./gradlew connectedCheck
