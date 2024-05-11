@@ -33,4 +33,4 @@ jobs:
         uses: actions/upload-artifact@v3.1.3
         with: 
           name: index.html
-          path: app/build/outputs/report.html
+          path: app/build/outputs/apk/debug/report.html
