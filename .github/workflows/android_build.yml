@@ -89,7 +89,7 @@ jobs:
       - name: Run Instrumentation Tests (reactivecircus)
         uses: ReactiveCircus/android-emulator-runner@v2.30.1
         with:
-          api-level: 34
+          api-level: 29
     #      target: default
        #   avd-name: macOS-avd-arm64-v8a-31
           script: ./gradlew connectedCheck
