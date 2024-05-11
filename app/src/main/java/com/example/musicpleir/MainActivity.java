@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private static final int REQUEST_PERMISSION_CODE = 10;
     static ArrayList<MusicFiles> musicFiles = new ArrayList<>();
     static ArrayList<MusicFiles> localMusicFiles = new ArrayList<>();
-    String songItem[];
     DatabaseReference databaseReference;
     ValueEventListener valueEventListener;
     ProgressBar progressBar;
@@ -76,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public static ViewPager viewPager;
     public static TabLayout tabLayout;
     public static String userID;
+    public static String userMail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,9 +102,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragments(new SongsFragment(), "Songs");
         viewPagerAdapter.addFragments(new AlbumFragment(), "Albums");
+        viewPagerAdapter.addFragments(new SoundRecognitionFragment(), "Shazam");
         viewPagerAdapter.addFragments(new LocalSongFragment(), "Playlist");
+        viewPagerAdapter.addFragments(new UserFragment(), "User");
 
-        viewPager.setOffscreenPageLimit(3);
+        viewPager.setOffscreenPageLimit(5);
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -118,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             finish();
         }
         else {
-            textView.setText(user.getEmail());
+            userMail = user.getEmail();
             userID = user.getUid();
         }
 
@@ -159,7 +161,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragments(new SongsFragment(), "Songs");
         viewPagerAdapter.addFragments(new AlbumFragment(), "Albums");
+        viewPagerAdapter.addFragments(new SoundRecognitionFragment(), "Shazam");
         viewPagerAdapter.addFragments(new LocalSongFragment(), "Playlist");
+        viewPagerAdapter.addFragments(new UserFragment(), "User");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }

@@ -79,7 +79,9 @@ public class AlbumFragment extends Fragment {
                 MainActivity.ViewPagerAdapter viewPagerAdapter = new MainActivity.ViewPagerAdapter(getFragmentManager());
                 viewPagerAdapter.addFragments(new SongsFragment(), "Songs");
                 viewPagerAdapter.addFragments(new AlbumFragment(), "Albums");
+                viewPagerAdapter.addFragments(new SoundRecognitionFragment(), "Shazam");
                 viewPagerAdapter.addFragments(new LocalSongFragment(), "Playlist");
+                viewPagerAdapter.addFragments(new UserFragment(), "User");
                 MainActivity.viewPager.setAdapter(viewPagerAdapter);
                 MainActivity.viewPager.setCurrentItem(1);
                 MainActivity.tabLayout.setupWithViewPager(MainActivity.viewPager);
