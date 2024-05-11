@@ -82,10 +82,11 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-      - name: Run espresso tests
-        uses: ReactiveCircus/android-emulator-runner@6b0df4b0efb23bb0ec63d881db79aefbc976e4b2
+      - name: Run Instrumentation Tests (reactivecircus)
+        uses: reactivecircus/android-emulator-runner@v2.6.1
         with:
-          api-level: 29
+          api-level: 23
+          target: default
           script: ./gradlew connectedCheck
 
       - name: Upload test report
