@@ -46,6 +46,8 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.runner)
     implementation(libs.rules)
+    implementation(libs.mockito.core)
+    implementation(libs.core.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
             byte[] image = Util.getAlbumArt(mFiles.get(position).getSongLink());
             if(image!=null) {
                 Glide.with(mContext).asBitmap().load(image).into(holder.album_art);
+                Log.e("yoyo", String.valueOf(image));
             }
             else {
                 Glide.with(mContext).asBitmap().load(R.drawable.pic).into(holder.album_art);

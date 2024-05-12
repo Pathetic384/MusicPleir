@@ -29,6 +29,7 @@ public class Login extends AppCompatActivity {
     FirebaseAuth mAuth;
     ProgressBar progressBar;
     TextView textView;
+    TextView note;
 
     @Override
     public void onStart() {
@@ -52,6 +53,7 @@ public class Login extends AppCompatActivity {
         logButton = findViewById(R.id.login_btn);
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.registerNow);
+        note = findViewById(R.id.note);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,11 +72,13 @@ public class Login extends AppCompatActivity {
                 password = String.valueOf(editTextPassword.getText());
 
                 if(TextUtils.isEmpty(email)) {
-                    Toast.makeText(Login.this, "Email plz", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+                    note.setText("Please enter your Email");
                     return;
                 }
                 if(TextUtils.isEmpty(password)) {
-                    Toast.makeText(Login.this, "Password plz", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+                    note.setText("Please enter your Password");
                     return;
                 }
 
@@ -89,8 +93,7 @@ public class Login extends AppCompatActivity {
                                     startActivity(intent);
                                     finish();
                                 } else {
-                                    Toast.makeText(Login.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
+                                    note.setText("Wrong Email or Password");
                                 }
                             }
                         });

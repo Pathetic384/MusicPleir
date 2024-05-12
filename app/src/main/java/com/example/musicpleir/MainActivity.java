@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 }, 1
         );
 
+
         progressBar = findViewById(R.id.progressBar);
         bottom = findViewById(R.id.frag_bottom);
         auth = FirebaseAuth.getInstance();
@@ -116,6 +117,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         if(user == null) {
             Intent i = new Intent(getApplicationContext(), Login.class);
             startActivity(i);
+            userMail = "abc@gmail.com";
+            userID ="4JUhPUv72dZDPHvPmXjVzdqSavG2";
             finish();
         }
         else {

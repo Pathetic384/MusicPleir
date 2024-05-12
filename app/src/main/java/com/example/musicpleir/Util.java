@@ -4,8 +4,16 @@ import android.media.MediaMetadataRetriever;
 
 import java.io.IOException;
 import java.util.Objects;
+import org.mockito.Mockito.*;
 
 public class Util {
+    public static byte[] getAlbumArt(String uri, MediaMetadataRetriever retriever) throws IOException {
+        if (Objects.equals(uri, "")) return null;
+        retriever.setDataSource(uri);
+        byte[] art = retriever.getEmbeddedPicture();
+        retriever.release();
+        return art;
+    }
 
     public static byte[] getAlbumArt (String uri) throws IOException {
         if(Objects.equals(uri, "")) return null;

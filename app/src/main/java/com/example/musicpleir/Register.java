@@ -31,6 +31,7 @@ public class Register extends AppCompatActivity {
     FirebaseAuth mAuth;
     ProgressBar progressBar;
     TextView textView;
+    TextView note;
 
     public void onStart() {
         super.onStart();
@@ -52,6 +53,7 @@ public class Register extends AppCompatActivity {
         regButton = findViewById(R.id.register_btn);
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.loginNow);
+        note = findViewById(R.id.note);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,11 +72,13 @@ public class Register extends AppCompatActivity {
                 password = String.valueOf(editTextPassword.getText());
 
                 if(TextUtils.isEmpty(email)) {
-                    Toast.makeText(Register.this, "Email plz", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+                    note.setText("Please enter your Email");
                     return;
                 }
                 if(TextUtils.isEmpty(password)) {
-                    Toast.makeText(Register.this, "Password plz", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+                    note.setText("Please enter your Password");
                     return;
                 }
 
@@ -91,8 +95,7 @@ public class Register extends AppCompatActivity {
                                     finish();
                                 } else {
                                     progressBar.setVisibility(View.GONE);
-                                    Toast.makeText(Register.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
+                                    note.setText("Your mail must follow format: @gmail.com and the length of password must be >=6 letters");
                                 }
                             }
                         });
