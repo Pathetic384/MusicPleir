@@ -3395,6 +3395,7 @@ id immediateStop
 id included
 id indeterminate
 id info
+id info_text
 id invisible
 id inward
 id italic
@@ -3535,6 +3536,7 @@ id pathRelative
 id peekHeight
 id percent
 id pin
+id play_btn
 id play_pause
 id play_pause_mini
 id position
@@ -3623,6 +3625,7 @@ id start
 id startHorizontal
 id startToEnd
 id startVertical
+id start_recording
 id staticLayout
 id staticPostLayout
 id status_bar_latest_event_content

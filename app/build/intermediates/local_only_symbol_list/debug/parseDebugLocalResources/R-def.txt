@@ -51,6 +51,7 @@ id id_repeat
 id id_shuffle
 id imageViewGradient
 id info
+id info_text
 id layout_top_btn
 id loginNow
 id login_btn
@@ -62,6 +63,7 @@ id menuMore
 id music_file_name
 id music_img
 id password
+id play_btn
 id play_pause
 id play_pause_mini
 id progressBar
@@ -80,6 +82,7 @@ id song_artist
 id song_artist_mini
 id song_name
 id song_name_mini
+id start_recording
 id tab_layout
 id user_mail
 id viewpager
