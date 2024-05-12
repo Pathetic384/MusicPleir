@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.rules)
     implementation(libs.mockito.core)
     implementation(libs.core.ktx)
+    implementation(libs.monitor)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

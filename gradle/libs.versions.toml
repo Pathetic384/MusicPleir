@@ -18,6 +18,7 @@ runner = "1.6.0-alpha07"
 rules = "1.6.0-alpha04"
 mockitoCore = "5.12.0"
 coreKtx = "1.6.0-alpha06"
+monitor = "1.7.0-alpha05"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -38,6 +39,7 @@ runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
 rules = { group = "androidx.test", name = "rules", version.ref = "rules" }
 mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockitoCore" }
 core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "coreKtx" }
+monitor = { group = "androidx.test", name = "monitor", version.ref = "monitor" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
