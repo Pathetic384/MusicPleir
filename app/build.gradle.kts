@@ -49,6 +49,8 @@ dependencies {
     implementation(libs.mockito.core)
     implementation(libs.core.ktx)
     implementation(libs.monitor)
+    implementation(libs.fragment.testing)
+    implementation(libs.fragment.testing.manifest)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
