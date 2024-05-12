@@ -84,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         ActivityCompat.requestPermissions( this,
                 new String[]{
                         Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.MANAGE_EXTERNAL_STORAGE,
                         Manifest.permission.READ_MEDIA_AUDIO
                 }, 1
         );
