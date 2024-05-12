@@ -13,6 +13,8 @@ import android.database.Cursor;
 import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
@@ -69,8 +71,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public static String Artist_To_Mini = null;
     public static boolean showable = false;
     FirebaseAuth auth;
-    Button button;
-    TextView textView;
     FirebaseUser user;
     public static ViewPager viewPager;
     public static TabLayout tabLayout;
@@ -92,8 +92,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         progressBar = findViewById(R.id.progressBar);
         bottom = findViewById(R.id.frag_bottom);
         auth = FirebaseAuth.getInstance();
-        button = findViewById(R.id.logout);
-        textView = findViewById(R.id.info);
         user = auth.getCurrentUser();
 
         viewPager = findViewById(R.id.viewpager);
@@ -124,15 +122,15 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             userID = user.getUid();
         }
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                Intent i = new Intent(getApplicationContext(), Login.class);
-                startActivity(i);
-                finish();
-            }
-        });
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                FirebaseAuth.getInstance().signOut();
+//                Intent i = new Intent(getApplicationContext(), Login.class);
+//                startActivity(i);
+//                finish();
+//            }
+//        });
     }
 
     void permission() {
@@ -157,7 +155,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     }
 
     public void initViewPager() {
-        //Log.e("321389283239", String.valueOf(musicFiles.size()));
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragments(new SongsFragment(), "Songs");
         viewPagerAdapter.addFragments(new AlbumFragment(), "Albums");
@@ -200,14 +197,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
     }
 
-    public ArrayList<String> getAllAlbum () {
-        ArrayList<String> tmp = new ArrayList<>();
+    public static void getAllAlbum () {
+
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                collectPhoneNumbers((Map<String,Object>) snapshot.child(userID).getValue());
+                collectAlbums((Map<String,Object>) snapshot.child(userID).getValue());
 
             }
             @Override
@@ -216,33 +213,23 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 //                initViewPager();
             }
         });
-        Log.e("1223", String.valueOf(tmp));
-        return tmp;
+
     }
 
-    private void collectPhoneNumbers(Map<String,Object> users) {
+    private static void collectAlbums(Map<String,Object> users) {
 
-        ArrayList<String> phoneNumbers = new ArrayList<>();
+        ArrayList<String> albumList = new ArrayList<>();
         if(users == null)
             return;
 
-        //iterate through each user, ignoring their UID
-//        for (Map.Entry<String, Object> entry : users.entrySet()){
-//
-//            //Get user map
-//            Map singleUser = (Map) entry.getValue();
         for(String key : users.keySet()) {
-            phoneNumbers.add(key);
+            albumList.add(key);
         }
-            //Get phone field and append to list
-//            phoneNumbers.add((String) singleUser.get("name"));
-//        }
 
-        albums = phoneNumbers;Log.e("dhdhdh", String.valueOf(albums));
+        albums = albumList;
     }
 
     public ArrayList<MusicFiles> getAllAudio () {
-//        ArrayList<String>  duplicates = new ArrayList<>();
         ArrayList<MusicFiles> tmp = new ArrayList<>();
 
         databaseReference = FirebaseDatabase.getInstance().getReference("songs");
@@ -254,11 +241,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                     MusicFiles getSongs = dss.getValue(MusicFiles.class);
                     if(getSongs.getSongsCategory() == null) getSongs.setSongsCategory("no title");
                     tmp.add(getSongs);
-                   // Log.e("spôp", String.valueOf(getSongs));
-//                    if(!duplicates.contains(getSongs.getSongsCategory())) {
-//                        albums.add(getSongs);
-//                        duplicates.add(getSongs.getSongsCategory());
-//                    }
                 }
                 progressBar.setVisibility(View.GONE);
                 initViewPager();
@@ -274,7 +256,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     }
 
     public ArrayList<MusicFiles> getAllLocalAudio (Context context) {
-        //ArrayList<String>  duplicates = new ArrayList<>();
         ArrayList<MusicFiles> tmp2 = new ArrayList<>();
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         String[] projection = {
@@ -285,9 +266,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 MediaStore.Audio.AudioColumns.ARTIST
         };
         Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
-        //int x=0;
         if(cursor != null) {
-            //Log.e("áda", String.valueOf(cursor.getCount()));
             while(cursor.moveToNext()) {
                 String album = cursor.getString(0);
                 if(Objects.equals(album, "")) album = "no album";
@@ -299,18 +278,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 if(artist == null) artist = "no artist";
 
                 MusicFiles musicFiles1 = new MusicFiles(album, title , artist, duration, path);
-//                Log.e("album", album);
-//                Log.e("tit", title);
-//                Log.e("ar", artist);
-//                Log.e("1du", duration);
-//                Log.e("pa", path);
-                //x++;
                 if(!Objects.equals(musicFiles1.getSongLink(), "tone.mp3")) {
                     tmp2.add(musicFiles1);
                 }
             }
             cursor.close();
-            //Log.e("123123", String.valueOf(x));
         }
 
         return tmp2;
@@ -335,14 +307,23 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public boolean onQueryTextChange(String newText) {
         String userInput = newText.toLowerCase();
         ArrayList<MusicFiles> myFiles = new ArrayList<>();
-        for(MusicFiles song : musicFiles) {
-            if(song.getSongTitle().toLowerCase().contains(userInput)) {
-                myFiles.add(song);
-            }
-        }
-        SongsFragment.musicAdapter.updateList(myFiles);
+
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                for(MusicFiles song : musicFiles) {
+                    if(song.getSongTitle().toLowerCase().contains(userInput)) {
+                        myFiles.add(song);
+                    }
+                }
+                SongsFragment.musicAdapter.updateList(myFiles);
+            };
+        }, 5);
+
+
         return true;
     }
+
 
     @Override
     protected void onResume() {

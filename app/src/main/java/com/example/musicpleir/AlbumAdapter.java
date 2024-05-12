@@ -45,7 +45,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyHolder> {
             //if (image != null) {
                // Glide.with(mContext).asBitmap().load(image).into(holder.album_image);
           //  } else {
-             //   Glide.with(mContext).asBitmap().load(R.drawable.pic).into(holder.album_image);
+                Glide.with(mContext).asBitmap().load(R.drawable.pic).into(holder.album_image);
            // }
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -74,12 +74,10 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyHolder> {
             album_name = itemView.findViewById(R.id.album_name);
         }
     }
-    private byte[] getAlbumArt (String uri) throws IOException {
-        if(Objects.equals(uri, "")) return null;
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-        retriever.setDataSource(uri);
-        byte[] art = retriever.getEmbeddedPicture();
-        retriever.release();
-        return art;
+
+    void updateList(ArrayList<String> musicFilesArrayList) {
+        albumNames = new ArrayList<>();
+        albumNames.addAll(musicFilesArrayList);
+        notifyDataSetChanged();
     }
 }

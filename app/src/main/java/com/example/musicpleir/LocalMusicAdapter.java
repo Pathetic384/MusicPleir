@@ -116,17 +116,7 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.My
             menu = itemView.findViewById(R.id.menuMore);
         }
     }
-    private byte[] getAlbumArt (String uri) throws IOException {
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-        retriever.setDataSource(uri);
-        byte[] art = retriever.getEmbeddedPicture();
-        retriever.release();
-        return art;
-    }
 
-    void updateList(ArrayList<MusicFiles> musicFilesArrayList) {
-        mFiles = new ArrayList<>();
-        mFiles.addAll(musicFilesArrayList);
-        notifyDataSetChanged();
-    }
+
+
 }

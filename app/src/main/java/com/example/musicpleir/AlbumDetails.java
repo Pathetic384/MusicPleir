@@ -59,7 +59,7 @@ public class AlbumDetails extends AppCompatActivity {
     void idk() {
         if(!albumSongs.isEmpty()) {
             try {
-                byte[] image = getAlbumArt(albumSongs.get(0).getSongLink());
+                byte[] image = Util.getAlbumArt(albumSongs.get(0).getSongLink());
                 if (image != null) {
                     Glide.with(this).load(image).into(albumPhoto);
                 } else {
@@ -113,12 +113,5 @@ public class AlbumDetails extends AppCompatActivity {
        // }
     }
 
-    private byte[] getAlbumArt (String uri) throws IOException {
-        if(Objects.equals(uri, "")) return null;
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-        retriever.setDataSource(uri);
-        byte[] art = retriever.getEmbeddedPicture();
-        retriever.release();
-        return art;
-    }
+
 }

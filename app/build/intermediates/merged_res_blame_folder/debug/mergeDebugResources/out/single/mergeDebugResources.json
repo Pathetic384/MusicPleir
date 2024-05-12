@@ -1,202 +1,206 @@
 [
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\drawable_more.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\drawable\\more.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\drawable_ic_skip_next.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\drawable\\ic_skip_next.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\drawable_ic_skip_next.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\drawable\\ic_skip_next.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\xml_data_extraction_rules.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\xml\\data_extraction_rules.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\drawable_chevron_right.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\drawable\\chevron_right.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
     },
     {
-        "merged": "com.example.musicpleir.app-debug-38:/layout_fragment_user.xml.flat",
-        "source": "com.example.musicpleir.app-main-40:/layout/fragment_user.xml"
+        "merged": "com.example.musicpleir.app-debug-39:/layout_activity_main.xml.flat",
+        "source": "com.example.musicpleir.app-main-41:/layout/activity_main.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\menu_popup.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\menu\\popup.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\drawable_ic_menu.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\drawable\\ic_menu.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\mipmap-mdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\mipmap-mdpi\\ic_launcher.webp"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\mipmap-hdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\mipmap-hdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\mipmap-hdpi\\ic_launcher_round.webp"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\xml_backup_rules.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\xml\\backup_rules.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\mipmap-xhdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\mipmap-xhdpi\\ic_launcher.webp"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\drawable_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\drawable\\ic_launcher_foreground.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\mipmap-xxhdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\mipmap-xxhdpi\\ic_launcher.webp"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\drawable_white_corner.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\drawable\\white_corner.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\mipmap-xxxhdpi\\ic_launcher.webp"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\drawable_ic_skip_previous.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\drawable\\ic_skip_previous.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\drawable_white_corner.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\drawable\\white_corner.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\layout\\activity_main.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\drawable_pic.png.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\drawable\\pic.png"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\drawable_pic.png.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\drawable\\pic.png"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\drawable_ic_play.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\drawable\\ic_play.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\mipmap-xhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\mipmap-xhdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\mipmap-xhdpi\\ic_launcher_round.webp"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\layout_activity_album_details.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\layout\\activity_album_details.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\mipmap-mdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\mipmap-mdpi\\ic_launcher_round.webp"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\menu_popup.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\menu\\popup.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\mipmap-xxxhdpi\\ic_launcher_round.webp"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\mipmap-mdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\layout_fragment_songs.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\layout\\fragment_songs.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\layout_music_items.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\layout\\music_items.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\layout_activity_album_details.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\layout\\activity_album_details.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\layout_fragment_album.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\layout\\fragment_album.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\drawable_gradient_bg.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\drawable\\gradient_bg.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\drawable\\ic_launcher_background.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\layout_fragment_local_song.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\layout\\fragment_local_song.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\mipmap-anydpi-v26\\ic_launcher.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\layout_activity_login.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\layout\\activity_login.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\drawable_chevron_right.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\drawable\\chevron_right.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\layout_activity_player.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\layout\\activity_player.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\layout_layout_dialog.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\layout\\layout_dialog.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\mipmap-hdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\mipmap-hdpi\\ic_launcher.webp"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\menu_search.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\menu\\search.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\xml_backup_rules.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\xml\\backup_rules.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\layout_activity_register.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\layout\\activity_register.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\drawable_ic_skip_previous.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\drawable\\ic_skip_previous.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\drawable_ic_repeat_on.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\drawable\\ic_repeat_on.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\drawable_ic_shuffle_off.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\drawable\\ic_shuffle_off.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\drawable_ic_pause.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\drawable\\ic_pause.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\drawable_ic_repeat_off.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\drawable\\ic_repeat_off.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\mipmap-xxxhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\drawable_ic_shuffle_on.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\drawable\\ic_shuffle_on.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\drawable_more.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\drawable\\more.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\drawable_ic_pause.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\drawable\\ic_pause.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\drawable_tab_indicator.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\drawable\\tab_indicator.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\drawable_ic_menu.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\drawable\\ic_menu.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\mipmap-mdpi\\ic_launcher.webp"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\layout_activity_register.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\layout\\activity_register.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\drawable_ic_play.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\drawable\\ic_play.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\mipmap-xxhdpi\\ic_launcher_round.webp"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\layout_fragment_sound_recognition.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\layout\\fragment_sound_recognition.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\layout_album_item.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\layout\\album_item.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\drawable_main_bg.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\drawable\\main_bg.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\layout_music_items.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\layout\\music_items.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\layout_album_item.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\layout\\album_item.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\xml_data_extraction_rules.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\xml\\data_extraction_rules.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\drawable_ic_shuffle_on.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\drawable\\ic_shuffle_on.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\menu_search.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\menu\\search.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\mipmap-xxhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\mipmap-anydpi-v26\\ic_launcher.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\layout_activity_player.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\layout\\activity_player.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\drawable_ic_launcher_background.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\drawable\\ic_launcher_background.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\drawable_chevron_left.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\drawable\\chevron_left.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\drawable_yellow_top.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\drawable\\yellow_top.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\layout_fragment_user.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\layout\\fragment_user.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\drawable_chevron_left.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\drawable\\chevron_left.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\drawable_gradient_bg.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\drawable\\gradient_bg.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\drawable_ic_launcher_foreground.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\drawable\\ic_launcher_foreground.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\layout_activity_login.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\layout\\activity_login.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\layout_fragment_sound_recognition.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\layout\\fragment_sound_recognition.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\mipmap-xhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\layout_fragment_album.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\layout\\fragment_album.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\drawable_ic_repeat_off.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\drawable\\ic_repeat_off.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\layout_layout_dialog.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\layout\\layout_dialog.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\mipmap-hdpi\\ic_launcher.webp"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\layout_activity_main.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\layout\\activity_main.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\layout_fragment_songs.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\layout\\fragment_songs.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\mipmap-xxxhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\layout_fragment_now_playing.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\layout\\fragment_now_playing.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\drawable_yellow_top.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\drawable\\yellow_top.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\drawable_main_bg.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\drawable\\main_bg.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\drawable_ic_shuffle_off.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\drawable\\ic_shuffle_off.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\drawable_tab_indicator.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\drawable\\tab_indicator.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\layout_fragment_local_song.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\layout\\fragment_local_song.xml"
     },
     {
-        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-38:\\drawable_ic_repeat_on.xml.flat",
-        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-40:\\drawable\\ic_repeat_on.xml"
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\layout_fragment_now_playing.xml.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\layout\\fragment_now_playing.xml"
+    },
+    {
+        "merged": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-debug-39:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Asus\\.gradle\\daemon\\8.4\\com.example.musicpleir.app-main-41:\\mipmap-xxhdpi\\ic_launcher_round.webp"
     }
 ]

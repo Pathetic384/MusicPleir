@@ -29,14 +29,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/progressBar"
-        android:layout_marginLeft="100dp"
-        android:text="Logout" />
-
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
@@ -58,10 +50,4 @@
             tools:layout="@layout/fragment_now_playing"/>
     </FrameLayout>
 
-    <TextView
-        android:id="@+id/info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/logout"
-        android:text="TextView" />
 </RelativeLayout>

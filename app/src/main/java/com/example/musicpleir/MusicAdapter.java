@@ -44,7 +44,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
     public void onBindViewHolder(@NonNull MusicAdapter.MyViewHolder holder, int position) {
         holder.file_name.setText(mFiles.get(position).getSongTitle());
         try {
-            byte[] image = getAlbumArt(mFiles.get(position).getSongLink());
+            byte[] image = Util.getAlbumArt(mFiles.get(position).getSongLink());
             if(image!=null) {
                 Glide.with(mContext).asBitmap().load(image).into(holder.album_art);
             }
@@ -113,13 +113,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
             menu = itemView.findViewById(R.id.menuMore);
         }
     }
-        private byte[] getAlbumArt (String uri) throws IOException {
-            MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-            retriever.setDataSource(uri);
-            byte[] art = retriever.getEmbeddedPicture();
-            retriever.release();
-            return art;
-        }
+
 
         void updateList(ArrayList<MusicFiles> musicFilesArrayList) {
         mFiles = new ArrayList<>();

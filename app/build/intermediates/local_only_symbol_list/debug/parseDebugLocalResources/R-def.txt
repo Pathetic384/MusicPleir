@@ -50,11 +50,9 @@ id id_prev
 id id_repeat
 id id_shuffle
 id imageViewGradient
-id info
 id layout_top_btn
 id loginNow
 id login_btn
-id logout
 id logout_btn
 id mContainer
 id main

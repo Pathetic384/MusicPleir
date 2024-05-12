@@ -119,7 +119,7 @@ public class NowPlayingFragment extends Fragment implements ServiceConnection {
             if(Show_Mini_Player) {
                 if (Path_To_Mini != null) {
                     try {
-                        byte[] art = getAlbumArt(Path_To_Mini);
+                        byte[] art = Util.getAlbumArt(Path_To_Mini);
                         if (art != null) {
                             Glide.with(getContext()).load(art).into(albumArt);
                         } else {
@@ -141,7 +141,7 @@ public class NowPlayingFragment extends Fragment implements ServiceConnection {
         if(Show_Mini_Player) {
             if(Path_To_Mini != null) {
                 try {
-                    byte[] art = getAlbumArt(Path_To_Mini);
+                    byte[] art = Util.getAlbumArt(Path_To_Mini);
                     if(art != null) {
                         Glide.with(getContext()).load(art).into(albumArt);
                     }
@@ -169,13 +169,6 @@ public class NowPlayingFragment extends Fragment implements ServiceConnection {
         }
     }
 
-    private byte[] getAlbumArt (String uri) throws IOException {
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-        retriever.setDataSource(uri);
-        byte[] art = retriever.getEmbeddedPicture();
-        retriever.release();
-        return art;
-    }
 
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {

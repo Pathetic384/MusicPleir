@@ -194,7 +194,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
         PendingIntent nextIntent = PendingIntent.getBroadcast(this, 0, nextI, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
         byte[] picture = null;
-        picture = getAlbumArt(listSongs.get(position).getSongLink());
+        picture = Util.getAlbumArt(listSongs.get(position).getSongLink());
         Bitmap thumb = null;
         if(picture != null) {
             thumb = BitmapFactory.decodeByteArray(picture, 0, picture.length);
@@ -243,13 +243,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
 
     }
 
-    private byte[] getAlbumArt (String uri) throws IOException {
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-        retriever.setDataSource(uri);
-        byte[] art = retriever.getEmbeddedPicture();
-        retriever.release();
-        return art;
-    }
+
 
     void nextBtnClicked() throws IOException {
         actionPlaying.nextBtnClicked();

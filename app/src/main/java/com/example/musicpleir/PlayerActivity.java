@@ -110,7 +110,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
                 if(musicService != null) {
                 int mCurrentPosition = musicService.getCurrentPosition() / 1000;
                 seekBar.setProgress(mCurrentPosition);
-                duration_played.setText(formattedTime(mCurrentPosition));
+                duration_played.setText(Util.formattedTime(mCurrentPosition));
                 //Log.e("playy", String.valueOf(musicService.isPlaying()));
                 }
                 handler.postDelayed(this, 1000);
@@ -385,19 +385,6 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         }
     }
 
-    private String formattedTime(int mCurrentPosition) {
-        String totalout = "";
-        String totalNew = "";
-        String seconds = String.valueOf(mCurrentPosition % 60);
-        String minutes = String.valueOf(mCurrentPosition/60);
-        totalout = minutes + ":" + seconds;
-        totalNew = minutes + ":0" + seconds;
-        if(seconds.length() == 1)
-        {
-            return totalNew;
-        }
-        else return totalout;
-    }
 
     private void getIntentMethod() throws IOException {
         position = getIntent().getIntExtra("position",-1);
@@ -407,7 +394,6 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         }
         else if(sender != null && sender.equals("local")) {
             listSongs = LocalMusicAdapter.mFiles;
-            Log.e("hêllu", String.valueOf(LocalMusicAdapter.mFiles));
         }
         else {
             listSongs = MusicAdapter.mFiles;
@@ -442,7 +428,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         MediaMetadataRetriever retriever = new MediaMetadataRetriever();
         retriever.setDataSource(uri.toString());
         int durationTotal = Integer.parseInt( listSongs.get(position).getSongDuration() ) / 1000;
-        duration_total.setText(formattedTime(durationTotal));
+        duration_total.setText(Util.formattedTime(durationTotal));
         byte[] art = retriever.getEmbeddedPicture();
         Bitmap bitmap;
         if(art != null) {

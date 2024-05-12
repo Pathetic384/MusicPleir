@@ -27,13 +27,15 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
+
 public class AlbumFragment extends Fragment {
     RecyclerView recyclerView;
     AlbumAdapter adapter;
     Button button;
     EditText editText;
     StorageReference mStorageref;
-    StorageTask mUploadTask;
+
     DatabaseReference referenceSongs;
     MediaMetadataRetriever metadataRetriever;
 
@@ -71,20 +73,15 @@ public class AlbumFragment extends Fragment {
     private void uploadAlbum() {
         DatabaseReference mDatabase;
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        //MusicFiles m = new MusicFiles("1","2","3","4","5");
         mDatabase.child("users").child(MainActivity.userID).child(editText.getText().toString())
                 .setValue(editText.getText().toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                MainActivity.ViewPagerAdapter viewPagerAdapter = new MainActivity.ViewPagerAdapter(getFragmentManager());
-                viewPagerAdapter.addFragments(new SongsFragment(), "Songs");
-                viewPagerAdapter.addFragments(new AlbumFragment(), "Albums");
-                viewPagerAdapter.addFragments(new SoundRecognitionFragment(), "Shazam");
-                viewPagerAdapter.addFragments(new LocalSongFragment(), "Playlist");
-                viewPagerAdapter.addFragments(new UserFragment(), "User");
-                MainActivity.viewPager.setAdapter(viewPagerAdapter);
-                MainActivity.viewPager.setCurrentItem(1);
-                MainActivity.tabLayout.setupWithViewPager(MainActivity.viewPager);
+
+                MainActivity.getAllAlbum();
+                ArrayList<String> newAlbum = MainActivity.albums;
+                adapter.updateList(newAlbum);
+
             }
         });
         //mDatabase.child("users").child(MainActivity.userID).child("a1").child(MainActivity.musicFiles.get(6).songTitle).setValue(MainActivity.musicFiles.get(6));
