@@ -92,11 +92,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         progressBar = findViewById(R.id.progressBar);
         bottom = findViewById(R.id.frag_bottom);
         auth = FirebaseAuth.getInstance();
-        button = findViewById(R.id.logout);
-        textView = findViewById(R.id.info);
-        //----- Set visibility of the button and text view to GONE
-        button.setVisibility(View.GONE);
-        textView.setVisibility(View.GONE);
         //----------------
         user = auth.getCurrentUser();
 

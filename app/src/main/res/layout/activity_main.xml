@@ -50,13 +50,13 @@
             tools:layout="@layout/fragment_now_playing"/>
     </FrameLayout>
 
-    <TextView
-        android:id="@+id/info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="3dp"
-        android:layout_toEndOf="@id/logout"
-        android:text="TextView" />
+<!--    <TextView-->
+<!--        android:id="@+id/info"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_marginStart="14dp"-->
+<!--        android:layout_marginTop="3dp"-->
+<!--        android:layout_toEndOf="@id/logout"-->
+<!--        android:text="TextView" />-->
 </RelativeLayout>
