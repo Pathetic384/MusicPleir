@@ -1,15 +1,18 @@
 package com.example.musicpleir;
 
 
+import static androidx.test.InstrumentationRegistry.getTargetContext;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.Matchers.allOf;
 
 import android.app.Instrumentation;
+import android.os.Build;
 import android.view.View;
 
 import androidx.test.espresso.ViewInteraction;
@@ -31,6 +34,7 @@ import org.junit.runner.RunWith;
 public class MainActivityTest {
 
 
+
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
@@ -41,9 +45,19 @@ public class MainActivityTest {
                     "android.permission.READ_MEDIA_AUDIO",
                     "android.permission.READ_EXTERNAL_STORAGE");
 
+    @Before
+    public void grant() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getInstrumentation().getUiAutomation().executeShellCommand("pm grant "
+                    + getTargetContext().getPackageName() + "android.permission.READ_MEDIA_AUDIO");
+            getInstrumentation().getUiAutomation().executeShellCommand("pm grant "
+                    + getTargetContext().getPackageName() + "android.permission.READ_EXTERNAL_STORAGE");
+        }
+    }
+
     @Test
     public void mainActivityTest() throws Exception{
-        Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
+        Instrumentation instrumentation = getInstrumentation();
         UiDevice device = UiDevice.getInstance(instrumentation);
 
         String targetPackageName = instrumentation.getTargetContext().getPackageName();

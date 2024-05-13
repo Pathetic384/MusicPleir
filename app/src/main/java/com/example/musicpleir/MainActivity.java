@@ -76,17 +76,20 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public static TabLayout tabLayout;
     public static String userID;
     public static String userMail;
+    public static boolean testing = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //permission();
-        ActivityCompat.requestPermissions( this,
-                new String[]{
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_MEDIA_AUDIO
-                }, 1
-        );
+        if(!testing) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_MEDIA_AUDIO
+                    }, 1
+            );
+        }
 
 
         progressBar = findViewById(R.id.progressBar);
@@ -136,12 +139,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 //        });
     }
 
-    void permission() {
-        if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-            String[] permission = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
-            requestPermissions(permission, REQUEST_PERMISSION_CODE);
-        }
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
