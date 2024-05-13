@@ -36,7 +36,11 @@ public class MainActivityTest {
         UiDevice device = UiDevice.getInstance(instrumentation);
 
         String targetPackageName = instrumentation.getTargetContext().getPackageName();
-        String permissionCommand = String.format("appops set %s WRITE_EXTERNAL_STORAGE allow", targetPackageName);
+        String permissionCommand = String.format("appops set %s READ_EXTERNAL_STORAGE allow", targetPackageName);
+
+        device.executeShellCommand(permissionCommand);
+
+        permissionCommand = String.format("appops set %s READ_MEDIA_AUDIO allow", targetPackageName);
 
         device.executeShellCommand(permissionCommand);
     }
