@@ -30,20 +30,6 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
 
-    @Before
-    public void grant() throws Exception{
-        Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
-        UiDevice device = UiDevice.getInstance(instrumentation);
-
-        String targetPackageName = instrumentation.getTargetContext().getPackageName();
-        String permissionCommand = String.format("appops set %s READ_EXTERNAL_STORAGE allow", targetPackageName);
-
-        device.executeShellCommand(permissionCommand);
-
-        permissionCommand = String.format("appops set %s READ_MEDIA_AUDIO allow", targetPackageName);
-
-        device.executeShellCommand(permissionCommand);
-    }
 
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
@@ -56,7 +42,18 @@ public class MainActivityTest {
                     "android.permission.READ_EXTERNAL_STORAGE");
 
     @Test
-    public void mainActivityTest() {
+    public void mainActivityTest() throws Exception{
+        Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
+        UiDevice device = UiDevice.getInstance(instrumentation);
+
+        String targetPackageName = instrumentation.getTargetContext().getPackageName();
+        String permissionCommand = String.format("appops set %s READ_EXTERNAL_STORAGE allow", targetPackageName);
+
+        device.executeShellCommand(permissionCommand);
+
+        permissionCommand = String.format("appops set %s READ_MEDIA_AUDIO allow", targetPackageName);
+
+        device.executeShellCommand(permissionCommand);
         ViewInteraction textView = onView(
                 allOf(withText("SONGS"),
                         withParent(allOf(withContentDescription("Songs"),
