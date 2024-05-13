@@ -23,7 +23,7 @@ fragmentTesting = "1.8.0-alpha02"
 fragmentTestingManifest = "1.8.0-alpha02"
 core = "1.6.0-alpha06"
 uiautomator = "2.3.0"
-uiautomatorVersion = "2.2.0"
+uiautomatorVersion = "2.3.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
