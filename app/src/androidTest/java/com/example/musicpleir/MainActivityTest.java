@@ -40,9 +40,9 @@ public class MainActivityTest {
 //    }
 //
 //
-//    @Rule
-//    public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
-//            new ActivityScenarioRule<>(MainActivity.class);
+    @Rule
+    public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
+            new ActivityScenarioRule<>(MainActivity.class);
 //
 //    @Rule
 //    public GrantPermissionRule mGrantPermissionRule =
@@ -62,19 +62,19 @@ public class MainActivityTest {
 
     @Test
     public void mainActivityTest() throws Exception{
-//        ViewInteraction textView = onView(
-//                allOf(withText("SONGS"),
-//                        withParent(allOf(withContentDescription("Songs"),
-//                                withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class)))),
-//                        isDisplayed()));
-//        textView.check(matches(withText("SONGS")));
-//
-//        ViewInteraction textView2 = onView(
-//                allOf(withText("ALBUMS"),
-//                        withParent(allOf(withContentDescription("Albums"),
-//                                withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class)))),
-//                        isDisplayed()));
-//        textView2.check(matches(withText("ALBUMS")));
-        assertTrue(true);
+        ViewInteraction textView = onView(
+                allOf(withText("SONGS"),
+                        withParent(allOf(withContentDescription("Songs"),
+                                withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class)))),
+                        isDisplayed()));
+        textView.check(matches(withText("SONGS")));
+
+        ViewInteraction textView2 = onView(
+                allOf(withText("ALBUMS"),
+                        withParent(allOf(withContentDescription("Albums"),
+                                withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class)))),
+                        isDisplayed()));
+        textView2.check(matches(withText("ALBUMS")));
+     //   assertTrue(true);
     }
 }
