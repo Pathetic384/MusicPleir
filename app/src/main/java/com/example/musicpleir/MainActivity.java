@@ -114,11 +114,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         getAllAlbum();
 
         if(user == null) {
-            Intent i = new Intent(getApplicationContext(), Login.class);
-            startActivity(i);
+//            Intent i = new Intent(getApplicationContext(), Login.class);
+//            startActivity(i);
             userMail = "abc@gmail.com";
             userID ="4JUhPUv72dZDPHvPmXjVzdqSavG2";
-            finish();
+            //finish();
         }
         else {
             userMail = user.getEmail();
