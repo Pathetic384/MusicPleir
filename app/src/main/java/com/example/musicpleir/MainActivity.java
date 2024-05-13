@@ -82,7 +82,23 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //permission();
-        if(!testing) {
+
+        auth = FirebaseAuth.getInstance();
+        //----------------
+        user = auth.getCurrentUser();
+        if(user == null) {
+//            Intent i = new Intent(getApplicationContext(), Login.class);
+//            startActivity(i);
+            userMail = "tester@gmail.com";
+            userID ="1dPHdOx5ivgQJhoMtUgs2otLW1v2";
+            //finish();
+        }
+        else {
+            userMail = user.getEmail();
+            userID = user.getUid();
+        }
+
+        if(!Objects.equals(userMail, "tester@gmail.com")) {
             ActivityCompat.requestPermissions(this,
                     new String[]{
                             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -94,9 +110,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         progressBar = findViewById(R.id.progressBar);
         bottom = findViewById(R.id.frag_bottom);
-        auth = FirebaseAuth.getInstance();
-        //----------------
-        user = auth.getCurrentUser();
 
         viewPager = findViewById(R.id.viewpager);
         tabLayout = findViewById(R.id.tab_layout);
@@ -116,17 +129,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         musicFiles = getAllAudio();
         getAllAlbum();
 
-        if(user == null) {
-//            Intent i = new Intent(getApplicationContext(), Login.class);
-//            startActivity(i);
-            userMail = "abc@gmail.com";
-            userID ="4JUhPUv72dZDPHvPmXjVzdqSavG2";
-            //finish();
-        }
-        else {
-            userMail = user.getEmail();
-            userID = user.getUid();
-        }
 
 //        button.setOnClickListener(new View.OnClickListener() {
 //            @Override
