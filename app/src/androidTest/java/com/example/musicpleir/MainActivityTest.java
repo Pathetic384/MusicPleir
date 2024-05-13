@@ -9,15 +9,19 @@ import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
+import android.app.Instrumentation;
 import android.view.View;
 
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
+import androidx.test.uiautomator.UiDevice;
 
 import org.hamcrest.core.IsInstanceOf;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +29,17 @@ import org.junit.runner.RunWith;
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
+
+    @Before
+    public void grant() throws Exception{
+        Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
+        UiDevice device = UiDevice.getInstance(instrumentation);
+
+        String targetPackageName = instrumentation.getTargetContext().getPackageName();
+        String permissionCommand = String.format("appops set %s WRITE_EXTERNAL_STORAGE allow", targetPackageName);
+
+        device.executeShellCommand(permissionCommand);
+    }
 
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
