@@ -75,6 +75,6 @@ public class MainActivityTest {
                                 withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class)))),
                         isDisplayed()));
         textView2.check(matches(withText("ALBUMS")));
-     //   assertTrue(true);
+       // assertTrue(true);
     }
 }
