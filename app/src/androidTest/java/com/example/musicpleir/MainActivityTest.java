@@ -22,10 +22,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
-import androidx.test.uiautomator.UiDevice;
 
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,53 +34,47 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
 
+    @Before
+    public void set() {
+        MainActivity.testing = true;
+    }
+
 
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
 
-//    @Rule
-//    public GrantPermissionRule mGrantPermissionRule =
-//            GrantPermissionRule.grant(
-//                    "android.permission.READ_MEDIA_AUDIO",
-//                    "android.permission.READ_EXTERNAL_STORAGE");
-//
-//    @Before
-//    public void grant() {
-//        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            getInstrumentation().getUiAutomation().executeShellCommand("pm grant "
-//                    + getTargetContext().getPackageName() + "android.permission.READ_MEDIA_AUDIO");
-//            getInstrumentation().getUiAutomation().executeShellCommand("pm grant "
-//                    + getTargetContext().getPackageName() + "android.permission.READ_EXTERNAL_STORAGE");
-//        }
-//    }
+    @Rule
+    public GrantPermissionRule mGrantPermissionRule =
+            GrantPermissionRule.grant(
+                    "android.permission.READ_MEDIA_AUDIO",
+                    "android.permission.READ_EXTERNAL_STORAGE");
+
+    @Before
+    public void grant() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getInstrumentation().getUiAutomation().executeShellCommand("pm grant "
+                    + getTargetContext().getPackageName() + "android.permission.READ_MEDIA_AUDIO");
+            getInstrumentation().getUiAutomation().executeShellCommand("pm grant "
+                    + getTargetContext().getPackageName() + "android.permission.READ_EXTERNAL_STORAGE");
+        }
+    }
 
     @Test
     public void mainActivityTest() throws Exception{
-//        Instrumentation instrumentation = getInstrumentation();
-//        UiDevice device = UiDevice.getInstance(instrumentation);
-//
-//        String targetPackageName = instrumentation.getTargetContext().getPackageName();
-//        String permissionCommand = String.format("appops set %s READ_EXTERNAL_STORAGE allow", targetPackageName);
-//
-//        device.executeShellCommand(permissionCommand);
-//
-//        permissionCommand = String.format("appops set %s READ_MEDIA_AUDIO allow", targetPackageName);
-//
-//        device.executeShellCommand(permissionCommand);
-//        ViewInteraction textView = onView(
-//                allOf(withText("SONGS"),
-//                        withParent(allOf(withContentDescription("Songs"),
-//                                withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class)))),
-//                        isDisplayed()));
-//        textView.check(matches(withText("SONGS")));
-//
-//        ViewInteraction textView2 = onView(
-//                allOf(withText("ALBUMS"),
-//                        withParent(allOf(withContentDescription("Albums"),
-//                                withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class)))),
-//                        isDisplayed()));
-//        textView2.check(matches(withText("ALBUMS")));
+        ViewInteraction textView = onView(
+                allOf(withText("SONGS"),
+                        withParent(allOf(withContentDescription("Songs"),
+                                withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class)))),
+                        isDisplayed()));
+        textView.check(matches(withText("SONGS")));
+
+        ViewInteraction textView2 = onView(
+                allOf(withText("ALBUMS"),
+                        withParent(allOf(withContentDescription("Albums"),
+                                withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class)))),
+                        isDisplayed()));
+        textView2.check(matches(withText("ALBUMS")));
         assertTrue(true);
     }
 }

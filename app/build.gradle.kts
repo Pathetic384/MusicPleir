@@ -52,7 +52,6 @@ dependencies {
     implementation(libs.fragment.testing)
     implementation(libs.fragment.testing.manifest)
     implementation(libs.core)
-    implementation(libs.androidx.uiautomator)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
