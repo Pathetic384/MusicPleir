@@ -59,6 +59,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Random;
 
 public class PlayerActivity extends AppCompatActivity implements  ActionPlaying, ServiceConnection {
@@ -425,7 +426,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
     }
 
     private void metaData (Uri uri, MediaMetadataRetriever retriever) {
-
+        if(Objects.equals(MainActivity.userMail, "tester@gmail.com")) return;
         retriever.setDataSource(uri.toString(), new HashMap<String, String>());
         int durationTotal = Integer.parseInt( listSongs.get(position).getSongDuration() ) / 1000;
         duration_total.setText(Util.formattedTime(durationTotal));
