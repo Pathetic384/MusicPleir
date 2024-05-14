@@ -139,13 +139,12 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
         return mediaPlayer.getCurrentPosition();
     }
     void createMediaPlayer(int pos) {
-   //     Log.d("ádkjhsdfnjkjklsdfji", String.valueOf(listSongs));
         position = pos;
-//        Log.e("pos", String.valueOf(position));
-//        Log.e("12123", String.valueOf(listSongs.get(position)));
-//        Log.e("12123", String.valueOf(listSongs.get(position).getSongLink()));
-        uri = Uri.parse(listSongs.get(position).getSongLink());
- //       Log.e("song link", String.valueOf(uri));
+        if(position != -1) {
+            uri = Uri.parse(listSongs.get(position).getSongLink());
+        }
+        else uri = Uri.parse("https://firebasestorage.googleapis.com/v0/b" +
+                "/serverside-7a675.appspot.com/o/songs%2F1713442432213.mp3?alt=media&token=e754aab0-36fd-4a90-8546-e97be79dc9ed");
 
         SharedPreferences.Editor editor = getSharedPreferences(Music_Last_Played, MODE_PRIVATE).edit();
         editor.putString(Music_File, uri.toString());
