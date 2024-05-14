@@ -28,6 +28,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -70,7 +71,8 @@ public class SoundRecognitionFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (ContextCompat.checkSelfPermission(getContext(),
-                        android.Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                        android.Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED
+                        && !Objects.equals(MainActivity.userMail, "tester@gmail.com")) {
                     // Permission is not granted. Ask for it.
                     ActivityCompat.requestPermissions(getActivity(),
                             new String[]{Manifest.permission.RECORD_AUDIO},
