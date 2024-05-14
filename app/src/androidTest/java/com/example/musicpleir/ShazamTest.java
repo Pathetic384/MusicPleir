@@ -87,7 +87,7 @@ public class ShazamTest {
                         isDisplayed()));
         appCompatButton.perform(click());
 
-        onView(isRoot()).perform(waitFor(10000));
+        onView(isRoot()).perform(waitFor(15000));
 
         ViewInteraction textView = onView(
                 allOf(withId(R.id.info_text),

@@ -90,14 +90,14 @@ public class AlbumTest {
                                 0),isDisplayed()));
         recyclerView.perform(actionOnItemAtPosition(0, click()));
 
-        onView(isRoot()).perform(waitFor(12000));
+        onView(isRoot()).perform(waitFor(5000));
 
         ViewInteraction textView2 = onView(
                 allOf(withId(R.id.music_file_name), withText("Never Gonna Give You Up"),
                         withParent(allOf(withId(R.id.audio_item),
                                 withParent(withId(R.id.recyclerView)))),
                         isDisplayed()));
-        textView2.check(matches(withText("Never Gonna Give You Up")));
+        textView2.check(matches(withText(("Never Gonna Give You Up"))));
     }
 
     private static Matcher<View> childAtPosition(
