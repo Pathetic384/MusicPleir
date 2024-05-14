@@ -46,7 +46,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
         holder.file_name.setText(mFiles.get(position).getSongTitle());
         try {
             if(!Objects.equals(MainActivity.userMail, "tester@gmail.com")) {
-                byte[] image = Util.getAlbumArt(mFiles.get(position).getSongLink());
+                byte[] image = Util.getAlbumArt(mFiles.get(position).getSongLink(), new MediaMetadataRetriever());
                 if (image != null) {
                     Glide.with(mContext).asBitmap().load(image).into(holder.album_art);
                     Log.e("yoyo", String.valueOf(image));

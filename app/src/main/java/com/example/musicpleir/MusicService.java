@@ -193,7 +193,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
         PendingIntent nextIntent = PendingIntent.getBroadcast(this, 0, nextI, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
         byte[] picture = null;
-        picture = Util.getAlbumArt(listSongs.get(position).getSongLink());
+        picture = Util.getAlbumArt(listSongs.get(position).getSongLink(), new MediaMetadataRetriever());
         Bitmap thumb = null;
         if(picture != null) {
             thumb = BitmapFactory.decodeByteArray(picture, 0, picture.length);

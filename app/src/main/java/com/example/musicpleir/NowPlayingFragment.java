@@ -119,7 +119,7 @@ public class NowPlayingFragment extends Fragment implements ServiceConnection {
             if(Show_Mini_Player) {
                 if (Path_To_Mini != null) {
                     try {
-                        byte[] art = Util.getAlbumArt(Path_To_Mini);
+                        byte[] art = Util.getAlbumArt(Path_To_Mini, new MediaMetadataRetriever());
                         if (art != null) {
                             Glide.with(getContext()).load(art).into(albumArt);
                         } else {
@@ -141,7 +141,7 @@ public class NowPlayingFragment extends Fragment implements ServiceConnection {
         if(Show_Mini_Player) {
             if(Path_To_Mini != null) {
                 try {
-                    byte[] art = Util.getAlbumArt(Path_To_Mini);
+                    byte[] art = Util.getAlbumArt(Path_To_Mini, new MediaMetadataRetriever());
                     if(art != null) {
                         Glide.with(getContext()).load(art).into(albumArt);
                     }

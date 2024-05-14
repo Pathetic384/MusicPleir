@@ -59,7 +59,7 @@ public class AlbumDetails extends AppCompatActivity {
     void idk() {
         if(!albumSongs.isEmpty()) {
             try {
-                byte[] image = Util.getAlbumArt(albumSongs.get(0).getSongLink());
+                byte[] image = Util.getAlbumArt(albumSongs.get(0).getSongLink(), new MediaMetadataRetriever());
                 if (image != null) {
                     Glide.with(this).load(image).into(albumPhoto);
                 } else {
