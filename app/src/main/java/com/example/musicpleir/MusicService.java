@@ -30,6 +30,7 @@ import androidx.core.app.NotificationCompat;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MusicService extends Service implements MediaPlayer.OnCompletionListener{
 
@@ -193,7 +194,8 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
         PendingIntent nextIntent = PendingIntent.getBroadcast(this, 0, nextI, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
         byte[] picture = null;
-        picture = Util.getAlbumArt(listSongs.get(position).getSongLink(), new MediaMetadataRetriever());
+        if(!Objects.equals(MainActivity.userMail, "tester@gmail.com"))
+            picture = Util.getAlbumArt(listSongs.get(position).getSongLink(), new MediaMetadataRetriever());
         Bitmap thumb = null;
         if(picture != null) {
             thumb = BitmapFactory.decodeByteArray(picture, 0, picture.length);

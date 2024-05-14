@@ -32,6 +32,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class NowPlayingFragment extends Fragment implements ServiceConnection {
 
@@ -119,7 +120,9 @@ public class NowPlayingFragment extends Fragment implements ServiceConnection {
             if(Show_Mini_Player) {
                 if (Path_To_Mini != null) {
                     try {
-                        byte[] art = Util.getAlbumArt(Path_To_Mini, new MediaMetadataRetriever());
+                        byte[] art = null;
+                        if(!Objects.equals(MainActivity.userMail, "tester@gmail.com"))
+                            Util.getAlbumArt(Path_To_Mini, new MediaMetadataRetriever());
                         if (art != null) {
                             Glide.with(getContext()).load(art).into(albumArt);
                         } else {
@@ -141,7 +144,9 @@ public class NowPlayingFragment extends Fragment implements ServiceConnection {
         if(Show_Mini_Player) {
             if(Path_To_Mini != null) {
                 try {
-                    byte[] art = Util.getAlbumArt(Path_To_Mini, new MediaMetadataRetriever());
+                    byte[] art = null;
+                    if(!Objects.equals(MainActivity.userMail, "tester@gmail.com"))
+                        Util.getAlbumArt(Path_To_Mini, new MediaMetadataRetriever());
                     if(art != null) {
                         Glide.with(getContext()).load(art).into(albumArt);
                     }
