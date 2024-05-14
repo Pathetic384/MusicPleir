@@ -2,22 +2,22 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="FragmentsTest">
-        <State />
-      </entry>
       <entry key="LoginTest">
         <State />
       </entry>
-      <entry key="MainActivityTest">
+      <entry key="MainActivityTest2">
         <State />
       </entry>
-      <entry key="MainActivityTest2">
+      <entry key="PlayerTest">
         <State />
       </entry>
       <entry key="SongTest">
         <State />
       </entry>
       <entry key="app">
+        <State />
+      </entry>
+      <entry key="playerTest()">
         <State />
       </entry>
     </value>

@@ -267,7 +267,6 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
 
         loading = true;
         playpauseBtn.setImageResource(R.drawable.ic_pause);
-        position = ( (position - 1) <0 ) ? (listSongs.size() - 1) : (position-1);
         if(MainActivity.shuffleBoolean && !MainActivity.repeatBoolean) {
             position = getRandom(listSongs.size() - 1);
         }

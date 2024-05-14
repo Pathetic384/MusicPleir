@@ -134,7 +134,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
         mediaPlayer.seekTo(pos);
     }
     int getCurrentPosition() {
-        //if(mediaPlayer == null) return 0;
+        if(mediaPlayer == null) return 0;
         if(PlayerActivity.loading) return 0;
         return mediaPlayer.getCurrentPosition();
     }
