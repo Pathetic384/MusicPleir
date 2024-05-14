@@ -3,6 +3,7 @@ package com.example.musicpleir;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -10,7 +11,9 @@ import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.test.espresso.UiController;
 import androidx.test.espresso.ViewAction;
@@ -20,7 +23,9 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 
+import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,6 +47,7 @@ public class MainActivityTest2 {
                                 withParent(withId(R.id.recyclerView)))),
                         isDisplayed()));
         textView.check(matches(withText("Never Gonna Give You Up")));
+
     }
 
     public static ViewAction waitFor(long delay) {
@@ -59,4 +65,6 @@ public class MainActivityTest2 {
             }
         };
     }
+
+
 }
