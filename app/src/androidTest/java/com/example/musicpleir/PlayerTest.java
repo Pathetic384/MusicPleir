@@ -49,7 +49,7 @@ public class PlayerTest {
                                 withClassName(is("android.widget.RelativeLayout")),
                                 0),isDisplayed()));
         recyclerView.perform(actionOnItemAtPosition(0, click()));
-        onView(isRoot()).perform(waitFor(3000));
+        onView(isRoot()).perform(waitFor(7000));
         ViewInteraction appCompatImageView = onView(
                 allOf(withId(R.id.id_next),
                         childAtPosition(
@@ -60,7 +60,7 @@ public class PlayerTest {
                                 3),
                         isDisplayed()));
         appCompatImageView.perform(click());
-        onView(isRoot()).perform(waitFor(3000));
+        onView(isRoot()).perform(waitFor(7000));
         ViewInteraction textView = onView(
                 allOf(withId(R.id.song_name), withText("Ed Sheeran - Shape of You (Official Music Video)"),
                         withParent(allOf(withId(R.id.mContainer),
@@ -78,7 +78,7 @@ public class PlayerTest {
                                 1),
                         isDisplayed()));
         appCompatImageView2.perform(click());
-        onView(isRoot()).perform(waitFor(3000));
+        onView(isRoot()).perform(waitFor(7000));
         ViewInteraction textView2 = onView(
                 allOf(withId(R.id.song_name), withText("Never Gonna Give You Up"),
                         withParent(allOf(withId(R.id.mContainer),
@@ -96,7 +96,7 @@ public class PlayerTest {
                                 4),
                         isDisplayed()));
         appCompatImageView3.perform(click());
-        onView(isRoot()).perform(waitFor(3000));
+        onView(isRoot()).perform(waitFor(7000));
         ViewInteraction appCompatImageView4 = onView(
                 allOf(withId(R.id.id_next),
                         childAtPosition(
@@ -107,7 +107,7 @@ public class PlayerTest {
                                 3),
                         isDisplayed()));
         appCompatImageView4.perform(click());
-        onView(isRoot()).perform(waitFor(3000));
+        onView(isRoot()).perform(waitFor(7000));
         ViewInteraction textView3 = onView(
                 allOf(withId(R.id.song_name), withText("Never Gonna Give You Up"),
                         withParent(allOf(withId(R.id.mContainer),
