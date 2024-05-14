@@ -275,7 +275,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
             position = ( (position - 1) <0 ) ? (listSongs.size() - 1) : (position-1);
         }
         uri = Uri.parse(listSongs.get(position).getSongLink());
-        metaData(uri);
+        metaData(uri, new MediaMetadataRetriever());
         song_name.setText(listSongs.get(position).getSongTitle());
         artist_name.setText(listSongs.get(position).getArtist());
 
@@ -319,7 +319,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
                 position = ((position + 1) % listSongs.size());
             }
             uri = Uri.parse(listSongs.get(position).getSongLink());
-            metaData(uri);
+            metaData(uri, new MediaMetadataRetriever());
             song_name.setText(listSongs.get(position).getSongTitle());
             artist_name.setText(listSongs.get(position).getArtist());
 
@@ -424,8 +424,8 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         addAlbum = findViewById(R.id.addAlbum);
     }
 
-    private void metaData (Uri uri) {
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+    private void metaData (Uri uri, MediaMetadataRetriever retriever) {
+
         retriever.setDataSource(uri.toString(), new HashMap<String, String>());
         int durationTotal = Integer.parseInt( listSongs.get(position).getSongDuration() ) / 1000;
         duration_total.setText(Util.formattedTime(durationTotal));
@@ -524,7 +524,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         musicService.setCallBack(this);
         Toast.makeText(musicService, "connected", Toast.LENGTH_SHORT).show();
         seekBar.setMax(musicService.getDuration() / 1000);
-        metaData(uri);
+        metaData(uri, new MediaMetadataRetriever());
         song_name.setText(listSongs.get(position).getSongTitle());
         artist_name.setText(listSongs.get(position).getArtist());
         musicService.onCompleted();
