@@ -78,6 +78,13 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyHolder> {
     void updateList(ArrayList<String> musicFilesArrayList) {
         albumNames = new ArrayList<>();
         albumNames.addAll(musicFilesArrayList);
-        notifyDataSetChanged();
+        Runnable myRunnable = new Runnable(){
+            public void run(){
+                notifyDataSetChanged();
+            }
+        };
+        Thread thread = new Thread(myRunnable);
+        thread.start();
+        //notifyDataSetChanged();
     }
 }

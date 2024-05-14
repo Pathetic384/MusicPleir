@@ -120,6 +120,13 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
         void updateList(ArrayList<MusicFiles> musicFilesArrayList) {
         mFiles = new ArrayList<>();
         mFiles.addAll(musicFilesArrayList);
-        notifyDataSetChanged();
+            Runnable myRunnable = new Runnable(){
+                public void run(){
+                    notifyDataSetChanged();
+                }
+            };
+            Thread thread = new Thread(myRunnable);
+            thread.start();
+            //notifyDataSetChanged();
         }
 }
