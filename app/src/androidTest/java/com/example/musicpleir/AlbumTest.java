@@ -92,6 +92,7 @@ public class AlbumTest {
 
         onView(isRoot()).perform(waitFor(50000));
 
+
         ViewInteraction textView2 = onView(
                 allOf(withId(R.id.music_file_name), withText("Never Gonna Give You Up"),
                         withParent(allOf(withId(R.id.audio_item),
