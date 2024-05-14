@@ -128,5 +128,6 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
             Thread thread = new Thread(myRunnable);
             thread.start();
             //notifyDataSetChanged();
+            
         }
 }
