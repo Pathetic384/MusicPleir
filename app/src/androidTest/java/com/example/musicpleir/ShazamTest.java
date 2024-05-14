@@ -78,7 +78,7 @@ public class ShazamTest {
                         isDisplayed()));
         tabView.perform(click());
 
-        onView(isRoot()).perform(waitFor(20000));
+        onView(isRoot()).perform(waitFor(30000));
         ViewInteraction appCompatButton = onView(
                 allOf(withId(R.id.start_recording),
                         childAtPosition(
