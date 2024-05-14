@@ -34,31 +34,10 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
 
-//    @Before
-//    public void set() {
-//        MainActivity.testing = true;
-//    }
-//
-//
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
-//
-//    @Rule
-//    public GrantPermissionRule mGrantPermissionRule =
-//            GrantPermissionRule.grant(
-//                    "android.permission.READ_MEDIA_AUDIO",
-//                    "android.permission.READ_EXTERNAL_STORAGE");
-//
-//    @Before
-//    public void grant() {
-//        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            getInstrumentation().getUiAutomation().executeShellCommand("pm grant "
-//                    + getTargetContext().getPackageName() + "android.permission.READ_MEDIA_AUDIO");
-//            getInstrumentation().getUiAutomation().executeShellCommand("pm grant "
-//                    + getTargetContext().getPackageName() + "android.permission.READ_EXTERNAL_STORAGE");
-//        }
-//    }
+
 
     @Test
     public void mainActivityTest() throws Exception{
