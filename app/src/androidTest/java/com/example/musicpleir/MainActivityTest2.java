@@ -8,6 +8,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.Matchers.allOf;
 
 
@@ -19,8 +20,13 @@ import androidx.test.espresso.ViewInteraction;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
+import androidx.test.uiautomator.UiDevice;
+import androidx.test.uiautomator.UiObject;
+import androidx.test.uiautomator.UiObjectNotFoundException;
+import androidx.test.uiautomator.UiSelector;
 
 import org.hamcrest.Matcher;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,6 +34,20 @@ import org.junit.runner.RunWith;
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest2 {
+    @BeforeClass
+    public static void dismissANRSystemDialog() throws UiObjectNotFoundException {
+        UiDevice device = UiDevice.getInstance(getInstrumentation());
+        // If the device is running in English Locale
+        UiObject waitButton = device.findObject(new UiSelector().textContains("wait"));
+        if (waitButton.exists()) {
+            waitButton.click();
+        }
+        // If the device is running in Japanese Locale
+        waitButton = device.findObject(new UiSelector().textContains("待機"));
+        if (waitButton.exists()) {
+            waitButton.click();
+        }
+    }
 
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
