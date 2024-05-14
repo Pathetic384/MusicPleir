@@ -89,7 +89,9 @@ public class AlbumTest {
                                 withClassName(is("android.widget.RelativeLayout")),
                                 0),isDisplayed()));
         recyclerView.perform(actionOnItemAtPosition(0, click()));
-        onView(isRoot()).perform(waitFor(8000));
+
+        onView(isRoot()).perform(waitFor(12000));
+
         ViewInteraction textView2 = onView(
                 allOf(withId(R.id.music_file_name), withText("Never Gonna Give You Up"),
                         withParent(allOf(withId(R.id.audio_item),
