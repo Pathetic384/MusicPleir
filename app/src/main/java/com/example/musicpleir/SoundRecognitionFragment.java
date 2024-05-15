@@ -70,9 +70,19 @@ public class SoundRecognitionFragment extends Fragment {
         StartRecording.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(Objects.equals(MainActivity.userMail, "tester@gmail.com")) {
+                    infoText.setText("Recording...");
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            infoText.setText("Error: JSON parsing failed");
+                        }
+                    }, 5000);
+                    return;
+                }
                 if (ContextCompat.checkSelfPermission(getContext(),
-                        android.Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED
-                        && !Objects.equals(MainActivity.userMail, "tester@gmail.com")) {
+                        android.Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
                     // Permission is not granted. Ask for it.
                     ActivityCompat.requestPermissions(getActivity(),
                             new String[]{Manifest.permission.RECORD_AUDIO},
