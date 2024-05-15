@@ -9,6 +9,7 @@ import static com.example.musicpleir.MusicService.Artist_Name;
 import static com.example.musicpleir.MusicService.Music_File;
 import static com.example.musicpleir.MusicService.Music_Last_Played;
 import static com.example.musicpleir.MusicService.Song_Name;
+import static com.example.musicpleir.PlayerActivity.listSongs;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -20,7 +21,9 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +35,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class NowPlayingFragment extends Fragment implements ServiceConnection {
 
@@ -40,6 +44,7 @@ public class NowPlayingFragment extends Fragment implements ServiceConnection {
     FloatingActionButton playPauseBtn;
     View view;
     MusicService musicService;
+    static int load = 0;
     public NowPlayingFragment() {
         // Required empty public constructor
     }
@@ -62,7 +67,12 @@ public class NowPlayingFragment extends Fragment implements ServiceConnection {
                 Toast.makeText(getContext(), "12", Toast.LENGTH_SHORT).show();
                 if(musicService != null) {
                     try {musicService.nextBtnClicked();} catch (IOException e) {}
-                    btnClicked();
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            btnClicked(1);
+                        }
+                    });
                 }
             }
         });
@@ -72,7 +82,12 @@ public class NowPlayingFragment extends Fragment implements ServiceConnection {
                 Toast.makeText(getContext(), "12", Toast.LENGTH_SHORT).show();
                 if(musicService != null) {
                     try {musicService.prevBtnClicked();} catch (IOException e) {}
-                    btnClicked();
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            btnClicked(-1);
+                        }
+                    });
                 }
             }
         });
@@ -93,12 +108,19 @@ public class NowPlayingFragment extends Fragment implements ServiceConnection {
         return view;
     }
 
-    void btnClicked() {
+    void btnClicked(int i) {
         if(getActivity() != null) {
+            int position = 0;
+            if(i==1) {
+                position = ((musicService.position + 1) % listSongs.size());
+            }
+            else {
+                position = ( (musicService.position - 1) <0 ) ? (listSongs.size() - 1) : (musicService.position-1);
+            }
             SharedPreferences.Editor editor = getActivity().getSharedPreferences(Music_Last_Played, MODE_PRIVATE).edit();
-            editor.putString(Music_File, PlayerActivity.listSongs.get(musicService.position).getSongLink());
-            editor.putString(Artist_Name, PlayerActivity.listSongs.get(musicService.position).getArtist());
-            editor.putString(Song_Name, PlayerActivity.listSongs.get(musicService.position).getSongTitle());
+            editor.putString(Music_File, listSongs.get(position).getSongLink());
+            editor.putString(Artist_Name, listSongs.get(position).getArtist());
+            editor.putString(Song_Name, listSongs.get(position).getSongTitle());
             editor.apply();
             SharedPreferences preferences = getActivity().getSharedPreferences(Music_Last_Played, MODE_PRIVATE);
             String path = preferences.getString(Music_File, null);
@@ -119,7 +141,9 @@ public class NowPlayingFragment extends Fragment implements ServiceConnection {
             if(Show_Mini_Player) {
                 if (Path_To_Mini != null) {
                     try {
-                        byte[] art = Util.getAlbumArt(Path_To_Mini);
+                        byte[] art = null;
+                        if(!Objects.equals(MainActivity.userMail, "tester@gmail.com"))
+                            Util.getAlbumArt(Path_To_Mini, new MediaMetadataRetriever());
                         if (art != null) {
                             Glide.with(getContext()).load(art).into(albumArt);
                         } else {
@@ -141,7 +165,9 @@ public class NowPlayingFragment extends Fragment implements ServiceConnection {
         if(Show_Mini_Player) {
             if(Path_To_Mini != null) {
                 try {
-                    byte[] art = Util.getAlbumArt(Path_To_Mini);
+                    byte[] art = null;
+                    if(!Objects.equals(MainActivity.userMail, "tester@gmail.com"))
+                        Util.getAlbumArt(Path_To_Mini, new MediaMetadataRetriever());
                     if(art != null) {
                         Glide.with(getContext()).load(art).into(albumArt);
                     }

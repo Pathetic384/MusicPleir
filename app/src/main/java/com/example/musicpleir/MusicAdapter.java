@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,20 +47,18 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
     public void onBindViewHolder(@NonNull MusicAdapter.MyViewHolder holder, int position) {
         holder.file_name.setText(mFiles.get(position).getSongTitle());
         try {
-//            if(mFiles != null) {
-//                byte[] image = Util.getAlbumArt(mFiles.get(position).getSongLink(), new MediaMetadataRetriever());
-//                if (image != null) {
-//                    Glide.with(mContext).asBitmap().load(image).into(holder.album_art);
-//                    Log.e("yoyo", String.valueOf(image));
-//                } else {
-//                    Glide.with(mContext).asBitmap().load(R.drawable.pic).into(holder.album_art);
-//                }
-//            }
-//                else {
+            if(!Objects.equals(MainActivity.userMail, "tester@gmail.com")) {
+                byte[] image = Util.getAlbumArt(mFiles.get(position).getSongLink(), new MediaMetadataRetriever());
+                if (image != null) {
+                    Glide.with(mContext).asBitmap().load(image).into(holder.album_art);
+                    Log.e("yoyo", String.valueOf(image));
+                } else {
                     Glide.with(mContext).asBitmap().load(R.drawable.pic).into(holder.album_art);
-             //   }
-            
-
+                }
+            }
+            else {
+                Glide.with(mContext).asBitmap().load(R.drawable.pic).into(holder.album_art);
+            }
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -126,14 +126,12 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
         void updateList(ArrayList<MusicFiles> musicFilesArrayList) {
         mFiles = new ArrayList<>();
         mFiles.addAll(musicFilesArrayList);
-            Runnable myRunnable = new Runnable(){
-                public void run(){
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
                     notifyDataSetChanged();
                 }
-            };
-            Thread thread = new Thread(myRunnable);
-            thread.start();
-            //notifyDataSetChanged();
+            });
 
         }
 }

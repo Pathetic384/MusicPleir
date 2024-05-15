@@ -9,13 +9,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 
 public class SongsFragment extends Fragment {
 
     RecyclerView recyclerView;
     static MusicAdapter musicAdapter;
-
+//    EditText songFinding;
+//    Button findEnter;
 
     public SongsFragment() {
         // Required empty public constructor
@@ -34,6 +40,20 @@ public class SongsFragment extends Fragment {
                 recyclerView.setAdapter(musicAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
             }
+//        songFinding = view.findViewById(R.id.song_find);
+//        findEnter = view.findViewById(R.id.enter_find);
+//        findEnter.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ArrayList<MusicFiles> myFiles = new ArrayList<>();
+//                for(MusicFiles song : MainActivity.musicFiles) {
+//                    if(song.getSongTitle().toLowerCase().contains(songFinding.getText().toString().toLowerCase())) {
+//                        myFiles.add(song);
+//                    }
+//                }
+//                musicAdapter.updateList(myFiles);
+//            }
+//        });
             return view;
 
 

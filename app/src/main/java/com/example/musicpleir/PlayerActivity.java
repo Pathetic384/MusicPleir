@@ -4,10 +4,6 @@ package com.example.musicpleir;
 import static com.example.musicpleir.MainActivity.musicFiles;
 
 import android.app.Dialog;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -58,6 +54,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 import java.util.Random;
 
 public class PlayerActivity extends AppCompatActivity implements  ActionPlaying, ServiceConnection {
@@ -267,7 +265,6 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
 
         loading = true;
         playpauseBtn.setImageResource(R.drawable.ic_pause);
-        position = ( (position - 1) <0 ) ? (listSongs.size() - 1) : (position-1);
         if(MainActivity.shuffleBoolean && !MainActivity.repeatBoolean) {
             position = getRandom(listSongs.size() - 1);
         }
@@ -275,7 +272,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
             position = ( (position - 1) <0 ) ? (listSongs.size() - 1) : (position-1);
         }
         uri = Uri.parse(listSongs.get(position).getSongLink());
-        metaData(uri);
+        metaData(uri, new MediaMetadataRetriever());
         song_name.setText(listSongs.get(position).getSongTitle());
         artist_name.setText(listSongs.get(position).getArtist());
 
@@ -319,7 +316,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
                 position = ((position + 1) % listSongs.size());
             }
             uri = Uri.parse(listSongs.get(position).getSongLink());
-            metaData(uri);
+            metaData(uri, new MediaMetadataRetriever());
             song_name.setText(listSongs.get(position).getSongTitle());
             artist_name.setText(listSongs.get(position).getArtist());
 
@@ -424,8 +421,8 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         addAlbum = findViewById(R.id.addAlbum);
     }
 
-    private void metaData (Uri uri) {
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+    private void metaData (Uri uri, MediaMetadataRetriever retriever) {
+        if(Objects.equals(MainActivity.userMail, "tester@gmail.com")) return;
         retriever.setDataSource(uri.toString());
         int durationTotal = Integer.parseInt( listSongs.get(position).getSongDuration() ) / 1000;
         duration_total.setText(Util.formattedTime(durationTotal));
@@ -524,7 +521,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         musicService.setCallBack(this);
         Toast.makeText(musicService, "connected", Toast.LENGTH_SHORT).show();
         seekBar.setMax(musicService.getDuration() / 1000);
-        metaData(uri);
+        metaData(uri, new MediaMetadataRetriever());
         song_name.setText(listSongs.get(position).getSongTitle());
         artist_name.setText(listSongs.get(position).getArtist());
         musicService.onCompleted();

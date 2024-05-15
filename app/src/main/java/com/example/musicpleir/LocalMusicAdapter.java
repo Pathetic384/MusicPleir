@@ -1,11 +1,14 @@
 package com.example.musicpleir;
 
 import android.app.DownloadManager;
+import android.app.*;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -117,6 +120,18 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.My
         }
     }
 
+    void updateList(ArrayList<MusicFiles> musicFilesArrayList) {
+        mFiles = new ArrayList<>();
+        mFiles.addAll(musicFilesArrayList);
 
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                notifyDataSetChanged();
+            }
+        });
+        //notifyDataSetChanged();
+
+    }
 
 }
