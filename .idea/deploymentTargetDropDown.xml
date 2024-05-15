@@ -2,19 +2,19 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="BottomPlayerTest">
+      <entry key="MainActivityTest2">
         <State />
       </entry>
-      <entry key="LogOutTest">
+      <entry key="PlayerTest">
         <State />
       </entry>
-      <entry key="Logg">
-        <State />
-      </entry>
-      <entry key="LogoutTest">
+      <entry key="PlaylistTest">
         <State />
       </entry>
       <entry key="ShazamUITest">
+        <State />
+      </entry>
+      <entry key="UserTest">
         <State />
       </entry>
       <entry key="app">

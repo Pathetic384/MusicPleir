@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.media.MediaMetadataRetriever;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -21,7 +22,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -55,8 +55,9 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
+    private SongsFragment songsFragment;
     private static final int REQUEST_PERMISSION_CODE = 10;
     static ArrayList<MusicFiles> musicFiles = new ArrayList<>();
     static ArrayList<MusicFiles> localMusicFiles = new ArrayList<>();
@@ -77,15 +78,91 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public static TabLayout tabLayout;
     public static String userID;
     public static String userMail;
-
+    public static boolean testing = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //permission();
 
+        authenticateUser();
+
+        progressBar = findViewById(R.id.progressBar);
+        bottom = findViewById(R.id.frag_bottom);
+
+        viewPager = findViewById(R.id.viewpager);
+        tabLayout = findViewById(R.id.tab_layout);
+        localMusicFiles = getAllLocalAudio(this);
+
+        createViewPager();
+
+        loadMusicFiles();
+        getAllAlbum();
+    }
+
+    private void loadMusicFiles() {
+        new LoadAudioTask(this).execute();
+    }
+    private class LoadAudioTask extends AsyncTask<Void, Void, ArrayList<MusicFiles>> {
+        private Context context;
+
+        public LoadAudioTask(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected ArrayList<MusicFiles> doInBackground(Void... voids) {
+            ArrayList<MusicFiles> allAudio = new ArrayList<>();
+            //allAudio.addAll(getAllLocalAudio(context));
+            allAudio.addAll(getAllAudio());
+            getAllAudioFromFirebase();
+            return allAudio;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<MusicFiles> musicFiles) {
+            super.onPostExecute(musicFiles);
+            progressBar.setVisibility(View.GONE);
+            MainActivity.musicFiles = musicFiles;
+            initViewPager();
+        }
+    }
+
+    private void getAllAudioFromFirebase() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("songs");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<MusicFiles> tmp = new ArrayList<>();
+                for (DataSnapshot dss : snapshot.getChildren()) {
+                    MusicFiles getSongs = dss.getValue(MusicFiles.class);
+                    if (getSongs.getSongsCategory() == null) getSongs.setSongsCategory("no title");
+                    tmp.add(getSongs);
+                }
+                MainActivity.musicFiles.addAll(tmp);
+                progressBar.setVisibility(View.GONE);
+                if (songsFragment != null) {
+                    songsFragment.onMusicDataLoaded(MainActivity.musicFiles);
+                }
+                initViewPager();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                progressBar.setVisibility(View.GONE);
+                initViewPager();
+            }
+        });
+    }
+    
+    private void authenticateUser() {
         auth = FirebaseAuth.getInstance();
-        //----------------
         user = auth.getCurrentUser();
         if(user == null) {
 //            Intent i = new Intent(getApplicationContext(), Login.class);
@@ -107,15 +184,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                     }, 1
             );
         }
+    }
 
-        progressBar = findViewById(R.id.progressBar);
-        bottom = findViewById(R.id.frag_bottom);
-
-        viewPager = findViewById(R.id.viewpager);
-        tabLayout = findViewById(R.id.tab_layout);
-
+    private void createViewPager () {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPagerAdapter.addFragments(new SongsFragment(), "Songs");
+        songsFragment = new SongsFragment();
+        viewPagerAdapter.addFragments(songsFragment, "Songs");
         viewPagerAdapter.addFragments(new AlbumFragment(), "Albums");
         viewPagerAdapter.addFragments(new SoundRecognitionFragment(), "Shazam");
         viewPagerAdapter.addFragments(new LocalSongFragment(this), "Playlist");
@@ -124,30 +198,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         viewPager.setOffscreenPageLimit(5);
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
-
-        localMusicFiles = getAllLocalAudio(this);
-        musicFiles = getAllAudio();
-        getAllAlbum();
-        
-
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FirebaseAuth.getInstance().signOut();
-//                Intent i = new Intent(getApplicationContext(), Login.class);
-//                startActivity(i);
-//                finish();
-//            }
-//        });
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_PERMISSION_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
+                localMusicFiles = getAllLocalAudio(this);
             }
             else {
                 String[] permission = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -200,14 +258,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     }
 
     public static void getAllAlbum () {
-
-
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 collectAlbums((Map<String,Object>) snapshot.child(userID).getValue());
-
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -231,9 +286,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         albums = albumList;
     }
 
+
     public ArrayList<MusicFiles> getAllAudio () {
         ArrayList<MusicFiles> tmp = new ArrayList<>();
-
         databaseReference = FirebaseDatabase.getInstance().getReference("songs");
         valueEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -253,11 +308,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 initViewPager();
             }
         });
-        Log.e("spôgfgggp", String.valueOf(tmp.size()));
+        Log.e("getAllAudio", String.valueOf(tmp.size()));
         return tmp;
     }
 
-    public static ArrayList<MusicFiles> getAllLocalAudio(Context context) {
+    public static ArrayList<MusicFiles> getAllLocalAudio (Context context) {
         ArrayList<MusicFiles> tmp2 = new ArrayList<>();
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         String[] projection = {
@@ -310,19 +365,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         String userInput = newText.toLowerCase();
         ArrayList<MusicFiles> myFiles = new ArrayList<>();
 
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                for(MusicFiles song : musicFiles) {
-                    if(song.getSongTitle().toLowerCase().contains(userInput)) {
-                        myFiles.add(song);
-                    }
-                }
-                SongsFragment.musicAdapter.updateList(myFiles);
-            };
-        }, 5);
-
-
+        for (MusicFiles song : musicFiles) {
+            if (song.getSongTitle().toLowerCase().contains(userInput)) {
+                myFiles.add(song);
+            }
+        }
+        SongsFragment.musicAdapter.updateList(myFiles);
         return true;
     }
 

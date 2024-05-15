@@ -24,6 +24,11 @@ fragmentTestingManifest = "1.8.0-alpha02"
 core = "1.6.0-alpha06"
 uiautomator = "2.3.0"
 espressoContrib = "3.6.0-alpha04"
+lifecycleViewmodelKtx = "2.8.0-rc01"
+lifecycleLivedataKtx = "2.8.0-rc01"
+startupRuntime = "1.2.0-alpha02"
+lifecycleViewmodel = "2.5.0"
+espressoContribVersion = "3.5.1"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -50,6 +55,11 @@ fragment-testing-manifest = { group = "androidx.fragment", name = "fragment-test
 core = { group = "androidx.test", name = "core", version.ref = "core" }
 uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
 espresso-contrib = { group = "androidx.test.espresso", name = "espresso-contrib", version.ref = "espressoContrib" }
+lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
+lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
+startup-runtime = { group = "androidx.startup", name = "startup-runtime", version.ref = "startupRuntime" }
+lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "lifecycleViewmodel" }
+androidx-espresso-contrib = { group = "androidx.test.espresso", name = "espresso-contrib", version.ref = "espressoContribVersion" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

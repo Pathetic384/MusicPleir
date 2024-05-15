@@ -65,6 +65,7 @@ public class UserTest {
 
     @Test
     public void userTest() {
+        onView(isRoot()).perform(waitFor(3000));
         onView(isRoot()).perform(waitId(R.id.music_img, 30000));
         ViewInteraction tabView = onView(
                 allOf(withContentDescription("User"),
