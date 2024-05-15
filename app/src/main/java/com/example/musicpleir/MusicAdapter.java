@@ -33,7 +33,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
 
     MusicAdapter(Context context, ArrayList<MusicFiles> mFiles) {
         this.mContext = context;
-        this.mFiles = mFiles;
+        this.mFiles = new ArrayList<>(mFiles);
     }
 
     @NonNull
@@ -42,19 +42,22 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
         View view = LayoutInflater.from(mContext).inflate(R.layout.music_items, parent, false);
         return new MyViewHolder(view);
     }
+    public ArrayList<MusicFiles> getMusicFiles() {
+        return mFiles;
+    }
+    public void updateMusicFiles(ArrayList<MusicFiles> newFiles) {
+        this.mFiles = new ArrayList<>(newFiles);
+    }
 
     @Override
     public void onBindViewHolder(@NonNull MusicAdapter.MyViewHolder holder, int position) {
         holder.file_name.setText(mFiles.get(position).getSongTitle());
         try {
-            if(!Objects.equals(MainActivity.userMail, "tester@gmail.com")) {
-                byte[] image = Util.getAlbumArt(mFiles.get(position).getSongLink(), new MediaMetadataRetriever());
-                if (image != null) {
-                    Glide.with(mContext).asBitmap().load(image).into(holder.album_art);
-                    Log.e("yoyo", String.valueOf(image));
-                } else {
-                    Glide.with(mContext).asBitmap().load(R.drawable.pic).into(holder.album_art);
-                }
+            byte[] image = null;
+                    //Util.getAlbumArt(mFiles.get(position).getSongLink());
+            if(image!=null) {
+                Glide.with(mContext).asBitmap().load(image).into(holder.album_art);
+                Log.e("yoyo", String.valueOf(image));
             }
             else {
                 Glide.with(mContext).asBitmap().load(R.drawable.pic).into(holder.album_art);

@@ -85,6 +85,5 @@ public class AlbumFragment extends Fragment {
             }
         });
         //mDatabase.child("users").child(MainActivity.userID).child("a1").child(MainActivity.musicFiles.get(6).songTitle).setValue(MainActivity.musicFiles.get(6));
-
     }
 }
