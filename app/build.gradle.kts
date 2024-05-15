@@ -7,6 +7,7 @@ android {
     namespace = "com.example.musicpleir"
     compileSdk = 34
 
+
     defaultConfig {
         applicationId = "com.example.musicpleir"
         minSdk = 24
@@ -29,6 +30,10 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 }
 
@@ -59,4 +64,6 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.9.3") // OkHttp library
     implementation ("com.github.bumptech.glide:glide:4.13.0") // Glide library
     annotationProcessor ("com.github.bumptech.glide:compiler:4.13.0") // Glide annotation processor
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
 }
