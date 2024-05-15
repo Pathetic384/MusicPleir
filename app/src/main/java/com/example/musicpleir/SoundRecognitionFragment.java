@@ -45,7 +45,7 @@ public class SoundRecognitionFragment extends Fragment {
     private MediaRecorder mediaRecorder;
     private String AudioSavePath = null;
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
-    private String coverImageUrl = "https://ih1.redbubble.net/image.3855047736.1946/flat,750x,075,f-pad,750x1000,f8f8f8.jpg";
+    private String coverImageUrl = "https://ih1.redbubble.net/image.3800727619.4531/st,small,845x845-pad,1000x1000,f8f8f8.jpg";
     private Boolean playBtnEnabled = false;
 
     public SoundRecognitionFragment() {
