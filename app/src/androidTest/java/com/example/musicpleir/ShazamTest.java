@@ -86,7 +86,7 @@ public class ShazamTest {
 
         onView(isRoot()).perform(waitId(R.id.info_text, 60000));
         ViewInteraction appCompatButton = onView(
-                allOf(withId(R.id.start_recording), 
+                allOf(withId(R.id.start_recording),
                         childAtPosition(
                                 withParent(withId(R.id.viewpager)),
                                 0),
