@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         viewPagerAdapter.addFragments(new SongsFragment(), "Songs");
         viewPagerAdapter.addFragments(new AlbumFragment(), "Albums");
         viewPagerAdapter.addFragments(new SoundRecognitionFragment(), "Shazam");
-        viewPagerAdapter.addFragments(new LocalSongFragment(), "Playlist");
+        viewPagerAdapter.addFragments(new LocalSongFragment(this), "Playlist");
         viewPagerAdapter.addFragments(new UserFragment(), "User");
 
         viewPager.setOffscreenPageLimit(5);
@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         viewPagerAdapter.addFragments(new SongsFragment(), "Songs");
         viewPagerAdapter.addFragments(new AlbumFragment(), "Albums");
         viewPagerAdapter.addFragments(new SoundRecognitionFragment(), "Shazam");
-        viewPagerAdapter.addFragments(new LocalSongFragment(), "Playlist");
+        viewPagerAdapter.addFragments(new LocalSongFragment(this), "Playlist");
         viewPagerAdapter.addFragments(new UserFragment(), "User");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -257,7 +257,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         return tmp;
     }
 
-    public ArrayList<MusicFiles> getAllLocalAudio (Context context) {
+    public static ArrayList<MusicFiles> getAllLocalAudio(Context context) {
         ArrayList<MusicFiles> tmp2 = new ArrayList<>();
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         String[] projection = {

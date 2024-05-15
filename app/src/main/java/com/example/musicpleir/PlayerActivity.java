@@ -4,10 +4,6 @@ package com.example.musicpleir;
 import static com.example.musicpleir.MainActivity.musicFiles;
 
 import android.app.Dialog;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -427,7 +423,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
 
     private void metaData (Uri uri, MediaMetadataRetriever retriever) {
         if(Objects.equals(MainActivity.userMail, "tester@gmail.com")) return;
-        retriever.setDataSource(uri.toString(), new HashMap<String, String>());
+        retriever.setDataSource(uri.toString());
         int durationTotal = Integer.parseInt( listSongs.get(position).getSongDuration() ) / 1000;
         duration_total.setText(Util.formattedTime(durationTotal));
         byte[] art = retriever.getEmbeddedPicture();

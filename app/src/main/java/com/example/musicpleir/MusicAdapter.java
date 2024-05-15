@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -124,14 +126,12 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
         void updateList(ArrayList<MusicFiles> musicFilesArrayList) {
         mFiles = new ArrayList<>();
         mFiles.addAll(musicFilesArrayList);
-            Runnable myRunnable = new Runnable(){
-                public void run(){
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
                     notifyDataSetChanged();
                 }
-            };
-            Thread thread = new Thread(myRunnable);
-            thread.start();
-            //notifyDataSetChanged();
+            });
 
         }
 }
