@@ -10,6 +10,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.Matchers.allOf;
 
 import android.view.View;
@@ -25,10 +26,15 @@ import androidx.test.espresso.util.TreeIterables;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
+import androidx.test.uiautomator.UiDevice;
+import androidx.test.uiautomator.UiObject;
+import androidx.test.uiautomator.UiObjectNotFoundException;
+import androidx.test.uiautomator.UiSelector;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,40 +43,52 @@ import java.util.concurrent.TimeoutException;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class Tesst {
+public class UserTest {
+    @BeforeClass
+    public static void dismissANRSystemDialog() throws UiObjectNotFoundException {
+        UiDevice device = UiDevice.getInstance(getInstrumentation());
+        // If the device is running in English Locale
+        UiObject waitButton = device.findObject(new UiSelector().textContains("wait"));
+        if (waitButton.exists()) {
+            waitButton.click();
+        }
+        // If the device is running in Japanese Locale
+        waitButton = device.findObject(new UiSelector().textContains("待機"));
+        if (waitButton.exists()) {
+            waitButton.click();
+        }
+    }
 
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
-    public void tesst() {
+    public void userTest() {
         onView(isRoot()).perform(waitId(R.id.music_img, 30000));
         ViewInteraction tabView = onView(
-                allOf(withContentDescription("Shazam"),
+                allOf(withContentDescription("User"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.tab_layout),
                                         0),
-                                2),
+                                4),
                         isDisplayed()));
         tabView.perform(click());
 
-        onView(isRoot()).perform(waitId(R.id.cover_art, 30000));
-        ViewInteraction appCompatButton = onView(
-                allOf(withId(R.id.start_recording), withText("Start recording"),
-                        childAtPosition(
-                                withParent(withId(R.id.viewpager)),
-                                0),
-                        isDisplayed()));
-        appCompatButton.perform(click());
+        onView(isRoot()).perform(waitId(R.id.user_mail, 60000));
 
-        onView(isRoot()).perform(waitFor(8000));
         ViewInteraction textView = onView(
-                allOf(withId(R.id.info_text), withText("Error: JSON parsing failed"),
+                allOf(withId(R.id.user_mail), withText("tester@gmail.com"),
                         withParent(withParent(withId(R.id.viewpager))),
                         isDisplayed()));
-        textView.check(matches(withText("Error: JSON parsing failed")));
+        textView.check(matches(withText("tester@gmail.com")));
+
+        ViewInteraction button = onView(
+                allOf(withId(R.id.logout_btn), withText("LOG OUT"),
+                        withParent(withParent(withId(R.id.viewpager))),
+                        isDisplayed()));
+        button.check(matches(isDisplayed()));
     }
 
     private static Matcher<View> childAtPosition(
@@ -91,6 +109,7 @@ public class Tesst {
             }
         };
     }
+
     public static ViewAction waitId(final int viewId, final long millis) {
         return new ViewAction() {
             @Override
