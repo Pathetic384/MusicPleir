@@ -13,7 +13,6 @@ public class MusicFiles {
         this.songLink = songLink;
     }
 
-
     public String getSongsCategory() {
         return songsCategory;
     }
