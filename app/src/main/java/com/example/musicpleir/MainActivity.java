@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -54,7 +55,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_PERMISSION_CODE = 10;
     static ArrayList<MusicFiles> musicFiles = new ArrayList<>();
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public static TabLayout tabLayout;
     public static String userID;
     public static String userMail;
-    public static boolean testing = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,7 +107,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                     }, 1
             );
         }
-
 
         progressBar = findViewById(R.id.progressBar);
         bottom = findViewById(R.id.frag_bottom);
@@ -290,41 +290,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         return tmp2;
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search, menu);
-        MenuItem menuItem = menu.findItem(R.id.search_option);
-        SearchView searchView = (SearchView) menuItem.getActionView();
-        searchView.setOnQueryTextListener(this);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        return false;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        String userInput = newText.toLowerCase();
-        ArrayList<MusicFiles> myFiles = new ArrayList<>();
-
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                for(MusicFiles song : musicFiles) {
-                    if(song.getSongTitle().toLowerCase().contains(userInput)) {
-                        myFiles.add(song);
-                    }
-                }
-                SongsFragment.musicAdapter.updateList(myFiles);
-            };
-        }, 5);
-
-
-        return true;
-    }
 
 
     @Override
