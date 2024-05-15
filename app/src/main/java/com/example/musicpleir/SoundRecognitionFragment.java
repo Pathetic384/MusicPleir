@@ -28,6 +28,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -69,6 +70,17 @@ public class SoundRecognitionFragment extends Fragment {
         StartRecording.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(Objects.equals(MainActivity.userMail, "tester@gmail.com")) {
+                    infoText.setText("Recording...");
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            infoText.setText("Error: JSON parsing failed");
+                        }
+                    }, 5000);
+                    return;
+                }
                 if (ContextCompat.checkSelfPermission(getContext(),
                         android.Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
                     // Permission is not granted. Ask for it.

@@ -22,6 +22,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
+import androidx.test.uiautomator.UiDevice;
+import androidx.test.uiautomator.UiObject;
+import androidx.test.uiautomator.UiObjectNotFoundException;
+import androidx.test.uiautomator.UiSelector;
 
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Before;
@@ -33,32 +37,25 @@ import org.junit.runner.RunWith;
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
+    @BeforeClass
+    public static void dismissANRSystemDialog() throws UiObjectNotFoundException {
+        UiDevice device = UiDevice.getInstance(getInstrumentation());
+        // If the device is running in English Locale
+        UiObject waitButton = device.findObject(new UiSelector().textContains("wait"));
+        if (waitButton.exists()) {
+            waitButton.click();
+        }
+        // If the device is running in Japanese Locale
+        waitButton = device.findObject(new UiSelector().textContains("待機"));
+        if (waitButton.exists()) {
+            waitButton.click();
+        }
+    }
 
-//    @Before
-//    public void set() {
-//        MainActivity.testing = true;
-//    }
-//
-//
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
-//
-//    @Rule
-//    public GrantPermissionRule mGrantPermissionRule =
-//            GrantPermissionRule.grant(
-//                    "android.permission.READ_MEDIA_AUDIO",
-//                    "android.permission.READ_EXTERNAL_STORAGE");
-//
-//    @Before
-//    public void grant() {
-//        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            getInstrumentation().getUiAutomation().executeShellCommand("pm grant "
-//                    + getTargetContext().getPackageName() + "android.permission.READ_MEDIA_AUDIO");
-//            getInstrumentation().getUiAutomation().executeShellCommand("pm grant "
-//                    + getTargetContext().getPackageName() + "android.permission.READ_EXTERNAL_STORAGE");
-//        }
-//    }
+
 
     @Test
     public void mainActivityTest() throws Exception{

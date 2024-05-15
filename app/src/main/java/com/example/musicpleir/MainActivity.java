@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -57,6 +58,7 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
+
     private SongsFragment songsFragment;
     private static final int REQUEST_PERMISSION_CODE = 10;
     static ArrayList<MusicFiles> musicFiles = new ArrayList<>();
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public static TabLayout tabLayout;
     public static String userID;
     public static String userMail;
-    public static boolean testing = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,11 +89,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         authenticateUser();
 
-        progressBar = findViewById(R.id.progressBar);
-        bottom = findViewById(R.id.frag_bottom);
+//         progressBar = findViewById(R.id.progressBar);
+//         bottom = findViewById(R.id.frag_bottom);
 
-        viewPager = findViewById(R.id.viewpager);
-        tabLayout = findViewById(R.id.tab_layout);
+//         viewPager = findViewById(R.id.viewpager);
+//         tabLayout = findViewById(R.id.tab_layout);
 
         createViewPager();
 
@@ -185,13 +187,20 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
     }
 
+
     private void createViewPager () {
+        progressBar = findViewById(R.id.progressBar);
+        bottom = findViewById(R.id.frag_bottom);
+
+        viewPager = findViewById(R.id.viewpager);
+        tabLayout = findViewById(R.id.tab_layout);
+
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         songsFragment = new SongsFragment();
         viewPagerAdapter.addFragments(songsFragment, "Songs");
         viewPagerAdapter.addFragments(new AlbumFragment(), "Albums");
         viewPagerAdapter.addFragments(new SoundRecognitionFragment(), "Shazam");
-        viewPagerAdapter.addFragments(new LocalSongFragment(), "Playlist");
+        viewPagerAdapter.addFragments(new LocalSongFragment(this), "Playlist");
         viewPagerAdapter.addFragments(new UserFragment(), "User");
 
         viewPager.setOffscreenPageLimit(5);
@@ -218,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         viewPagerAdapter.addFragments(new SongsFragment(), "Songs");
         viewPagerAdapter.addFragments(new AlbumFragment(), "Albums");
         viewPagerAdapter.addFragments(new SoundRecognitionFragment(), "Shazam");
-        viewPagerAdapter.addFragments(new LocalSongFragment(), "Playlist");
+        viewPagerAdapter.addFragments(new LocalSongFragment(this), "Playlist");
         viewPagerAdapter.addFragments(new UserFragment(), "User");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -311,7 +320,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         return tmp;
     }
 
-    public ArrayList<MusicFiles> getAllLocalAudio (Context context) {
+    public static ArrayList<MusicFiles> getAllLocalAudio(Context context) {
         ArrayList<MusicFiles> tmp2 = new ArrayList<>();
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         String[] projection = {
@@ -344,7 +353,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         return tmp2;
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search, menu);
@@ -372,7 +380,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         SongsFragment.musicAdapter.updateList(myFiles);
         return true;
     }
-
 
     @Override
     protected void onResume() {
