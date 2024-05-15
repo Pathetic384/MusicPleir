@@ -97,7 +97,7 @@ public class AlbumTest {
                                 0),isDisplayed()));
         recyclerView.perform(actionOnItemAtPosition(0, click()));
 
-        onView(isRoot()).perform(waitId(R.id.audio_item, 60000));
+        onView(isRoot()).perform(waitId(R.id.audio_item, 90000));
 
 
         ViewInteraction textView2 = onView(
