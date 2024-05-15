@@ -84,6 +84,7 @@ public class ShazamTest {
                         isDisplayed()));
         button.check(matches(isDisplayed()));
 
+        onView(isRoot()).perform(waitId(R.id.start_recording, 30000));
         ViewInteraction appCompatButton = onView(
                 allOf(withId(R.id.start_recording), withText(endsWith("Start recording")),
                         childAtPosition(
