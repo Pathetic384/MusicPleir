@@ -55,7 +55,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     private static final int REQUEST_PERMISSION_CODE = 10;
     static ArrayList<MusicFiles> musicFiles = new ArrayList<>();
@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         localMusicFiles = getAllLocalAudio(this);
         musicFiles = getAllAudio();
         getAllAlbum();
-
+        
 
 //        button.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -290,6 +290,41 @@ public class MainActivity extends AppCompatActivity {
         return tmp2;
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search, menu);
+        MenuItem menuItem = menu.findItem(R.id.search_option);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setOnQueryTextListener(this);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        String userInput = newText.toLowerCase();
+        ArrayList<MusicFiles> myFiles = new ArrayList<>();
+
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                for(MusicFiles song : musicFiles) {
+                    if(song.getSongTitle().toLowerCase().contains(userInput)) {
+                        myFiles.add(song);
+                    }
+                }
+                SongsFragment.musicAdapter.updateList(myFiles);
+            };
+        }, 5);
+
+
+        return true;
+    }
 
 
     @Override
