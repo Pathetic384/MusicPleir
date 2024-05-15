@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -76,23 +77,39 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public static TabLayout tabLayout;
     public static String userID;
     public static String userMail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //permission();
-        ActivityCompat.requestPermissions( this,
-                new String[]{
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.MANAGE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_MEDIA_AUDIO
-                }, 1
-        );
+
+        auth = FirebaseAuth.getInstance();
+        //----------------
+        user = auth.getCurrentUser();
+        if(user == null) {
+//            Intent i = new Intent(getApplicationContext(), Login.class);
+//            startActivity(i);
+            userMail = "tester@gmail.com";
+            userID ="1dPHdOx5ivgQJhoMtUgs2otLW1v2";
+            //finish();
+        }
+        else {
+            userMail = user.getEmail();
+            userID = user.getUid();
+        }
+
+        if(!Objects.equals(userMail, "tester@gmail.com")) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_MEDIA_AUDIO
+                    }, 1
+            );
+        }
 
         progressBar = findViewById(R.id.progressBar);
         bottom = findViewById(R.id.frag_bottom);
-        auth = FirebaseAuth.getInstance();
-        user = auth.getCurrentUser();
 
         viewPager = findViewById(R.id.viewpager);
         tabLayout = findViewById(R.id.tab_layout);
@@ -101,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         viewPagerAdapter.addFragments(new SongsFragment(), "Songs");
         viewPagerAdapter.addFragments(new AlbumFragment(), "Albums");
         viewPagerAdapter.addFragments(new SoundRecognitionFragment(), "Shazam");
-        viewPagerAdapter.addFragments(new LocalSongFragment(), "Playlist");
+        viewPagerAdapter.addFragments(new LocalSongFragment(this), "Playlist");
         viewPagerAdapter.addFragments(new UserFragment(), "User");
 
         viewPager.setOffscreenPageLimit(5);
@@ -111,16 +128,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         localMusicFiles = getAllLocalAudio(this);
         musicFiles = getAllAudio();
         getAllAlbum();
-
-        if(user == null) {
-            Intent i = new Intent(getApplicationContext(), Login.class);
-            startActivity(i);
-            finish();
-        }
-        else {
-            userMail = user.getEmail();
-            userID = user.getUid();
-        }
+        
 
 //        button.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -133,12 +141,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 //        });
     }
 
-    void permission() {
-        if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-            String[] permission = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
-            requestPermissions(permission, REQUEST_PERMISSION_CODE);
-        }
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -159,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         viewPagerAdapter.addFragments(new SongsFragment(), "Songs");
         viewPagerAdapter.addFragments(new AlbumFragment(), "Albums");
         viewPagerAdapter.addFragments(new SoundRecognitionFragment(), "Shazam");
-        viewPagerAdapter.addFragments(new LocalSongFragment(), "Playlist");
+        viewPagerAdapter.addFragments(new LocalSongFragment(this), "Playlist");
         viewPagerAdapter.addFragments(new UserFragment(), "User");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -255,7 +257,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         return tmp;
     }
 
-    public ArrayList<MusicFiles> getAllLocalAudio (Context context) {
+    public static ArrayList<MusicFiles> getAllLocalAudio(Context context) {
         ArrayList<MusicFiles> tmp2 = new ArrayList<>();
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         String[] projection = {

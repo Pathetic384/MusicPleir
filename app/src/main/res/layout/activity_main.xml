@@ -23,6 +23,7 @@
 
     </com.google.android.material.tabs.TabLayout>
 
+
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
@@ -34,7 +35,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tab_layout"
-        android:layout_alignBottom="@+id/frag_bottom">
+        android:layout_alignBottom="@+id/frag_bottom"
+        >
 
     </androidx.viewpager.widget.ViewPager>
 
@@ -50,4 +52,13 @@
             tools:layout="@layout/fragment_now_playing"/>
     </FrameLayout>
 
+<!--    <TextView-->
+<!--        android:id="@+id/info"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_marginStart="14dp"-->
+<!--        android:layout_marginTop="3dp"-->
+<!--        android:layout_toEndOf="@id/logout"-->
+<!--        android:text="TextView" />-->
 </RelativeLayout>

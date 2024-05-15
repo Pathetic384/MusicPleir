@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,9 +47,14 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
     public void onBindViewHolder(@NonNull MusicAdapter.MyViewHolder holder, int position) {
         holder.file_name.setText(mFiles.get(position).getSongTitle());
         try {
-            byte[] image = Util.getAlbumArt(mFiles.get(position).getSongLink());
-            if(image!=null) {
-                Glide.with(mContext).asBitmap().load(image).into(holder.album_art);
+            if(!Objects.equals(MainActivity.userMail, "tester@gmail.com")) {
+                byte[] image = Util.getAlbumArt(mFiles.get(position).getSongLink(), new MediaMetadataRetriever());
+                if (image != null) {
+                    Glide.with(mContext).asBitmap().load(image).into(holder.album_art);
+                    Log.e("yoyo", String.valueOf(image));
+                } else {
+                    Glide.with(mContext).asBitmap().load(R.drawable.pic).into(holder.album_art);
+                }
             }
             else {
                 Glide.with(mContext).asBitmap().load(R.drawable.pic).into(holder.album_art);
@@ -118,6 +126,12 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
         void updateList(ArrayList<MusicFiles> musicFilesArrayList) {
         mFiles = new ArrayList<>();
         mFiles.addAll(musicFilesArrayList);
-        notifyDataSetChanged();
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    notifyDataSetChanged();
+                }
+            });
+
         }
 }

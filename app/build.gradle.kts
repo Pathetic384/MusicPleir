@@ -46,7 +46,19 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.runner)
     implementation(libs.rules)
+    implementation(libs.mockito.core)
+    implementation(libs.core.ktx)
+    implementation(libs.monitor)
+    implementation(libs.fragment.testing)
+    implementation(libs.fragment.testing.manifest)
+    implementation(libs.core)
+    implementation(libs.uiautomator)
+    implementation(libs.espresso.contrib)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    implementation("com.squareup.okhttp3:okhttp:4.9.3") // OkHttp library
+    implementation ("com.github.bumptech.glide:glide:4.13.0") // Glide library
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.13.0") // Glide annotation processor
 }

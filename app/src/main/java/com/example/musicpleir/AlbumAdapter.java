@@ -3,6 +3,8 @@ package com.example.musicpleir;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaMetadataRetriever;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,6 +80,12 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyHolder> {
     void updateList(ArrayList<String> musicFilesArrayList) {
         albumNames = new ArrayList<>();
         albumNames.addAll(musicFilesArrayList);
-        notifyDataSetChanged();
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                notifyDataSetChanged();
+            }
+        });
+        //notifyDataSetChanged();
     }
 }

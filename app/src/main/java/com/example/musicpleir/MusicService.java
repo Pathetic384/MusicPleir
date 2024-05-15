@@ -30,6 +30,7 @@ import androidx.core.app.NotificationCompat;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MusicService extends Service implements MediaPlayer.OnCompletionListener{
 
@@ -134,18 +135,17 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
         mediaPlayer.seekTo(pos);
     }
     int getCurrentPosition() {
-        //if(mediaPlayer == null) return 0;
+        if(mediaPlayer == null) return 0;
         if(PlayerActivity.loading) return 0;
         return mediaPlayer.getCurrentPosition();
     }
     void createMediaPlayer(int pos) {
-   //     Log.d("ádkjhsdfnjkjklsdfji", String.valueOf(listSongs));
         position = pos;
-//        Log.e("pos", String.valueOf(position));
-//        Log.e("12123", String.valueOf(listSongs.get(position)));
-//        Log.e("12123", String.valueOf(listSongs.get(position).getSongLink()));
-        uri = Uri.parse(listSongs.get(position).getSongLink());
- //       Log.e("song link", String.valueOf(uri));
+        if(position != -1) {
+            uri = Uri.parse(listSongs.get(position).getSongLink());
+        }
+        else uri = Uri.parse("https://firebasestorage.googleapis.com/v0/b" +
+                "/serverside-7a675.appspot.com/o/songs%2F1713442432213.mp3?alt=media&token=e754aab0-36fd-4a90-8546-e97be79dc9ed");
 
         SharedPreferences.Editor editor = getSharedPreferences(Music_Last_Played, MODE_PRIVATE).edit();
         editor.putString(Music_File, uri.toString());
@@ -194,7 +194,8 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
         PendingIntent nextIntent = PendingIntent.getBroadcast(this, 0, nextI, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
         byte[] picture = null;
-        picture = Util.getAlbumArt(listSongs.get(position).getSongLink());
+        if(!Objects.equals(MainActivity.userMail, "tester@gmail.com"))
+            picture = Util.getAlbumArt(listSongs.get(position).getSongLink(), new MediaMetadataRetriever());
         Bitmap thumb = null;
         if(picture != null) {
             thumb = BitmapFactory.decodeByteArray(picture, 0, picture.length);
