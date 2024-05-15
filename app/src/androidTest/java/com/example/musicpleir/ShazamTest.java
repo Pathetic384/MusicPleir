@@ -12,6 +12,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.endsWith;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,7 +85,7 @@ public class ShazamTest {
         button.check(matches(isDisplayed()));
 
         ViewInteraction appCompatButton = onView(
-                allOf(withId(R.id.start_recording), withText("Start recording"),
+                allOf(withId(R.id.start_recording), withText(endsWith("Start recording")),
                         childAtPosition(
                                 withParent(withId(R.id.viewpager)),
                                 0),
