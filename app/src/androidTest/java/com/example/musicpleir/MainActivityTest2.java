@@ -14,9 +14,12 @@ import static org.hamcrest.Matchers.allOf;
 
 import android.view.View;
 
+import androidx.test.espresso.PerformException;
 import androidx.test.espresso.UiController;
 import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.util.HumanReadables;
+import androidx.test.espresso.util.TreeIterables;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
@@ -30,6 +33,8 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.concurrent.TimeoutException;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -55,7 +60,7 @@ public class MainActivityTest2 {
 
     @Test
     public void mainActivityTest2() {
-        onView(isRoot()).perform(waitFor(10000));
+        onView(isRoot()).perform(waitId(R.id.music_img, 30000));
         ViewInteraction textView = onView(
                 allOf(withId(R.id.music_file_name), withText("Never Gonna Give You Up"),
                         withParent(allOf(withId(R.id.audio_item),
@@ -65,21 +70,44 @@ public class MainActivityTest2 {
 
     }
 
-    public static ViewAction waitFor(long delay) {
+    public static ViewAction waitId(final int viewId, final long millis) {
         return new ViewAction() {
-            @Override public Matcher<View> getConstraints() {
+            @Override
+            public Matcher<View> getConstraints() {
                 return isRoot();
             }
 
-            @Override public String getDescription() {
-                return "wait for " + delay + "milliseconds";
+            @Override
+            public String getDescription() {
+                return "wait for a specific view with id <" + viewId + "> during " + millis + " millis.";
             }
 
-            @Override public void perform(UiController uiController, View view) {
-                uiController.loopMainThreadForAtLeast(delay);
+            @Override
+            public void perform(final UiController uiController, final View view) {
+                uiController.loopMainThreadUntilIdle();
+                final long startTime = System.currentTimeMillis();
+                final long endTime = startTime + millis;
+                final Matcher<View> viewMatcher = withId(viewId);
+
+                do {
+                    for (View child : TreeIterables.breadthFirstViewTraversal(view)) {
+                        // found view with required ID
+                        if (viewMatcher.matches(child)) {
+                            return;
+                        }
+                    }
+
+                    uiController.loopMainThreadForAtLeast(50);
+                }
+                while (System.currentTimeMillis() < endTime);
+
+                // timeout happens
+                throw new PerformException.Builder()
+                        .withActionDescription(this.getDescription())
+                        .withViewDescription(HumanReadables.describe(view))
+                        .withCause(new TimeoutException())
+                        .build();
             }
         };
     }
-
-
 }

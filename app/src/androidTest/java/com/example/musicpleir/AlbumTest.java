@@ -21,9 +21,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
+import androidx.test.espresso.PerformException;
 import androidx.test.espresso.UiController;
 import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.util.HumanReadables;
+import androidx.test.espresso.util.TreeIterables;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
@@ -39,6 +42,8 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.concurrent.TimeoutException;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -64,7 +69,7 @@ public class AlbumTest {
 
     @Test
     public void albumTest() {
-        onView(isRoot()).perform(waitFor(5000));
+        onView(isRoot()).perform(waitId(R.id.music_img, 30000));
         ViewInteraction tabView = onView(
                 allOf(withContentDescription("Albums"),
                         childAtPosition(
@@ -74,7 +79,7 @@ public class AlbumTest {
                                 1),
                         isDisplayed()));
         tabView.perform(click());
-        onView(isRoot()).perform(waitFor(50000));
+        onView(isRoot()).perform(waitFor(2000));
 
         ViewInteraction textView = onView(
                 allOf(withId(R.id.album_name), withText("hi"),
@@ -83,6 +88,8 @@ public class AlbumTest {
                         isDisplayed()));
         textView.check(matches(withText("hi")));
 
+        onView(isRoot()).perform(waitFor(2000));
+
         ViewInteraction recyclerView = onView(
                 allOf(withId(R.id.recyclerView),
                         childAtPosition(
@@ -90,7 +97,7 @@ public class AlbumTest {
                                 0),isDisplayed()));
         recyclerView.perform(actionOnItemAtPosition(0, click()));
 
-        onView(isRoot()).perform(waitFor(50000));
+        onView(isRoot()).perform(waitId(R.id.albumPhoto, 300000));
 
 
         ViewInteraction textView2 = onView(
@@ -132,6 +139,47 @@ public class AlbumTest {
 
             @Override public void perform(UiController uiController, View view) {
                 uiController.loopMainThreadForAtLeast(delay);
+            }
+        };
+    }
+
+    public static ViewAction waitId(final int viewId, final long millis) {
+        return new ViewAction() {
+            @Override
+            public Matcher<View> getConstraints() {
+                return isRoot();
+            }
+
+            @Override
+            public String getDescription() {
+                return "wait for a specific view with id <" + viewId + "> during " + millis + " millis.";
+            }
+
+            @Override
+            public void perform(final UiController uiController, final View view) {
+                uiController.loopMainThreadUntilIdle();
+                final long startTime = System.currentTimeMillis();
+                final long endTime = startTime + millis;
+                final Matcher<View> viewMatcher = withId(viewId);
+
+                do {
+                    for (View child : TreeIterables.breadthFirstViewTraversal(view)) {
+                        // found view with required ID
+                        if (viewMatcher.matches(child)) {
+                            return;
+                        }
+                    }
+
+                    uiController.loopMainThreadForAtLeast(50);
+                }
+                while (System.currentTimeMillis() < endTime);
+
+                // timeout happens
+                throw new PerformException.Builder()
+                        .withActionDescription(this.getDescription())
+                        .withViewDescription(HumanReadables.describe(view))
+                        .withCause(new TimeoutException())
+                        .build();
             }
         };
     }
