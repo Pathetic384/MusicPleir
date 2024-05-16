@@ -59,6 +59,7 @@ dependencies {
     implementation(libs.core)
     implementation(libs.uiautomator)
     implementation(libs.androidx.espresso.contrib)
+    implementation(libs.androidx.junit)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

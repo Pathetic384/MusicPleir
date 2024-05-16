@@ -29,6 +29,7 @@ lifecycleLivedataKtx = "2.8.0-rc01"
 startupRuntime = "1.2.0-alpha02"
 lifecycleViewmodel = "2.5.0"
 espressoContribVersion = "3.5.1"
+androidxJunit = "1.2.0-alpha04"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -60,6 +61,7 @@ lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-lived
 startup-runtime = { group = "androidx.startup", name = "startup-runtime", version.ref = "startupRuntime" }
 lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "lifecycleViewmodel" }
 androidx-espresso-contrib = { group = "androidx.test.espresso", name = "espresso-contrib", version.ref = "espressoContribVersion" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxJunit" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
