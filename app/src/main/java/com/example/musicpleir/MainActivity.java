@@ -92,10 +92,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         viewPager = findViewById(R.id.viewpager);
         tabLayout = findViewById(R.id.tab_layout);
-        localMusicFiles = getAllLocalAudio(this);
 
         createViewPager();
 
+        localMusicFiles = getAllLocalAudio(this);
         loadMusicFiles();
         getAllAlbum();
     }
@@ -119,9 +119,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         @Override
         protected ArrayList<MusicFiles> doInBackground(Void... voids) {
             ArrayList<MusicFiles> allAudio = new ArrayList<>();
-            //allAudio.addAll(getAllLocalAudio(context));
-            allAudio.addAll(getAllAudio());
-            getAllAudioFromFirebase();
+            allAudio.addAll(getAllLocalAudio(context));
+            allAudio.addAll(getAllAudioFromFirebase());
             return allAudio;
         }
 
@@ -133,33 +132,132 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             initViewPager();
         }
     }
-
-    private void getAllAudioFromFirebase() {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("songs");
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+    public ArrayList<MusicFiles> getAllAudio () {
+        ArrayList<MusicFiles> tmp = new ArrayList<>();
+        databaseReference = FirebaseDatabase.getInstance().getReference("songs");
+        valueEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<MusicFiles> tmp = new ArrayList<>();
+                tmp.clear();
                 for (DataSnapshot dss : snapshot.getChildren()) {
                     MusicFiles getSongs = dss.getValue(MusicFiles.class);
-                    if (getSongs.getSongsCategory() == null) getSongs.setSongsCategory("no title");
+                    if(getSongs.getSongsCategory() == null) getSongs.setSongsCategory("no title");
                     tmp.add(getSongs);
                 }
-                MainActivity.musicFiles.addAll(tmp);
                 progressBar.setVisibility(View.GONE);
-                if (songsFragment != null) {
-                    songsFragment.onMusicDataLoaded(MainActivity.musicFiles);
-                }
                 initViewPager();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 progressBar.setVisibility(View.GONE);
                 initViewPager();
             }
         });
+        Log.e("getAllAudio", String.valueOf(tmp.size()));
+        return tmp;
     }
+
+    public static ArrayList<MusicFiles> getAllLocalAudio (Context context) {
+        ArrayList<MusicFiles> tmp2 = new ArrayList<>();
+        Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+        String[] projection = {
+                MediaStore.Audio.AudioColumns.ALBUM,
+                MediaStore.Audio.AudioColumns.TITLE,
+                MediaStore.Audio.AudioColumns.DURATION,
+                MediaStore.Audio.AudioColumns.DATA,
+                MediaStore.Audio.AudioColumns.ARTIST
+        };
+        Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
+        if(cursor != null) {
+            while(cursor.moveToNext()) {
+                String album = cursor.getString(0);
+                if(Objects.equals(album, "")) album = "no album";
+                String title = cursor.getString(1);
+                if(Objects.equals(title, "")) title = "no title";
+                String duration = cursor.getString(2);
+                if (duration == null || duration.isEmpty()) continue;
+                long durationLong = Long.parseLong(duration);
+                if (durationLong < 60000) {
+                    continue; // filter out songs shorter than 1 minute
+                }
+                String path = cursor.getString(3);
+                String artist = cursor.getString(4);
+                if(artist == null) artist = "no artist";
+
+                MusicFiles musicFiles1 = new MusicFiles(album, title , artist, duration, path);
+                if(!Objects.equals(musicFiles1.getSongLink(), "tone.mp3")) {
+                    tmp2.add(musicFiles1);
+                }
+            }
+            // sort the songs by title
+            tmp2.sort((o1, o2) -> o1.getSongTitle().compareTo(o2.getSongTitle()));
+            cursor.close();
+        }
+        return tmp2;
+    }
+    private ArrayList<MusicFiles> getAllAudioFromFirebase() {
+        ArrayList<MusicFiles> audioList = new ArrayList<>();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("songs");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dss : snapshot.getChildren()) {
+                    MusicFiles getSongs = dss.getValue(MusicFiles.class);
+                    if (getSongs != null) {
+                        if (getSongs.getSongsCategory() == null) {
+                            getSongs.setSongsCategory("no title");
+                        }
+                        audioList.add(getSongs);
+                    }
+                }
+                updateMusicFiles(audioList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                updateMusicFiles(null);
+            }
+        });
+        return audioList;
+    }
+
+    private void updateMusicFiles(ArrayList<MusicFiles> newFiles) {
+        if (newFiles != null) {
+            MainActivity.musicFiles.addAll(newFiles);
+        }
+        progressBar.setVisibility(View.GONE);
+        if (songsFragment != null) {
+            songsFragment.onMusicDataLoaded(MainActivity.musicFiles);
+        }
+        initViewPager();
+    }
+
+//    private void getAllAudioFromFirebase() {
+//        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("songs");
+//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                ArrayList<MusicFiles> tmp = new ArrayList<>();
+//                for (DataSnapshot dss : snapshot.getChildren()) {
+//                    MusicFiles getSongs = dss.getValue(MusicFiles.class);
+//                    if (getSongs.getSongsCategory() == null) getSongs.setSongsCategory("no title");
+//                    tmp.add(getSongs);
+//                }
+//                MainActivity.musicFiles.addAll(tmp);
+//                progressBar.setVisibility(View.GONE);
+//                if (songsFragment != null) {
+//                    songsFragment.onMusicDataLoaded(MainActivity.musicFiles);
+//                }
+//                initViewPager();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                progressBar.setVisibility(View.GONE);
+//                initViewPager();
+//            }
+//        });
+//    }
     
     private void authenticateUser() {
         auth = FirebaseAuth.getInstance();
@@ -287,65 +385,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     }
 
 
-    public ArrayList<MusicFiles> getAllAudio () {
-        ArrayList<MusicFiles> tmp = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference("songs");
-        valueEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                tmp.clear();
-                for (DataSnapshot dss : snapshot.getChildren()) {
-                    MusicFiles getSongs = dss.getValue(MusicFiles.class);
-                    if(getSongs.getSongsCategory() == null) getSongs.setSongsCategory("no title");
-                    tmp.add(getSongs);
-                }
-                progressBar.setVisibility(View.GONE);
-                initViewPager();
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                progressBar.setVisibility(View.GONE);
-                initViewPager();
-            }
-        });
-        Log.e("getAllAudio", String.valueOf(tmp.size()));
-        return tmp;
-    }
-
-    public static ArrayList<MusicFiles> getAllLocalAudio (Context context) {
-        ArrayList<MusicFiles> tmp2 = new ArrayList<>();
-        Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        String[] projection = {
-                MediaStore.Audio.AudioColumns.ALBUM,
-                MediaStore.Audio.AudioColumns.TITLE,
-                MediaStore.Audio.AudioColumns.DURATION,
-                MediaStore.Audio.AudioColumns.DATA,
-                MediaStore.Audio.AudioColumns.ARTIST
-        };
-        Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
-        if(cursor != null) {
-            while(cursor.moveToNext()) {
-                String album = cursor.getString(0);
-                if(Objects.equals(album, "")) album = "no album";
-                String title = cursor.getString(1);
-                if(Objects.equals(title, "")) title = "no title";
-                String duration = cursor.getString(2);
-                String path = cursor.getString(3);
-                String artist = cursor.getString(4);
-                if(artist == null) artist = "no artist";
-
-                MusicFiles musicFiles1 = new MusicFiles(album, title , artist, duration, path);
-                if(!Objects.equals(musicFiles1.getSongLink(), "tone.mp3")) {
-                    tmp2.add(musicFiles1);
-                }
-            }
-            cursor.close();
-        }
-
-        return tmp2;
-    }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search, menu);
@@ -399,5 +438,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             bottom.setVisibility(View.VISIBLE);
         }
         else bottom.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(valueEventListener != null) {
+            databaseReference.removeEventListener(valueEventListener);
+        }
     }
 }

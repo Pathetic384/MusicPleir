@@ -58,7 +58,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
                 Log.e("yoyo", String.valueOf(image));
             }
             else {
-                Glide.with(mContext).asBitmap().load(R.drawable.pic).into(holder.album_art);
+                Glide.with(mContext).asBitmap().load(R.drawable.ic_music_note).into(holder.album_art);
             }
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

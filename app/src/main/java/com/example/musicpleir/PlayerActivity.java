@@ -140,6 +140,12 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
                 }
             }
         });
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         addAlbum.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -519,7 +525,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         MusicService.MyBinder myBinder = (MusicService.MyBinder) service;
         musicService = myBinder.getService();
         musicService.setCallBack(this);
-        Toast.makeText(musicService, "connected", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(musicService, "connected", Toast.LENGTH_SHORT).show();
         seekBar.setMax(musicService.getDuration() / 1000);
         metaData(uri, new MediaMetadataRetriever());
         song_name.setText(listSongs.get(position).getSongTitle());
