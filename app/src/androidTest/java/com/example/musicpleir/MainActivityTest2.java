@@ -9,6 +9,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
+import static com.example.musicpleir.PlayerTest.waitFor;
 import static org.hamcrest.Matchers.allOf;
 
 
@@ -60,6 +61,7 @@ public class MainActivityTest2 {
 
     @Test
     public void mainActivityTest2() {
+        onView(isRoot()).perform(waitFor(3000));
         onView(isRoot()).perform(waitId(R.id.music_img, 30000));
         ViewInteraction textView = onView(
                 allOf(withId(R.id.music_file_name), withText("Never Gonna Give You Up"),

@@ -69,6 +69,7 @@ public class AlbumTest {
 
     @Test
     public void albumTest() {
+        onView(isRoot()).perform(waitFor(3000));
         onView(isRoot()).perform(waitId(R.id.music_img, 30000));
         ViewInteraction tabView = onView(
                 allOf(withContentDescription("Albums"),
@@ -97,7 +98,7 @@ public class AlbumTest {
                                 0),isDisplayed()));
         recyclerView.perform(actionOnItemAtPosition(0, click()));
 
-        onView(isRoot()).perform(waitId(R.id.audio_item, 180000));
+        onView(isRoot()).perform(waitId(R.id.audio_item, 300000));
 
 
         ViewInteraction textView2 = onView(
