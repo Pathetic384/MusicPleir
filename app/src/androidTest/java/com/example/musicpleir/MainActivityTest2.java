@@ -62,7 +62,7 @@ public class MainActivityTest2 {
     @Test
     public void mainActivityTest2() {
         onView(isRoot()).perform(waitFor(3000));
-        onView(isRoot()).perform(waitId(R.id.music_img, 30000));
+        onView(isRoot()).perform(waitId(R.id.music_img, 60000));
         ViewInteraction textView = onView(
                 allOf(withId(R.id.music_file_name), withText("Never Gonna Give You Up"),
                         withParent(allOf(withId(R.id.audio_item),

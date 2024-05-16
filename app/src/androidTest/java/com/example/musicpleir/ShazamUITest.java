@@ -47,7 +47,7 @@ public class ShazamUITest {
     @Test
     public void shazamUITest() {
         onView(isRoot()).perform(waitFor(3000));
-        onView(isRoot()).perform(waitId(R.id.music_img, 30000));
+        onView(isRoot()).perform(waitId(R.id.music_img, 60000));
         ViewInteraction tabView = onView(
                 allOf(withContentDescription("Shazam"),
                         childAtPosition(

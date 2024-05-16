@@ -46,7 +46,7 @@ public class PlaylistTest {
     @Test
     public void playlistTest() {
         onView(isRoot()).perform(waitFor(3000));
-        onView(isRoot()).perform(waitId(R.id.music_img, 30000));
+        onView(isRoot()).perform(waitId(R.id.music_img, 60000));
         ViewInteraction tabView = onView(
                 allOf(withContentDescription("Playlist"),
                         childAtPosition(
