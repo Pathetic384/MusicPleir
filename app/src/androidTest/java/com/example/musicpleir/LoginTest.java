@@ -109,6 +109,47 @@ public class LoginTest {
         textView2.check(matches(withText("Please enter your Password")));
     }
 
+    @Test
+    public void loginTest2() {
+        ViewInteraction textInputEditText = onView(
+                allOf(withId(R.id.email),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("com.google.android.material.textfield.TextInputLayout")),
+                                        0),
+                                0),
+                        isDisplayed()));
+        textInputEditText.perform(replaceText("pcsqw"), closeSoftKeyboard());
+
+        ViewInteraction textInputEditText2 = onView(
+                allOf(withId(R.id.password),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("com.google.android.material.textfield.TextInputLayout")),
+                                        0),
+                                0),
+                        isDisplayed()));
+        textInputEditText2.perform(replaceText("sada"), closeSoftKeyboard());
+
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(R.id.login_btn), withText("Login"),
+                        childAtPosition(
+                                allOf(withId(R.id.main),
+                                        childAtPosition(
+                                                withId(android.R.id.content),
+                                                0)),
+                                5),
+                        isDisplayed()));
+        appCompatButton.perform(click());
+
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.note), withText("Wrong Email or Password"),
+                        withParent(allOf(withId(R.id.main),
+                                withParent(withId(android.R.id.content)))),
+                        isDisplayed()));
+        textView.check(matches(withText("Wrong Email or Password")));
+    }
+
 
     private static Matcher<View> childAtPosition(
             final Matcher<View> parentMatcher, final int position) {

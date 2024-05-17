@@ -60,10 +60,19 @@ import java.util.Random;
 
 public class PlayerActivity extends AppCompatActivity implements  ActionPlaying, ServiceConnection {
 
-    TextView song_name, artist_name, duration_played, duration_total;
-    ImageView cover_art, nextBtn, prevBtn, backBtn, shuffleBtn, repeatBtn, addAlbum;
-    FloatingActionButton playpauseBtn;
-    SeekBar seekBar;
+    public TextView song_name;
+    public TextView artist_name;
+    public TextView duration_played;
+    public TextView duration_total;
+    public ImageView cover_art;
+    public ImageView nextBtn;
+    public ImageView prevBtn;
+    public ImageView backBtn;
+    public ImageView shuffleBtn;
+    public ImageView repeatBtn;
+    public ImageView addAlbum;
+    public FloatingActionButton playpauseBtn;
+    public SeekBar seekBar;
     int position = -1;
     static Uri uri;
     static ArrayList<MusicFiles> listSongs = new ArrayList<>();
@@ -138,6 +147,12 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
                     MainActivity.repeatBoolean = true;
                     repeatBtn.setImageResource(R.drawable.ic_repeat_on);
                 }
+            }
+        });
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 
@@ -519,7 +534,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         MusicService.MyBinder myBinder = (MusicService.MyBinder) service;
         musicService = myBinder.getService();
         musicService.setCallBack(this);
-        Toast.makeText(musicService, "connected", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(musicService, "connected", Toast.LENGTH_SHORT).show();
         seekBar.setMax(musicService.getDuration() / 1000);
         metaData(uri, new MediaMetadataRetriever());
         song_name.setText(listSongs.get(position).getSongTitle());

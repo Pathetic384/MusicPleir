@@ -10,6 +10,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static com.example.musicpleir.BottomPlayerTest.waitFor;
 import static org.hamcrest.Matchers.allOf;
 
 import android.view.View;
@@ -45,6 +46,7 @@ public class ShazamUITest {
 
     @Test
     public void shazamUITest() {
+        onView(isRoot()).perform(waitFor(3000));
         onView(isRoot()).perform(waitId(R.id.music_img, 30000));
         ViewInteraction tabView = onView(
                 allOf(withContentDescription("Shazam"),

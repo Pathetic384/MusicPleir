@@ -49,6 +49,7 @@ public class BottomPlayerTest {
 
     @Test
     public void bottomPlayerTest() {
+        onView(isRoot()).perform(waitFor(3000));
         onView(isRoot()).perform(waitId(R.id.music_img, 30000));
         ViewInteraction recyclerView = onView(
                 allOf(withId(R.id.recyclerView),
