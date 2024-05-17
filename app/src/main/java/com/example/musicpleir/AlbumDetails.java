@@ -31,10 +31,10 @@ public class AlbumDetails extends AppCompatActivity {
     RecyclerView recyclerView;
     ImageView albumPhoto;
     String albumName;
-    ArrayList<MusicFiles> albumSongs = new ArrayList<>();
+    static ArrayList<MusicFiles> albumSongs = new ArrayList<>();
     AlbumDetailsAdapter albumDetailsAdapter;
-    DatabaseReference databaseReference;
-    ValueEventListener valueEventListener;
+    static DatabaseReference databaseReference;
+    static ValueEventListener valueEventListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +46,7 @@ public class AlbumDetails extends AppCompatActivity {
 
         Runnable myRunnable = new Runnable(){
             public void run(){
-                albumSongs = getMusicFiles();
+                albumSongs = getMusicFiles(albumName);
             }
         };
 
@@ -56,27 +56,27 @@ public class AlbumDetails extends AppCompatActivity {
 
     }
 
-    void idk() {
-        if(!albumSongs.isEmpty()) {
-            try {
-                byte[] image = null;
-                if(!Objects.equals(MainActivity.userMail, "tester@gmail.com"))
-                    Util.getAlbumArt(albumSongs.get(0).getSongLink(), new MediaMetadataRetriever());
-                if (image != null) {
-                    Glide.with(this).load(image).into(albumPhoto);
-                } else {
-                    Glide.with(this).load(R.drawable.pic).into(albumPhoto);
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        else {
-            Glide.with(this).load(R.drawable.pic).into(albumPhoto);
-        }
-    }
+//    static void idk() {
+//        if(!albumSongs.isEmpty()) {
+//            try {
+//                byte[] image = null;
+//                if(!Objects.equals(MainActivity.userMail, "tester@gmail.com"))
+//                    Util.getAlbumArt(albumSongs.get(0).getSongLink(), new MediaMetadataRetriever());
+//                if (image != null) {
+//                    Glide.with(this).load(image).into(albumPhoto);
+//                } else {
+//                    Glide.with(this).load(R.drawable.pic).into(albumPhoto);
+//                }
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+//        else {
+//            Glide.with(this).load(R.drawable.pic).into(albumPhoto);
+//        }
+//    }
 
-    private ArrayList<MusicFiles> getMusicFiles() {
+    static ArrayList<MusicFiles> getMusicFiles(String albumName) {
         ArrayList<MusicFiles> tmp = new ArrayList<>();
 
         databaseReference = FirebaseDatabase.getInstance().getReference("users/" + MainActivity.userID + "/" + albumName);
@@ -90,17 +90,17 @@ public class AlbumDetails extends AppCompatActivity {
                     tmp.add(getSongs);
                     Log.e("síisisis", String.valueOf(getSongs));
                 }
-                idk();
-                albumSongs = tmp;
+//                idk();
+               // albumSongs = tmp;
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                 idk();
-                albumSongs = tmp;
+                 //idk();
+                //albumSongs = tmp;
             }
         });
      //   Log.e("sís", String.valueOf(tmp.size()));
-        albumSongs = tmp;
+        //albumSongs = tmp;
         return tmp;
     }
 
@@ -109,7 +109,7 @@ public class AlbumDetails extends AppCompatActivity {
         super.onResume();
        // if(!albumSongs.isEmpty()) {
             Log.e("sís", String.valueOf(albumSongs.size()));
-            albumDetailsAdapter = new AlbumDetailsAdapter(this, albumSongs);
+            albumDetailsAdapter = new AlbumDetailsAdapter(this, albumSongs, albumName);
             recyclerView.setAdapter(albumDetailsAdapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
        // }

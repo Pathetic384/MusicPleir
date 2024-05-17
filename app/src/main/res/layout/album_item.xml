@@ -13,6 +13,12 @@
         android:layout_height="match_parent"
         android:background="@color/colorPrimaryDark"
         android:id="@+id/relative_layout">
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="X"
+            android:layout_marginLeft="120dp"
+            android:id="@+id/delete_album"/>
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="170dp"
