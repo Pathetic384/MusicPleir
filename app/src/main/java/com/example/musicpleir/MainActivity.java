@@ -291,7 +291,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         viewPagerAdapter.addFragments(new AlbumFragment(), "Albums");
         viewPagerAdapter.addFragments(new SoundRecognitionFragment(), "Shazam");
         viewPagerAdapter.addFragments(new LocalSongFragment(this), "Playlist");
-        viewPagerAdapter.addFragments(new UserFragment(), "User");
+        viewPagerAdapter.addFragments(new UserFragment(this), "User");
 
         viewPager.setOffscreenPageLimit(5);
         viewPager.setAdapter(viewPagerAdapter);
@@ -318,7 +318,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         viewPagerAdapter.addFragments(new AlbumFragment(), "Albums");
         viewPagerAdapter.addFragments(new SoundRecognitionFragment(), "Shazam");
         viewPagerAdapter.addFragments(new LocalSongFragment(this), "Playlist");
-        viewPagerAdapter.addFragments(new UserFragment(), "User");
+        viewPagerAdapter.addFragments(new UserFragment(this), "User");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
