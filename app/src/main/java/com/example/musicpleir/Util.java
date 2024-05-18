@@ -15,13 +15,13 @@ public class Util {
         return art;
     }
 
-    public static byte[] getAlbumArt (String uri) throws IOException {
-        if(Objects.equals(uri, "")) return null;
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-        retriever.setDataSource(uri);
-        byte[] art = retriever.getEmbeddedPicture();
-        retriever.release();
-        return art;
+    public static MusicFiles stringToSong(String find) {
+        for(MusicFiles song : MainActivity.musicFiles) {
+            if(song.getSongTitle().toLowerCase().contains(find.toLowerCase())) {
+                return song;
+            }
+        }
+        return null;
     }
 
     public static String formattedTime(int mCurrentPosition) {

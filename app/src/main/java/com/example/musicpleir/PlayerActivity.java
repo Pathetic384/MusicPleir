@@ -81,6 +81,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
     MusicService musicService;
     static String selectedAlbum;
     public static boolean loading = false;
+    Button lyricsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,6 +163,45 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
                 openFeedbackDialog(Gravity.CENTER);
             }
         });
+        lyricsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openLyricsDialog(Gravity.CENTER);
+            }
+        });
+    }
+
+    void openLyricsDialog(int gravity) {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.lyrics_dialog);
+
+        Window window = dialog.getWindow();
+        if(window == null) return;
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = gravity;
+        window.setAttributes(windowAttributes);
+
+        dialog.setCancelable(true);
+
+        Button back = dialog.findViewById(R.id.back);
+        TextView lyrics = dialog.findViewById(R.id.lyric_dialog);
+
+
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        lyrics.setText("[Intro] Ooh Na-na, yeah [Verse 1] I saw you dancing in a crowded room (Uh) You look so happy when I'm not with you But then you saw me, caught you by surprise A single teardrop falling from your eye [Refrain] I don't know why I run away I make you cry when I run away [Verse 2] You could've asked me why I broke your heart You could've told me that you fell apart But you walked past me like I wasn't there And just pretended like you didn't care [Refrain] I don't know why I run away I make you cry when I run away [Pre-Chorus] Take me back 'cause I wanna stay Save your tears for another [Chorus] Save your tears for another day Save your tears for another day (So) [Verse 3] I made you think that I would always stay I said some things that I should never say Yeah, I broke your heart like someone did to mine And now you won't love me for a second time [Refrain] I don't know why I run away, oh, girl Said, I make you cry when I run away [Pre-Chorus] Girl, take me back 'cause I wanna stay Save your tears for another I realize that I'm much too late And you deserve someone better [Chorus] Save your tears for another day (Oh yeah) Save your tears for another day (Yeah) [Refrain] I don't know why I run away I'll make you cry when I run away [Chorus] Save your tears for another day Ooh, girl, I said (Ah) Save your tears for another day (Ah) [Outro] Save your tears for another day (Ah) Save your tears for another day (Ah)");
+
+        dialog.show();
     }
 
     void openFeedbackDialog(int gravity) {
@@ -434,6 +474,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         playpauseBtn = findViewById(R.id.play_pause);
         seekBar = findViewById(R.id.seekBar);
         addAlbum = findViewById(R.id.addAlbum);
+        lyricsButton = findViewById(R.id.lyrics);
     }
 
     private void metaData (Uri uri, MediaMetadataRetriever retriever) {

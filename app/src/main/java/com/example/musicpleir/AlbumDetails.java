@@ -1,9 +1,11 @@
 package com.example.musicpleir;
 
+import android.content.Intent;
 import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
@@ -31,6 +33,7 @@ public class AlbumDetails extends AppCompatActivity {
     RecyclerView recyclerView;
     ImageView albumPhoto;
     String albumName;
+    Button rcmBtn;
     static ArrayList<MusicFiles> albumSongs = new ArrayList<>();
     AlbumDetailsAdapter albumDetailsAdapter;
     static DatabaseReference databaseReference;
@@ -42,6 +45,7 @@ public class AlbumDetails extends AppCompatActivity {
         setContentView(R.layout.activity_album_details);
         recyclerView = findViewById(R.id.recyclerView);
         albumPhoto = findViewById(R.id.albumPhoto);
+        rcmBtn = findViewById(R.id.see_more);
         albumName = getIntent().getStringExtra("albumName");
 
         Runnable myRunnable = new Runnable(){
@@ -53,6 +57,15 @@ public class AlbumDetails extends AppCompatActivity {
         Thread thread = new Thread(myRunnable);
         thread.start();
 
+        rcmBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i =new Intent(getApplicationContext(), RecommendDetails.class);
+                i.putExtra("albumName", albumName);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getApplicationContext().startActivity(i);
+            }
+        });
 
     }
 
@@ -90,17 +103,14 @@ public class AlbumDetails extends AppCompatActivity {
                     tmp.add(getSongs);
                     Log.e("síisisis", String.valueOf(getSongs));
                 }
-//                idk();
-               // albumSongs = tmp;
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                 //idk();
-                //albumSongs = tmp;
+
             }
         });
-     //   Log.e("sís", String.valueOf(tmp.size()));
-        //albumSongs = tmp;
+
         return tmp;
     }
 
@@ -109,7 +119,7 @@ public class AlbumDetails extends AppCompatActivity {
         super.onResume();
        // if(!albumSongs.isEmpty()) {
             Log.e("sís", String.valueOf(albumSongs.size()));
-            albumDetailsAdapter = new AlbumDetailsAdapter(this, albumSongs, albumName);
+            albumDetailsAdapter = new AlbumDetailsAdapter(this, albumSongs, albumName, 1);
             recyclerView.setAdapter(albumDetailsAdapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
        // }

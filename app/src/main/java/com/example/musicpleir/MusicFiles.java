@@ -2,6 +2,7 @@ package com.example.musicpleir;
 
 public class MusicFiles {
     String songsCategory, songTitle, artist, songDuration, songLink, mKey;
+    String lyrics;
     //String path, title, artist, album, duration, mKey;
 
 
@@ -11,6 +12,14 @@ public class MusicFiles {
         this.artist = artist;
         this.songDuration = songDuration;
         this.songLink = songLink;
+    }
+
+    public String getLyrics() {
+        return lyrics;
+    }
+
+    public void setLyrics(String lyrics) {
+        this.lyrics = lyrics;
     }
 
     public String getSongsCategory() {

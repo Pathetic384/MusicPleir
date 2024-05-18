@@ -33,11 +33,13 @@ public class AlbumDetailsAdapter extends RecyclerView.Adapter<AlbumDetailsAdapte
     public static ArrayList<MusicFiles> albumFiles;
     View view;
     String albumName;
+    int loc;
 
-    public AlbumDetailsAdapter(Context mContext, ArrayList<MusicFiles> albumFiles, String albumName) {
+    public AlbumDetailsAdapter(Context mContext, ArrayList<MusicFiles> albumFiles, String albumName, int loc) {
         this.albumFiles = albumFiles;
         this.mContext = mContext;
         this.albumName = albumName;
+        this.loc = loc;
     }
 
     @NonNull
@@ -63,7 +65,12 @@ public class AlbumDetailsAdapter extends RecyclerView.Adapter<AlbumDetailsAdapte
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(mContext, PlayerActivity.class);
-                    i.putExtra("sender", "albumDetails");
+                    if(loc == 1) {
+                        i.putExtra("sender", "albumDetails");
+                    }
+                    else {
+                        i.putExtra("sender", "rcmDetails");
+                    }
                     i.putExtra("position", holder.getAdapterPosition());
                     mContext.startActivity(i);
                 }

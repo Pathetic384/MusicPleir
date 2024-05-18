@@ -91,7 +91,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             recommendedSongs = result;
             for (int i = 0; i < recommendedSongs.size(); ++ i) {
                 System.out.println("Recommended Song" + ": " + recommendedSongs.get(i));
+                Toast.makeText(MainActivity.this, recommendedSongs.get(i), Toast.LENGTH_SHORT).show();
             }
+
         }
     }
     @Override
@@ -147,30 +149,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             MainActivity.musicFiles = musicFiles;
             initViewPager();
         }
-    }
-    public ArrayList<MusicFiles> getAllAudio () {
-        ArrayList<MusicFiles> tmp = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference("songs");
-        valueEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                tmp.clear();
-                for (DataSnapshot dss : snapshot.getChildren()) {
-                    MusicFiles getSongs = dss.getValue(MusicFiles.class);
-                    if(getSongs.getSongsCategory() == null) getSongs.setSongsCategory("no title");
-                    tmp.add(getSongs);
-                }
-                progressBar.setVisibility(View.GONE);
-                initViewPager();
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                progressBar.setVisibility(View.GONE);
-                initViewPager();
-            }
-        });
-        Log.e("getAllAudio", String.valueOf(tmp.size()));
-        return tmp;
     }
 
     public static ArrayList<MusicFiles> getAllLocalAudio (Context context) {
@@ -248,32 +226,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         initViewPager();
     }
 
-//    private void getAllAudioFromFirebase() {
-//        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("songs");
-//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                ArrayList<MusicFiles> tmp = new ArrayList<>();
-//                for (DataSnapshot dss : snapshot.getChildren()) {
-//                    MusicFiles getSongs = dss.getValue(MusicFiles.class);
-//                    if (getSongs.getSongsCategory() == null) getSongs.setSongsCategory("no title");
-//                    tmp.add(getSongs);
-//                }
-//                MainActivity.musicFiles.addAll(tmp);
-//                progressBar.setVisibility(View.GONE);
-//                if (songsFragment != null) {
-//                    songsFragment.onMusicDataLoaded(MainActivity.musicFiles);
-//                }
-//                initViewPager();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                progressBar.setVisibility(View.GONE);
-//                initViewPager();
-//            }
-//        });
-//    }
     
     private void authenticateUser() {
         auth = FirebaseAuth.getInstance();
