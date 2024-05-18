@@ -69,4 +69,6 @@ dependencies {
     annotationProcessor ("com.github.bumptech.glide:compiler:4.13.0") // Glide annotation processor
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
+    implementation ("org.json:json:20210307")
+    implementation("org.jsoup:jsoup:1.13.1")
 }

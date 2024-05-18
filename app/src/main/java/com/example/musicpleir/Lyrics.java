@@ -2,6 +2,7 @@ package com.example.musicpleir;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
 
 import java.io.IOException;
 
@@ -17,7 +18,8 @@ public class Lyrics {
     public String lyrics(String songTitle) throws Exception {
         String songId = Integer.toString(searchSong(songTitle));
         if (songId != null) {
-            String lyrics = getLyrics(songId);
+            String htmlLyrics = getLyrics(songId);
+            String lyrics = Jsoup.parse(htmlLyrics).text();
             return lyrics;
         } else {
             return ("Song not found");
