@@ -26,7 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class Register extends AppCompatActivity {
 
-    TextInputEditText editTextEmail, editTextPassword;
+    TextInputEditText editTextEmail, editTextPassword, editTextConf;
     Button regButton;
     FirebaseAuth mAuth;
     ProgressBar progressBar;
@@ -50,6 +50,7 @@ public class Register extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         editTextEmail = findViewById(R.id.email);
         editTextPassword = findViewById(R.id.password);
+        editTextConf = findViewById(R.id.conf_password);
         regButton = findViewById(R.id.register_btn);
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.loginNow);
@@ -67,9 +68,10 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
-                String email, password;
+                String email, password, conf_password;
                 email = String.valueOf(editTextEmail.getText());
                 password = String.valueOf(editTextPassword.getText());
+                conf_password = String.valueOf(editTextConf.getText());
 
                 if(TextUtils.isEmpty(email)) {
                     progressBar.setVisibility(View.GONE);
@@ -79,6 +81,16 @@ public class Register extends AppCompatActivity {
                 if(TextUtils.isEmpty(password)) {
                     progressBar.setVisibility(View.GONE);
                     note.setText("Please enter your Password");
+                    return;
+                }
+                if(TextUtils.isEmpty(conf_password)) {
+                    progressBar.setVisibility(View.GONE);
+                    note.setText("Please confirm your Password");
+                    return;
+                }
+                if(!password.equals(conf_password)) {
+                    progressBar.setVisibility(View.GONE);
+                    note.setText("You didnt confirm your password correctly");
                     return;
                 }
 

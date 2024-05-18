@@ -60,7 +60,7 @@ public class LocalSongFragment extends Fragment {
                         musicAdapter2 = new LocalMusicAdapter(getContext(), MainActivity.localMusicFiles);
                         recyclerView.setAdapter(musicAdapter2);
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-                    
+
                     musicAdapter2.updateList(MainActivity.localMusicFiles);
                 }
             }
