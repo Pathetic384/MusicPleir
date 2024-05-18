@@ -79,6 +79,21 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public static String userID;
     public static String userMail;
     public static boolean testing = false;
+    public static ArrayList<String> recommendedSongs = new ArrayList<>();
+    private class RecommenderTask extends AsyncTask<Void, Void, ArrayList<String>> {
+        @Override
+        protected ArrayList<String> doInBackground(Void... voids) {
+            return Recommender.recommend(SpotifyAuth.getAccessToken());
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<String> result) {
+            recommendedSongs = result;
+            for (int i = 0; i < recommendedSongs.size(); ++ i) {
+                System.out.println("Recommended Song" + ": " + recommendedSongs.get(i));
+            }
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         localMusicFiles = getAllLocalAudio(this);
         loadMusicFiles();
         getAllAlbum();
+        new RecommenderTask().execute();
     }
 
     private void loadMusicFiles() {
