@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         localMusicFiles = getAllLocalAudio(this);
         loadMusicFiles();
         getAllAlbum();
-        new RecommenderTask().execute();
+        //new RecommenderTask().execute();
     }
 
     private void loadMusicFiles() {
@@ -205,6 +205,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                     }
                 }
                 updateMusicFiles(audioList);
+                localMusicFiles = getAllLocalAudio(getApplicationContext());
             }
 
             @Override

@@ -1,5 +1,7 @@
 package com.example.musicpleir;
 
+import static com.example.musicpleir.MainActivity.getAllLocalAudio;
+
 import android.content.Context;
 import android.os.Bundle;
 
@@ -52,8 +54,13 @@ public class LocalSongFragment extends Fragment {
         reload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.localMusicFiles = MainActivity.getAllLocalAudio(context);
+                MainActivity.localMusicFiles = getAllLocalAudio(context);
                 if(!MainActivity.localMusicFiles.isEmpty()) {
+
+                        musicAdapter2 = new LocalMusicAdapter(getContext(), MainActivity.localMusicFiles);
+                        recyclerView.setAdapter(musicAdapter2);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+                    
                     musicAdapter2.updateList(MainActivity.localMusicFiles);
                 }
             }
