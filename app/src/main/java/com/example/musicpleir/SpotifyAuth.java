@@ -36,6 +36,7 @@ public class SpotifyAuth {
         } catch (IOException | SpotifyWebApiException e) {
             System.out.println("Error: " + e.getMessage());
         }
+        System.out.println(accessToken);
         return accessToken;
     }
 }

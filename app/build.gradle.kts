@@ -77,4 +77,5 @@ dependencies {
     implementation("org.jsoup:jsoup:1.13.1")
     implementation("se.michaelthelin.spotify:spotify-web-api-java:6.5.4")
     implementation("com.squareup.okhttp3:okhttp:4.9.1")
+
 }
