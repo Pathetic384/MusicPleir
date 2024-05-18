@@ -19,7 +19,7 @@ public class Lyrics {
         String songId = Integer.toString(searchSong(songTitle));
         if (songId != null) {
             String htmlLyrics = getLyrics(songId);
-            String lyrics = Jsoup.parse(htmlLyrics).text();
+            String lyrics = htmlLyrics.replaceAll("<[^>]+>", "");
             return lyrics;
         } else {
             return ("Song not found");
