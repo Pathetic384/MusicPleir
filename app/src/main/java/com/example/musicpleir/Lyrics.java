@@ -22,7 +22,7 @@ public class Lyrics {
             String lyrics = htmlLyrics.replaceAll("<[^>]+>", "");
             return lyrics;
         } else {
-            return ("Song not found");
+            return ("Guess the lyrics yourself!!");
         }
     }
 
