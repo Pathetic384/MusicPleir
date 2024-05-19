@@ -7,6 +7,7 @@ import android.media.MediaRecorder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -104,7 +105,8 @@ public class SoundRecognitionFragment extends Fragment {
                             StartRecording.setEnabled(true);
 
                             //  Start AsyncTask for network call
-                            new SendAudioTask().execute(AudioSavePath);
+                            new SendAudioTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, AudioSavePath);
+
                         }
                     }, 5000);
                 }
@@ -113,6 +115,11 @@ public class SoundRecognitionFragment extends Fragment {
 
         return view;
     }
+
+    private void executeAsyncTask(String audioSavePath) {
+        new SendAudioTask().execute(audioSavePath);
+    }
+
     private void prepareAudioRecorder() {
         mediaRecorder = new MediaRecorder();
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -142,6 +149,7 @@ public class SoundRecognitionFragment extends Fragment {
             infoText.setText("Sending...");
         }
 
+        @Nullable
         @Override
         protected String doInBackground(String... params) {
             // Your existing network call logic using OkHttpClient
