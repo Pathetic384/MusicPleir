@@ -211,7 +211,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         String songLyrics = lyrics1.lyrics("Save Your Tears");
 
         lyrics.setText(songLyrics);
-        
+
 
         dialog.show();
     }
@@ -285,13 +285,13 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
     @Override
     protected void onPause() {
         super.onPause();
-        dialog.dismiss();
+        if(dialog!= null) dialog.dismiss();
         unbindService(this);
     }
 
     @Override
     protected void onDestroy() {
-        dialog.dismiss();
+        if(dialog!= null) dialog.dismiss();
         super.onDestroy();
     }
 

@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 if(artist == null) artist = "no artist";
 
                 MusicFiles musicFiles1 = new MusicFiles(album, title , artist, duration, path);
-                if(!Objects.equals(musicFiles1.getSongLink(), "tone.mp3")) {
+                if(!musicFiles1.getSongLink().trim().contains("tone")) {
                     tmp2.add(musicFiles1);
                 }
             }

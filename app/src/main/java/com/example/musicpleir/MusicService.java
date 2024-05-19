@@ -232,16 +232,6 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
         startForeground(2, notification);
 
 
-
-//        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
-//        Notification notification = notificationBuilder.setOngoing(true)
-//                .setSmallIcon(R.drawable.ic_play)
-//                .setContentTitle("App is running in background")
-//                .setPriority(NotificationManager.IMPORTANCE_MIN)
-//                .setCategory(Notification.CATEGORY_SERVICE)
-//                .build();
-//        startForeground(2, notification);
-
     }
 
 
