@@ -68,7 +68,7 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    implementation("com.squareup.okhttp3:okhttp:4.9.3") // OkHttp library
+
     implementation ("com.github.bumptech.glide:glide:4.13.0") // Glide library
     annotationProcessor ("com.github.bumptech.glide:compiler:4.13.0") // Glide annotation processor
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
@@ -77,5 +77,6 @@ dependencies {
     implementation("org.jsoup:jsoup:1.13.1")
     implementation("se.michaelthelin.spotify:spotify-web-api-java:6.5.4")
     implementation("com.squareup.okhttp3:okhttp:4.9.1")
+    implementation("com.squareup.okhttp3:okhttp:4.9.3") // OkHttp library
 
 }

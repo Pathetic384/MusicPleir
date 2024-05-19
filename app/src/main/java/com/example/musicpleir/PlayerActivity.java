@@ -166,12 +166,16 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         lyricsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openLyricsDialog(Gravity.CENTER);
+                try {
+                    openLyricsDialog(Gravity.CENTER);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
     }
 
-    void openLyricsDialog(int gravity) {
+    void openLyricsDialog(int gravity) throws Exception {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.lyrics_dialog);
@@ -198,9 +202,10 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
                 dialog.dismiss();
             }
         });
+        Lyrics lyrics1 = new Lyrics();
+        String songLyrics = lyrics1.lyrics("Save Your Tears");
 
-        lyrics.setText("[Intro] Ooh Na-na, yeah [Verse 1] I saw you dancing in a crowded room (Uh) You look so happy when I'm not with you But then you saw me, caught you by surprise A single teardrop falling from your eye [Refrain] I don't know why I run away I make you cry when I run away [Verse 2] You could've asked me why I broke your heart You could've told me that you fell apart But you walked past me like I wasn't there And just pretended like you didn't care [Refrain] I don't know why I run away I make you cry when I run away [Pre-Chorus] Take me back 'cause I wanna stay Save your tears for another [Chorus] Save your tears for another day Save your tears for another day (So) [Verse 3] I made you think that I would always stay I said some things that I should never say Yeah, I broke your heart like someone did to mine And now you won't love me for a second time [Refrain] I don't know why I run away, oh, girl Said, I make you cry when I run away [Pre-Chorus] Girl, take me back 'cause I wanna stay Save your tears for another I realize that I'm much too late And you deserve someone better [Chorus] Save your tears for another day (Oh yeah) Save your tears for another day (Yeah) [Refrain] I don't know why I run away I'll make you cry when I run away [Chorus] Save your tears for another day Ooh, girl, I said (Ah) Save your tears for another day (Ah) [Outro] Save your tears for another day (Ah) Save your tears for another day (Ah)");
-
+        lyrics.setText(songLyrics);
         dialog.show();
     }
 

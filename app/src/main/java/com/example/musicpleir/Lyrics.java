@@ -1,8 +1,9 @@
 package com.example.musicpleir;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
 
 import java.io.IOException;
 
@@ -16,8 +17,9 @@ public class Lyrics {
     private static final String HOST = "genius-song-lyrics1.p.rapidapi.com";
 
     public String lyrics(String songTitle) throws Exception {
-        String songId = Integer.toString(searchSong(songTitle));
-        if (songId != null) {
+        int songId = searchSong(songTitle);
+        System.out.println("fiajofjeapfjieis" + songId);
+        if (songId != -1) {
             String htmlLyrics = getLyrics(songId);
             String lyrics = htmlLyrics.replaceAll("<[^>]+>", "");
             return lyrics;
@@ -42,22 +44,26 @@ public class Lyrics {
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+            if (!response.isSuccessful()) {
+                throw new IOException("Unexpected code " + response);
+            }
 
             String responseData = response.body().string();
             System.out.println("Search Response Data: " + responseData); // Print the response data for debugging
+
             JSONObject jsonObject = new JSONObject(responseData);
 
+            if (jsonObject.has("response")) {
+                JSONObject responseObj = jsonObject.getJSONObject("response");
+                if (responseObj.has("hits")) {
+                    JSONArray hits = responseObj.getJSONArray("hits");
 
-            if (jsonObject.has("hits")) {
-                JSONArray hits = jsonObject.getJSONArray("hits");
-
-                if (hits.length() > 0) {
-                    JSONObject firstHit = hits.getJSONObject(0);
-                    return firstHit.getJSONObject("result").getInt("id");
+                    if (hits.length() > 0) {
+                        JSONObject firstHit = hits.getJSONObject(0);
+                        return firstHit.getJSONObject("result").getInt("id");
+                    }
                 }
-            }
-            else {
+            } else {
                 System.out.println("No 'response' key found in JSON");
             }
         } catch (Exception e) {
@@ -66,11 +72,12 @@ public class Lyrics {
         return -1;
     }
 
-    private static String getLyrics(String songId) throws Exception {
+    private static String getLyrics(int songId) throws Exception {
+        String Id = Integer.toString(songId);
         OkHttpClient client = new OkHttpClient();
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse("https://genius-song-lyrics1.p.rapidapi.com/song/lyrics/").newBuilder();
-        urlBuilder.addQueryParameter("id", songId);
+        urlBuilder.addQueryParameter("id", Id);
 
         Request request = new Request.Builder()
                 .url(urlBuilder.build())
