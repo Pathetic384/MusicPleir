@@ -44,26 +44,22 @@ public class Lyrics {
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) {
-                throw new IOException("Unexpected code " + response);
-            }
+            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
 
             String responseData = response.body().string();
-            System.out.println("Search Response Data: " + responseData); // Print the response data for debugging
-
+            Log.e("Search Response Data", responseData); // Print the response data for debugging
             JSONObject jsonObject = new JSONObject(responseData);
 
-            if (jsonObject.has("response")) {
-                JSONObject responseObj = jsonObject.getJSONObject("response");
-                if (responseObj.has("hits")) {
-                    JSONArray hits = responseObj.getJSONArray("hits");
 
-                    if (hits.length() > 0) {
-                        JSONObject firstHit = hits.getJSONObject(0);
-                        return firstHit.getJSONObject("result").getInt("id");
-                    }
+            if (jsonObject.has("hits")) {
+                JSONArray hits = jsonObject.getJSONArray("hits");
+
+                if (hits.length() > 0) {
+                    JSONObject firstHit = hits.getJSONObject(0);
+                    return firstHit.getJSONObject("result").getInt("id");
                 }
-            } else {
+            }
+            else {
                 System.out.println("No 'response' key found in JSON");
             }
         } catch (Exception e) {
