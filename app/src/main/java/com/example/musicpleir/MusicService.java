@@ -99,22 +99,35 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
         return START_STICKY;
     }
 
-
     private void playMedia(int startPosition) {
-        position = startPosition;
-        if(mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer.release();
-            if(listSongs != null) {
-                createMediaPlayer(position);
-                mediaPlayer.start();
+        if (position != startPosition) {
+            position = startPosition;
+            if (mediaPlayer != null) {
+                mediaPlayer.stop();
+                mediaPlayer.release();
             }
-        }
-        else {
             createMediaPlayer(position);
             mediaPlayer.start();
         }
     }
+
+
+
+//    private void playMedia(int startPosition) {
+//        position = startPosition;
+//        if(mediaPlayer != null) {
+//            mediaPlayer.stop();
+//            mediaPlayer.release();
+//            if(listSongs != null) {
+//                createMediaPlayer(position);
+//                mediaPlayer.start();
+//            }
+//        }
+//        else {
+//            createMediaPlayer(position);
+//            mediaPlayer.start();
+//        }
+//    }
 
     void start() {
         mediaPlayer.start();
@@ -138,6 +151,9 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
         if(mediaPlayer == null) return 0;
         if(PlayerActivity.loading) return 0;
         return mediaPlayer.getCurrentPosition();
+    }
+    public Uri getCurrentUri() {
+        return uri;
     }
     void createMediaPlayer(int pos) {
         position = pos;

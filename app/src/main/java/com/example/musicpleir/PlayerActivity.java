@@ -60,17 +60,8 @@ import java.util.Random;
 
 public class PlayerActivity extends AppCompatActivity implements  ActionPlaying, ServiceConnection {
 
-    public TextView song_name;
-    public TextView artist_name;
-    public TextView duration_played;
-    public TextView duration_total;
-    public ImageView cover_art;
-    public ImageView nextBtn;
-    public ImageView prevBtn;
-    public ImageView backBtn;
-    public ImageView shuffleBtn;
-    public ImageView repeatBtn;
-    public ImageView addAlbum;
+    public TextView song_name, artist_name, duration_played, duration_total;
+    public ImageView cover_art, nextBtn, prevBtn, backBtn, shuffleBtn, repeatBtn, addAlbum;
     public FloatingActionButton playpauseBtn;
     public SeekBar seekBar;
     int position = -1;
@@ -278,7 +269,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         bindService(i,this, BIND_AUTO_CREATE);
         playThreadBtn();
         nextThreadBtn();
-        prevThreadVtn();
+        prevThreadBtn();
         super.onResume();
     }
 
@@ -289,13 +280,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         unbindService(this);
     }
 
-    @Override
-    protected void onDestroy() {
-        if(dialog!= null) dialog.dismiss();
-        super.onDestroy();
-    }
-
-    private void prevThreadVtn() {
+    private void prevThreadBtn() {
         prevThread = new Thread() {
             @Override
             public void run() {
@@ -459,6 +444,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
 
     private void getIntentMethod() throws IOException {
         position = getIntent().getIntExtra("position",-1);
+        Log.d("PlayerActivity", "Received position: " + position);
         String sender = getIntent().getStringExtra("sender");
         if(sender!= null && sender.equals("albumDetails")) {
             listSongs = AlbumDetailsAdapter.albumFiles;
@@ -469,9 +455,12 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         else {
             listSongs = MusicAdapter.mFiles;
         }
-        if(listSongs != null) {
+        if(listSongs != null && position >= 0 && position < listSongs.size()) { // Check if position is valid
             playpauseBtn.setImageResource(R.drawable.ic_pause);
             uri = Uri.parse(listSongs.get(position).getSongLink());
+        }
+        else {
+            throw new RuntimeException("Invalid position");
         }
         Intent i = new Intent(this,MusicService.class);
         i.putExtra("servicePosition", position);
@@ -607,7 +596,4 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
     public void onServiceDisconnected(ComponentName name) {
         musicService = null;
     }
-
-
-
 }
