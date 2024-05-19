@@ -82,6 +82,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
     static String selectedAlbum;
     public static boolean loading = false;
     Button lyricsButton;
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,7 +177,11 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
     }
 
     void openLyricsDialog(int gravity) throws Exception {
-        final Dialog dialog = new Dialog(this);
+
+        dialog = new Dialog(this);
+
+        dialog = new Dialog(this);
+
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.lyrics_dialog);
 
@@ -206,11 +211,13 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         String songLyrics = lyrics1.lyrics("Save Your Tears");
 
         lyrics.setText(songLyrics);
+        
+
         dialog.show();
     }
 
     void openFeedbackDialog(int gravity) {
-        final Dialog dialog = new Dialog(this);
+        dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.layout_dialog);
 
@@ -278,7 +285,14 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
     @Override
     protected void onPause() {
         super.onPause();
+        dialog.dismiss();
         unbindService(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        dialog.dismiss();
+        super.onDestroy();
     }
 
     private void prevThreadVtn() {

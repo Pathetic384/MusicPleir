@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class SpotifyAuth {
     private static final String clientId = "f923bc7764514e16bb92e743ac90333d";
-    private static final String clientSecret = "25bb5d4515d446b0878d1e823cbfbf71";
+    private static final String clientSecret = "e4e1b273ce264d76bf7fc2f5a5a1b648";
 
     public static String getAccessToken() {
         String accessToken = "";

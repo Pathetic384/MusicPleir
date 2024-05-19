@@ -91,9 +91,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             recommendedSongs = result;
             for (int i = 0; i < recommendedSongs.size(); ++ i) {
                 System.out.println("Recommended Song" + ": " + recommendedSongs.get(i));
-                Toast.makeText(MainActivity.this, recommendedSongs.get(i), Toast.LENGTH_SHORT).show();
             }
-
+            Toast.makeText(MainActivity.this, String.valueOf(recommendedSongs), Toast.LENGTH_SHORT).show();
         }
     }
     @Override
@@ -115,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         localMusicFiles = getAllLocalAudio(this);
         loadMusicFiles();
         getAllAlbum();
-        //new RecommenderTask().execute();
+        new RecommenderTask().execute();
     }
 
     private void loadMusicFiles() {

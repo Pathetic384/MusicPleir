@@ -30,6 +30,7 @@ public class Login extends AppCompatActivity {
     ProgressBar progressBar;
     TextView textView;
     TextView note;
+    TextView forgot;
 
     @Override
     public void onStart() {
@@ -54,10 +55,19 @@ public class Login extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.registerNow);
         note = findViewById(R.id.note);
+        forgot = findViewById(R.id.forgot);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), Register.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        forgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), ForgotPassword.class);
                 startActivity(i);
                 finish();
             }
