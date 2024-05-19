@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         @Override
         protected ArrayList<MusicFiles> doInBackground(Void... voids) {
             ArrayList<MusicFiles> allAudio = new ArrayList<>();
-            allAudio.addAll(getAllLocalAudio(context));
+            //allAudio.addAll(getAllLocalAudio(context));
             allAudio.addAll(getAllAudioFromFirebase());
             return allAudio;
         }
@@ -256,9 +256,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         songsFragment = new SongsFragment();
         viewPagerAdapter.addFragments(songsFragment, "Songs");
+        viewPagerAdapter.addFragments(new LocalSongFragment(this), "Playlist");
         viewPagerAdapter.addFragments(new AlbumFragment(), "Albums");
         viewPagerAdapter.addFragments(new SoundRecognitionFragment(), "Shazam");
-        viewPagerAdapter.addFragments(new LocalSongFragment(this), "Playlist");
         viewPagerAdapter.addFragments(new UserFragment(this), "User");
 
         viewPager.setOffscreenPageLimit(5);
@@ -283,9 +283,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public void initViewPager() {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragments(new SongsFragment(), "Songs");
+        viewPagerAdapter.addFragments(new LocalSongFragment(this), "Playlist");
         viewPagerAdapter.addFragments(new AlbumFragment(), "Albums");
         viewPagerAdapter.addFragments(new SoundRecognitionFragment(), "Shazam");
-        viewPagerAdapter.addFragments(new LocalSongFragment(this), "Playlist");
         viewPagerAdapter.addFragments(new UserFragment(this), "User");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -371,6 +371,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public boolean onQueryTextChange(String newText) {
         String userInput = newText.toLowerCase();
         ArrayList<MusicFiles> myFiles = new ArrayList<>();
+        ArrayList<MusicFiles> myLocalFiles = new ArrayList<>();
 
         for (MusicFiles song : musicFiles) {
             if (song.getSongTitle().toLowerCase().contains(userInput)) {
@@ -378,6 +379,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             }
         }
         SongsFragment.musicAdapter.updateList(myFiles);
+
+        for (MusicFiles song : localMusicFiles) {
+            if (song.getSongTitle().toLowerCase().contains(userInput)) {
+                myLocalFiles.add(song);
+            }
+        }
+        LocalSongFragment.musicAdapter2.updateList(myLocalFiles);
         return true;
     }
 

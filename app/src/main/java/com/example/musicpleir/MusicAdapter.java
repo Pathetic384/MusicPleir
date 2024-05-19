@@ -57,6 +57,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
                 public void onClick(View v) {
                     Intent i = new Intent(mContext, PlayerActivity.class);
                     i.putExtra("position", holder.getAdapterPosition());
+                    i.putExtra("sender", "fire");
                     mContext.startActivity(i);
                 }
             });
@@ -71,7 +72,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
                             case R.id.download:
                                 downloading(mFiles.get(holder.getAdapterPosition()).songLink.trim(), mFiles.get(holder.getAdapterPosition()).songTitle
                                         , mFiles.get(holder.getAdapterPosition()).artist);
-                                Toast.makeText(mContext, "Download clicked", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(mContext, "Download clicked", Toast.LENGTH_SHORT).show();
                                 break;
                         }
                         return true;
@@ -84,15 +85,20 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
     }
 
     void downloading(String link, String name, String artist) {
+        //Toast.makeText(mContext, link, Toast.LENGTH_SHORT).show();
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(link));
         request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI);
         request.setTitle(name);
         request.setDescription(artist);
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, String.valueOf(System.currentTimeMillis()));
+        request.setMimeType("audio/mpeg");
+
+// Ensure the file has a .mp3 extension
+        String fileName = System.currentTimeMillis() + ".mp3";
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
 
         DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
-        if(downloadManager != null) {
+        if (downloadManager != null) {
             downloadManager.enqueue(request);
         }
     }

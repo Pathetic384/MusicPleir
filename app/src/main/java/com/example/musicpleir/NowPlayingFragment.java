@@ -68,6 +68,7 @@ public class NowPlayingFragment extends Fragment implements ServiceConnection {
                 Intent intent = new Intent(getContext(), PlayerActivity.class);
                 intent.putExtra("position", musicService.position);
                 intent.putExtra("isPlaying", musicService.isPlaying());
+                intent.putExtra("sender", "local");
                 intent.putExtra("currentPosition", musicService.getCurrentPosition());
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);

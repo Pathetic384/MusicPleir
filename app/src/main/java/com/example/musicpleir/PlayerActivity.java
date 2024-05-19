@@ -74,6 +74,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
     public static boolean loading = false;
     Button lyricsButton;
     Dialog dialog;
+    String current;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -452,7 +453,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         else if(sender != null && sender.equals("local")) {
             listSongs = LocalMusicAdapter.mFiles;
         }
-        else {
+        else if (sender != null && sender.equals("fire")){
             listSongs = MusicAdapter.mFiles;
         }
         if(listSongs != null && position >= 0 && position < listSongs.size()) { // Check if position is valid
