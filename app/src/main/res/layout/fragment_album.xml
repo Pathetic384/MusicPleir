@@ -8,13 +8,13 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="566dp"
+        android:layout_height="621dp"
         android:layout_below="@+id/albumName"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="0dp"
-        android:layout_marginBottom="7dp"
+        android:layout_marginBottom="114dp"
         android:background="@color/cardview_dark_background" />
 
     <Button
@@ -37,5 +37,13 @@
         android:layout_marginTop="52dp"
         android:hint="enter ur wanted album name"
         android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/see_more"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="42dp"
+        android:text="See recommended songs" />
 
 </RelativeLayout>
