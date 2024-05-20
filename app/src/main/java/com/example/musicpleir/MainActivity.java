@@ -391,6 +391,21 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         getMenuInflater().inflate(R.menu.search, menu);
         MenuItem menuItem = menu.findItem(R.id.search_option);
         searchView = (SearchView) menuItem.getActionView();
+
+        // Hiển thị thanh tìm kiếm mở rộng
+        searchView.setIconifiedByDefault(false);
+
+        // Ẩn biểu tượng kính lúp
+        int searchPlateId = searchView.getContext().getResources().getIdentifier("android:id/search_plate", null, null);
+        View searchPlate = searchView.findViewById(searchPlateId);
+        if (searchPlate != null) {
+            int searchIconId = searchPlate.getContext().getResources().getIdentifier("android:id/search_mag_icon", null, null);
+            View searchIcon = searchPlate.findViewById(searchIconId);
+            if (searchIcon != null) {
+                searchIcon.setVisibility(View.GONE);
+            }
+        }
+
         searchView.setOnQueryTextListener(this);
         return super.onCreateOptionsMenu(menu);
     }
