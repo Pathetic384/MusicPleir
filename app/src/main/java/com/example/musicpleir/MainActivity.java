@@ -55,7 +55,8 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener,
+        SoundRecognitionFragment.OnSongRecognizedListener {
 
     private SongsFragment songsFragment;
     private static final int REQUEST_PERMISSION_CODE = 10;
@@ -79,6 +80,19 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public static String userID;
     public static String userMail;
     public static boolean testing = false;
+    private SearchView searchView;
+
+
+    // Sound recognition fragment callback
+    @Override
+    public void onSongRecognized(String songTitle) {
+        if (searchView != null) {
+            searchView.setQuery(songTitle, true); // true để nộp truy vấn ngay lập tức
+        }
+    }
+
+
+    // Recommended songs from Spotify API
     public static ArrayList<String> recommendedSongs = new ArrayList<>();
     private class RecommenderTask extends AsyncTask<Void, Void, ArrayList<String>> {
         @Override
@@ -357,7 +371,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search, menu);
         MenuItem menuItem = menu.findItem(R.id.search_option);
-        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView = (SearchView) menuItem.getActionView();
         searchView.setOnQueryTextListener(this);
         return super.onCreateOptionsMenu(menu);
     }

@@ -1,6 +1,7 @@
 package com.example.musicpleir;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -21,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -48,6 +50,7 @@ public class SoundRecognitionFragment extends Fragment {
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private String coverImageUrl = "https://ih1.redbubble.net/image.3800727619.4531/st,small,845x845-pad,1000x1000,f8f8f8.jpg";
     private Boolean playBtnEnabled = false;
+    private String title = null;
 
     public SoundRecognitionFragment() {
 
@@ -113,6 +116,15 @@ public class SoundRecognitionFragment extends Fragment {
             }
         });
 
+        Play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Notify MainActivity
+                notifySongRecognized(title);
+                Toast.makeText(getContext(), "Check yo music tabs ASAP!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return view;
     }
 
@@ -141,8 +153,28 @@ public class SoundRecognitionFragment extends Fragment {
             infoText.setText("Error: Recording failed");
         }
     }
-    private class SendAudioTask extends AsyncTask<String, Void, String> {
+    public interface OnSongRecognizedListener {
+        void onSongRecognized(String songTitle);
+    }
 
+    private OnSongRecognizedListener mListener;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnSongRecognizedListener) {
+            mListener = (OnSongRecognizedListener) context;
+        } else {
+            throw new RuntimeException(context.toString() + " must implement OnSongRecognizedListener");
+        }
+    }
+
+    private void notifySongRecognized(String songTitle) {
+        if (mListener != null) {
+            mListener.onSongRecognized(songTitle);
+        }
+    }
+    private class SendAudioTask extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -152,6 +184,7 @@ public class SoundRecognitionFragment extends Fragment {
         @Nullable
         @Override
         protected String doInBackground(String... params) {
+
             // Your existing network call logic using OkHttpClient
             try {
                 final MediaType MEDIA_TYPE_MP3 = MediaType.get("audio/mpeg; charset=utf-8"); // Assuming AAC, adjust if needed
@@ -189,7 +222,7 @@ public class SoundRecognitionFragment extends Fragment {
 
                     // Extract desired information
                     String artist = resultObject.getString("artist");
-                    String title = resultObject.getString("title");
+                    title = resultObject.getString("title");
                     String album = resultObject.getString("album");
                     coverImageUrl = resultObject.getJSONObject("spotify")
                             .getJSONObject("album")
