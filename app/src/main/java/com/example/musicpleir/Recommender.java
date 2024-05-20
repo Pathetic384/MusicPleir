@@ -15,9 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Recommender {
-    private static final String clientId = "7bf43bbb28474ea488f23f748582c804";
-    private static final String clientSecret = "44030c98741a495bbe9173417aa47ec4";
-    private static final URI redirectUri = URI.create("http://localhost:3001/");
 
     public static ArrayList recommend(String accessToken) {
 
@@ -27,7 +24,7 @@ public class Recommender {
                 .build();
 
 
-        GetPlaylistRequest getPlaylistRequest = spotifyApi.getPlaylist("0uwrtTKgzReq3zSmrysWt1").build();
+        GetPlaylistRequest getPlaylistRequest = spotifyApi.getPlaylist("3PYMM73YWETgnuqCbRT94d").build();
 
 
         try {

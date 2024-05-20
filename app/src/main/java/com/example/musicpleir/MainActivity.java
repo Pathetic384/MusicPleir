@@ -50,10 +50,27 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import net.openid.appauth.AuthorizationRequest;
+import net.openid.appauth.AuthorizationService;
+import net.openid.appauth.AuthorizationServiceConfiguration;
+import net.openid.appauth.CodeVerifierUtil;
+import net.openid.appauth.ResponseTypeValues;
+
+import org.json.JSONObject;
+
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener,
         SoundRecognitionFragment.OnSongRecognizedListener {
@@ -81,7 +98,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public static String userMail;
     public static boolean testing = false;
     private SearchView searchView;
-
 
     // Sound recognition fragment callback
     @Override
@@ -117,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         authenticateUser();
 
+
         progressBar = findViewById(R.id.progressBar);
         bottom = findViewById(R.id.frag_bottom);
 
@@ -128,8 +145,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         localMusicFiles = getAllLocalAudio(this);
         loadMusicFiles();
         getAllAlbum();
+
         new RecommenderTask().execute();
     }
+
 
     private void loadMusicFiles() {
         new LoadAudioTask(this).execute();
@@ -437,4 +456,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             databaseReference.removeEventListener(valueEventListener);
         }
     }
+
+
 }
