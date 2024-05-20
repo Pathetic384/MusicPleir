@@ -74,7 +74,6 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
     public static boolean loading = false;
     Button lyricsButton;
     Dialog dialog;
-    String current;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -235,6 +234,9 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
                 mDatabase.child("users").child(MainActivity.userID).child(selectedAlbum)
                         .child(listSongs.get(position).songTitle).setValue(listSongs.get(position));
                 Toast.makeText(PlayerActivity.this, "aaaccc", Toast.LENGTH_SHORT).show();
+
+                Addsong addsong = new Addsong(AuthenticateSpotify.oauth2.accessToken, AuthenticateSpotify.oauth2.PLAYLIST_ID);
+                addsong.addSongToPlaylist(listSongs.get(position).songTitle);
             }
         });
         back.setOnClickListener(new View.OnClickListener() {

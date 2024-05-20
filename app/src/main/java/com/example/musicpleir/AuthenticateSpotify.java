@@ -7,7 +7,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class AuthenticateSpotify extends AppCompatActivity {
-    OAuth2 oauth2;
+    static OAuth2 oauth2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
