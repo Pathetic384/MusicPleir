@@ -4,4 +4,18 @@
     <color name="white">#FFFFFFFF</color>
     <color name="colorPrimaryDark">#F35B5B</color>
     <color name="transparent">#00000000</color>
+    <color name="colorPrimary">#43A047</color>
+    <color name="colorAccent">#03DAC6</color>
+    <color name="background">#3C3F41</color>
+    <color name="surface">#1E1E1E</color>
+    <color name="onPrimary">#FFFFFF</color>
+    <color name="onBackground">#FFFFFF</color>
+    <color name="onSurface">#FFFFFF</color>Z
+    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="textColorSecondary">#B0B0B0</color>
+    <color name="hintTextColor">#B0B0B0</color>
+    <color name="errorColor">#FF0000</color>
+    <color name="successColor">#00FF00</color>
+    <color name="warningColor">#FFA500</color>
+    <color name="editTextBackground">#EFEFEF</color>
 </resources>
