@@ -1,6 +1,7 @@
 package com.example.musicpleir;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -111,5 +112,85 @@ public class Addsong {
                 System.out.println("Track added to playlist successfully");
             }
         });
+    }
+
+    public String createPlaylist() {
+        String playlistId = "";
+        try {
+            String userId = getCurrentUserId();
+            System.out.println("Spotify User ID: " + userId);
+
+            playlistId = createPlaylist(userId, "My New Playlist", "This is a new playlist.");
+            return playlistId;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return playlistId;
+    }
+    public String getCurrentUserId() throws IOException {
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url("https://api.spotify.com/v1/me")
+                .get()
+                .addHeader("Authorization", "Bearer " + accessToken)
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                throw new IOException("Unexpected code " + response);
+            }
+
+            JSONObject responseBody = null;
+            try {
+                responseBody = new JSONObject(response.body().string());
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            return responseBody.getString("id");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String createPlaylist(String userId, String name, String description) throws IOException {
+        OkHttpClient client = new OkHttpClient();
+
+        JSONObject json = new JSONObject();
+        try {
+            json.put("name", name);
+            json.put("description", description);
+            json.put("public", false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        RequestBody body = RequestBody.create(
+                json.toString(),
+                MediaType.parse("application/json; charset=utf-8")
+        );
+
+        Request request = new Request.Builder()
+                .url("https://api.spotify.com/v1/users/" + userId + "/playlists")
+                .post(body)
+                .addHeader("Authorization", "Bearer " + accessToken)
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                throw new IOException("Unexpected code " + response);
+            }
+
+            JSONObject responseBody = null;
+            try {
+                responseBody = new JSONObject(response.body().string());
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            return responseBody.getString("id");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
