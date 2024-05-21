@@ -84,7 +84,10 @@ public class ForgotPassword extends AppCompatActivity {
             @Override
             public void onSuccess(Void unused) {
                 progressBar.setVisibility(View.GONE);
-                note.setText("Check your email for reset password link");
+                Toast.makeText(ForgotPassword.this, "Check your email for reset password link", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(getApplicationContext(), Login.class);
+                startActivity(i);
+                finish();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
