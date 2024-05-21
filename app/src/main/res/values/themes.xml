@@ -3,7 +3,7 @@
     <style name="Base.Theme.MusicPleir" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+<!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:colorBackground">@color/background</item>
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
