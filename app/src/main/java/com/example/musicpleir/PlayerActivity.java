@@ -202,11 +202,15 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
                 dialog.dismiss();
             }
         });
-        Lyrics lyrics1 = new Lyrics();
-        String songLyrics = lyrics1.lyrics("Save Your Tears");
+        Lyrics.lyrics("Save your tears", new Lyrics.LyricsCallback() {
+            @Override
+            public void onLyricsRetrieved(String songlyrics) {
+                // Update UI with the lyrics
+                lyrics.setText(songlyrics);
+                dialog.show();
+            }
+        });
 
-        lyrics.setText(songLyrics);
-        dialog.show();
     }
 
     void openFeedbackDialog(int gravity) {
