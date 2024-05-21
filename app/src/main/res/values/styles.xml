@@ -1,7 +1,7 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.MusicPleir" parent="Theme.AppCompat.DayNight.DarkActionBar">
-        <!-- Customize your light theme here. -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Login.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -10,5 +10,4 @@
         <item name="android:textColorSecondary">@color/textColorSecondary</item>
     </style>
 
-    <style name="Theme.MusicPleir" parent="Base.Theme.MusicPleir" />
 </resources>

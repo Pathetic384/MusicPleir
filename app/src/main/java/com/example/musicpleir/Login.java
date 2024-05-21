@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -84,11 +85,13 @@ public class Login extends AppCompatActivity {
                 if(TextUtils.isEmpty(email)) {
                     progressBar.setVisibility(View.GONE);
                     note.setText("Please enter your Email");
+                    note.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.warningColor));
                     return;
                 }
                 if(TextUtils.isEmpty(password)) {
                     progressBar.setVisibility(View.GONE);
                     note.setText("Please enter your Password");
+                    note.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.warningColor));
                     return;
                 }
 
@@ -104,6 +107,7 @@ public class Login extends AppCompatActivity {
                                     finish();
                                 } else {
                                     note.setText("Wrong Email or Password");
+                                    note.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.warningColor));
                                 }
                             }
                         });
