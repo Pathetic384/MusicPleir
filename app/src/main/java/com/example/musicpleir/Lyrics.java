@@ -14,7 +14,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class Lyrics {
-    private static final String API_KEY = "990d610252mshcfb719d49d5c783p1a23e1jsnd33c1f591dac";
+    private static final String API_KEY = "c6616b09fbmsh4e07462309d498ap14c78ejsn79a81e5cc451";
     private static final String HOST = "genius-song-lyrics1.p.rapidapi.com";
     private static final OkHttpClient client = new OkHttpClient();
 
