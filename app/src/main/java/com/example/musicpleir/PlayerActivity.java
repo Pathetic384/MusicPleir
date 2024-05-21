@@ -168,11 +168,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
     }
 
     void openLyricsDialog(int gravity) throws Exception {
-
         dialog = new Dialog(this);
-
-        dialog = new Dialog(this);
-
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.lyrics_dialog);
 
@@ -207,6 +203,8 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
             }
         });
     }
+
+
 
     void openFeedbackDialog(int gravity) {
         dialog = new Dialog(this);
