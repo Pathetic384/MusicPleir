@@ -35,6 +35,7 @@
             android:exported="false" />
         <activity
             android:name=".Register"
+            android:theme="@style/Theme.Login.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".Login"
@@ -58,7 +59,7 @@
         </activity>
         <activity
             android:name=".RecommendDetails"
-            android:exported="true"></activity>
+            android:exported="true" />
 
         <activity
             android:name=".AuthenticateSpotify"
