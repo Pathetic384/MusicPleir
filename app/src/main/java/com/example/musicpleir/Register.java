@@ -1,5 +1,7 @@
 package com.example.musicpleir;
 
+import static com.example.musicpleir.R.color.warningColor;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -76,21 +79,25 @@ public class Register extends AppCompatActivity {
                 if(TextUtils.isEmpty(email)) {
                     progressBar.setVisibility(View.GONE);
                     note.setText("Please enter your Email");
+                    note.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.warningColor));
                     return;
                 }
                 if(TextUtils.isEmpty(password)) {
                     progressBar.setVisibility(View.GONE);
                     note.setText("Please enter your Password");
+                    note.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.warningColor));
                     return;
                 }
                 if(TextUtils.isEmpty(conf_password)) {
                     progressBar.setVisibility(View.GONE);
                     note.setText("Please confirm your Password");
+                    note.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.warningColor));
                     return;
                 }
                 if(!password.equals(conf_password)) {
                     progressBar.setVisibility(View.GONE);
-                    note.setText("You didnt confirm your password correctly");
+                    note.setText("Passwords do not match");
+                    note.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.warningColor));
                     return;
                 }
 
@@ -108,6 +115,7 @@ public class Register extends AppCompatActivity {
                                 } else {
                                     progressBar.setVisibility(View.GONE);
                                     note.setText("Your mail must follow format: @gmail.com and the length of password must be >=6 letters");
+                                    note.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.warningColor));
                                 }
                             }
                         });
