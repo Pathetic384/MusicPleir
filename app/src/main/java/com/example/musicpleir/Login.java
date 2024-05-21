@@ -30,13 +30,14 @@ public class Login extends AppCompatActivity {
     ProgressBar progressBar;
     TextView textView;
     TextView note;
+    TextView forgot;
 
     @Override
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            Intent i = new Intent(getApplicationContext(), MainActivity.class);
+            Intent i = new Intent(getApplicationContext(), AuthenticateSpotify.class);
             startActivity(i);
             finish();
         }
@@ -54,10 +55,19 @@ public class Login extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.registerNow);
         note = findViewById(R.id.note);
+        forgot = findViewById(R.id.forgot);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), Register.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        forgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), ForgotPassword.class);
                 startActivity(i);
                 finish();
             }
@@ -89,7 +99,7 @@ public class Login extends AppCompatActivity {
                                 progressBar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
                                     Toast.makeText(getApplicationContext(), "Login Successfully", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    Intent intent = new Intent(getApplicationContext(), AuthenticateSpotify.class);
                                     startActivity(intent);
                                     finish();
                                 } else {

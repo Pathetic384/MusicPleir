@@ -60,17 +60,8 @@ import java.util.Random;
 
 public class PlayerActivity extends AppCompatActivity implements  ActionPlaying, ServiceConnection {
 
-    public TextView song_name;
-    public TextView artist_name;
-    public TextView duration_played;
-    public TextView duration_total;
-    public ImageView cover_art;
-    public ImageView nextBtn;
-    public ImageView prevBtn;
-    public ImageView backBtn;
-    public ImageView shuffleBtn;
-    public ImageView repeatBtn;
-    public ImageView addAlbum;
+    public TextView song_name, artist_name, duration_played, duration_total;
+    public ImageView cover_art, nextBtn, prevBtn, backBtn, shuffleBtn, repeatBtn, addAlbum;
     public FloatingActionButton playpauseBtn;
     public SeekBar seekBar;
     int position = -1;
@@ -82,6 +73,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
     static String selectedAlbum;
     public static boolean loading = false;
     Button lyricsButton;
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,7 +168,11 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
     }
 
     void openLyricsDialog(int gravity) throws Exception {
-        final Dialog dialog = new Dialog(this);
+
+        dialog = new Dialog(this);
+
+        dialog = new Dialog(this);
+
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.lyrics_dialog);
 
@@ -210,11 +206,10 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
                 dialog.show();
             }
         });
-
     }
 
     void openFeedbackDialog(int gravity) {
-        final Dialog dialog = new Dialog(this);
+        dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.layout_dialog);
 
@@ -240,6 +235,9 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
                 mDatabase.child("users").child(MainActivity.userID).child(selectedAlbum)
                         .child(listSongs.get(position).songTitle).setValue(listSongs.get(position));
                 Toast.makeText(PlayerActivity.this, "aaaccc", Toast.LENGTH_SHORT).show();
+
+                Addsong addsong = new Addsong(AuthenticateSpotify.oauth2.accessToken, AuthenticateSpotify.oauth2.PLAYLIST_ID);
+                addsong.addSongToPlaylist(listSongs.get(position).songTitle);
             }
         });
         back.setOnClickListener(new View.OnClickListener() {
@@ -275,17 +273,18 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         bindService(i,this, BIND_AUTO_CREATE);
         playThreadBtn();
         nextThreadBtn();
-        prevThreadVtn();
+        prevThreadBtn();
         super.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        if(dialog!= null) dialog.dismiss();
         unbindService(this);
     }
 
-    private void prevThreadVtn() {
+    private void prevThreadBtn() {
         prevThread = new Thread() {
             @Override
             public void run() {
@@ -449,6 +448,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
 
     private void getIntentMethod() throws IOException {
         position = getIntent().getIntExtra("position",-1);
+        Log.d("PlayerActivity", "Received position: " + position);
         String sender = getIntent().getStringExtra("sender");
         if(sender!= null && sender.equals("albumDetails")) {
             listSongs = AlbumDetailsAdapter.albumFiles;
@@ -456,12 +456,15 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         else if(sender != null && sender.equals("local")) {
             listSongs = LocalMusicAdapter.mFiles;
         }
-        else {
+        else if (sender != null && sender.equals("fire")){
             listSongs = MusicAdapter.mFiles;
         }
-        if(listSongs != null) {
+        if(listSongs != null && position >= 0 && position < listSongs.size()) { // Check if position is valid
             playpauseBtn.setImageResource(R.drawable.ic_pause);
             uri = Uri.parse(listSongs.get(position).getSongLink());
+        }
+        else {
+            throw new RuntimeException("Invalid position");
         }
         Intent i = new Intent(this,MusicService.class);
         i.putExtra("servicePosition", position);
@@ -597,7 +600,4 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
     public void onServiceDisconnected(ComponentName name) {
         musicService = null;
     }
-
-
-
 }

@@ -66,41 +66,12 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.My
                     mContext.startActivity(i);
                 }
             });
-            holder.menu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    PopupMenu popupMenu = new PopupMenu(mContext, v);
-                    popupMenu.getMenuInflater().inflate(R.menu.popup, popupMenu.getMenu());
-                    popupMenu.show();
-                    popupMenu.setOnMenuItemClickListener((item -> {
-                        switch(item.getItemId()) {
-                            case R.id.download:
-                                downloading(mFiles.get(holder.getAdapterPosition()).songLink.trim(), mFiles.get(holder.getAdapterPosition()).songTitle, mFiles.get(holder.getAdapterPosition()).artist);
-                                Toast.makeText(mContext, "Download clicked", Toast.LENGTH_SHORT).show();
-                                break;
-                        }
-                        return true;
-                    }));
-                }
-            });
+            holder.menu.setVisibility(View.GONE);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    void downloading(String link, String name, String artist) {
-        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(link));
-        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI);
-        request.setTitle(name);
-        request.setDescription(artist);
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, String.valueOf(System.currentTimeMillis()));
-
-        DownloadManager downloadManager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
-        if(downloadManager != null) {
-            downloadManager.enqueue(request);
-        }
-    }
 
     @Override
     public int getItemCount() {

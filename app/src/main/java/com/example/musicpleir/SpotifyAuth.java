@@ -10,8 +10,8 @@ import org.apache.hc.core5.http.ParseException;
 import java.io.IOException;
 
 public class SpotifyAuth {
-    private static final String clientId = "f923bc7764514e16bb92e743ac90333d";
-    private static final String clientSecret = "25bb5d4515d446b0878d1e823cbfbf71";
+    private static final String clientId = "1c485840565142e6a7713e9d00780e1d";
+    private static final String clientSecret = "c72373e2a4df4938a53433d7cd4206f1";
 
     public static String getAccessToken() {
         String accessToken = "";

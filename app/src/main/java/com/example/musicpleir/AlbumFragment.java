@@ -1,5 +1,6 @@
 package com.example.musicpleir;
 
+import android.content.Intent;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Build;
@@ -38,6 +39,7 @@ public class AlbumFragment extends Fragment {
 
     DatabaseReference referenceSongs;
     MediaMetadataRetriever metadataRetriever;
+    Button more;
 
     public AlbumFragment() {
         metadataRetriever = new MediaMetadataRetriever();
@@ -65,6 +67,15 @@ public class AlbumFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 uploadAlbum();
+            }
+        });
+        more = view.findViewById(R.id.see_more);
+        more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i =new Intent(getContext(), RecommendDetails.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getContext().startActivity(i);
             }
         });
         return view;

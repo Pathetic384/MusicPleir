@@ -50,12 +50,30 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import net.openid.appauth.AuthorizationRequest;
+import net.openid.appauth.AuthorizationService;
+import net.openid.appauth.AuthorizationServiceConfiguration;
+import net.openid.appauth.CodeVerifierUtil;
+import net.openid.appauth.ResponseTypeValues;
+
+import org.json.JSONObject;
+
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener,
+        SoundRecognitionFragment.OnSongRecognizedListener {
 
     private SongsFragment songsFragment;
     private static final int REQUEST_PERMISSION_CODE = 10;
@@ -79,6 +97,18 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public static String userID;
     public static String userMail;
     public static boolean testing = false;
+    private SearchView searchView;
+
+    // Sound recognition fragment callback
+    @Override
+    public void onSongRecognized(String songTitle) {
+        if (searchView != null) {
+            searchView.setQuery(songTitle, true); // true để nộp truy vấn ngay lập tức
+        }
+    }
+
+
+    // Recommended songs from Spotify API
     public static ArrayList<String> recommendedSongs = new ArrayList<>();
     private class RecommenderTask extends AsyncTask<Void, Void, ArrayList<String>> {
         @Override
@@ -91,9 +121,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             recommendedSongs = result;
             for (int i = 0; i < recommendedSongs.size(); ++ i) {
                 System.out.println("Recommended Song" + ": " + recommendedSongs.get(i));
-                Toast.makeText(MainActivity.this, recommendedSongs.get(i), Toast.LENGTH_SHORT).show();
             }
-
+            Toast.makeText(MainActivity.this, String.valueOf(recommendedSongs), Toast.LENGTH_SHORT).show();
         }
     }
     @Override
@@ -103,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         //permission();
 
         authenticateUser();
+
 
         progressBar = findViewById(R.id.progressBar);
         bottom = findViewById(R.id.frag_bottom);
@@ -115,8 +145,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         localMusicFiles = getAllLocalAudio(this);
         loadMusicFiles();
         getAllAlbum();
-        //new RecommenderTask().execute();
+
+        new RecommenderTask().execute();
     }
+
 
     private void loadMusicFiles() {
         new LoadAudioTask(this).execute();
@@ -137,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         @Override
         protected ArrayList<MusicFiles> doInBackground(Void... voids) {
             ArrayList<MusicFiles> allAudio = new ArrayList<>();
-            allAudio.addAll(getAllLocalAudio(context));
+            //allAudio.addAll(getAllLocalAudio(context));
             allAudio.addAll(getAllAudioFromFirebase());
             return allAudio;
         }
@@ -179,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 if(artist == null) artist = "no artist";
 
                 MusicFiles musicFiles1 = new MusicFiles(album, title , artist, duration, path);
-                if(!Objects.equals(musicFiles1.getSongLink(), "tone.mp3")) {
+                if(!musicFiles1.getSongLink().trim().contains("tone")) {
                     tmp2.add(musicFiles1);
                 }
             }
@@ -257,9 +289,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         songsFragment = new SongsFragment();
         viewPagerAdapter.addFragments(songsFragment, "Songs");
+        viewPagerAdapter.addFragments(new LocalSongFragment(this), "Playlist");
         viewPagerAdapter.addFragments(new AlbumFragment(), "Albums");
         viewPagerAdapter.addFragments(new SoundRecognitionFragment(), "Shazam");
-        viewPagerAdapter.addFragments(new LocalSongFragment(this), "Playlist");
         viewPagerAdapter.addFragments(new UserFragment(this), "User");
 
         viewPager.setOffscreenPageLimit(5);
@@ -284,9 +316,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public void initViewPager() {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragments(new SongsFragment(), "Songs");
+        viewPagerAdapter.addFragments(new LocalSongFragment(this), "Playlist");
         viewPagerAdapter.addFragments(new AlbumFragment(), "Albums");
         viewPagerAdapter.addFragments(new SoundRecognitionFragment(), "Shazam");
-        viewPagerAdapter.addFragments(new LocalSongFragment(this), "Playlist");
         viewPagerAdapter.addFragments(new UserFragment(this), "User");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -358,7 +390,22 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search, menu);
         MenuItem menuItem = menu.findItem(R.id.search_option);
-        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView = (SearchView) menuItem.getActionView();
+
+        // Hiển thị thanh tìm kiếm mở rộng
+        searchView.setIconifiedByDefault(false);
+
+        // Ẩn biểu tượng kính lúp
+        int searchPlateId = searchView.getContext().getResources().getIdentifier("android:id/search_plate", null, null);
+        View searchPlate = searchView.findViewById(searchPlateId);
+        if (searchPlate != null) {
+            int searchIconId = searchPlate.getContext().getResources().getIdentifier("android:id/search_mag_icon", null, null);
+            View searchIcon = searchPlate.findViewById(searchIconId);
+            if (searchIcon != null) {
+                searchIcon.setVisibility(View.GONE);
+            }
+        }
+
         searchView.setOnQueryTextListener(this);
         return super.onCreateOptionsMenu(menu);
     }
@@ -372,6 +419,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public boolean onQueryTextChange(String newText) {
         String userInput = newText.toLowerCase();
         ArrayList<MusicFiles> myFiles = new ArrayList<>();
+        ArrayList<MusicFiles> myLocalFiles = new ArrayList<>();
 
         for (MusicFiles song : musicFiles) {
             if (song.getSongTitle().toLowerCase().contains(userInput)) {
@@ -379,6 +427,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             }
         }
         SongsFragment.musicAdapter.updateList(myFiles);
+
+        for (MusicFiles song : localMusicFiles) {
+            if (song.getSongTitle().toLowerCase().contains(userInput)) {
+                myLocalFiles.add(song);
+            }
+        }
+        LocalSongFragment.musicAdapter2.updateList(myLocalFiles);
         return true;
     }
 
@@ -416,4 +471,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             databaseReference.removeEventListener(valueEventListener);
         }
     }
+
+
 }

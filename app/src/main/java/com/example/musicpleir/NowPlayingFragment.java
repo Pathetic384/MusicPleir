@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,10 +62,22 @@ public class NowPlayingFragment extends Fragment implements ServiceConnection {
         prevBtn = view.findViewById(R.id.skip_prev_bottom);
         playPauseBtn = view.findViewById(R.id.play_pause_mini);
 
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), PlayerActivity.class);
+                intent.putExtra("position", musicService.position);
+                intent.putExtra("isPlaying", musicService.isPlaying());
+                intent.putExtra("currentPosition", musicService.getCurrentPosition());
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+            }
+        });
+
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "12", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "12", Toast.LENGTH_SHORT).show();
                 if(musicService != null) {
                     try {musicService.nextBtnClicked();} catch (IOException e) {}
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
@@ -79,7 +92,7 @@ public class NowPlayingFragment extends Fragment implements ServiceConnection {
         prevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "12", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "12", Toast.LENGTH_SHORT).show();
                 if(musicService != null) {
                     try {musicService.prevBtnClicked();} catch (IOException e) {}
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
@@ -94,7 +107,7 @@ public class NowPlayingFragment extends Fragment implements ServiceConnection {
         playPauseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "122", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "122", Toast.LENGTH_SHORT).show();
                 if(musicService != null) {
                     try {musicService.playPauseBtnClicked();} catch (IOException e) {}
                     if(musicService.isPlaying()) {

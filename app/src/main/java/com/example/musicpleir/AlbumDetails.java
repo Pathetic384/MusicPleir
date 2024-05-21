@@ -33,7 +33,6 @@ public class AlbumDetails extends AppCompatActivity {
     RecyclerView recyclerView;
     ImageView albumPhoto;
     String albumName;
-    Button rcmBtn;
     static ArrayList<MusicFiles> albumSongs = new ArrayList<>();
     AlbumDetailsAdapter albumDetailsAdapter;
     static DatabaseReference databaseReference;
@@ -45,7 +44,6 @@ public class AlbumDetails extends AppCompatActivity {
         setContentView(R.layout.activity_album_details);
         recyclerView = findViewById(R.id.recyclerView);
         albumPhoto = findViewById(R.id.albumPhoto);
-        rcmBtn = findViewById(R.id.see_more);
         albumName = getIntent().getStringExtra("albumName");
 
         Runnable myRunnable = new Runnable(){
@@ -57,15 +55,7 @@ public class AlbumDetails extends AppCompatActivity {
         Thread thread = new Thread(myRunnable);
         thread.start();
 
-        rcmBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i =new Intent(getApplicationContext(), RecommendDetails.class);
-                i.putExtra("albumName", albumName);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                getApplicationContext().startActivity(i);
-            }
-        });
+
 
     }
 

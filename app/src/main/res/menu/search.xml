@@ -1,11 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:title="search"
         android:id="@+id/search_option"
-        android:icon="@mipmap/ic_launcher"
+        android:title="search"
         app:showAsAction="ifRoom"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"/>
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        android:focusable="true" />
 
+    <!-- Item ic_launcher -->
+    <item
+        android:id="@+id/menu_launcher_icon"
+        android:icon="@mipmap/ic_launcher"
+        app:showAsAction="always" />
 </menu>
