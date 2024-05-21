@@ -16,7 +16,7 @@ import java.util.List;
 
 public class Recommender {
 
-    public static ArrayList recommend(String accessToken) {
+    public static ArrayList recommend(String accessToken, String playlistID) {
 
         ArrayList<String> res = new ArrayList<String>();
         SpotifyApi spotifyApi = new SpotifyApi.Builder()
@@ -24,7 +24,7 @@ public class Recommender {
                 .build();
 
 
-        GetPlaylistRequest getPlaylistRequest = spotifyApi.getPlaylist("3PYMM73YWETgnuqCbRT94d").build();
+        GetPlaylistRequest getPlaylistRequest = spotifyApi.getPlaylist(playlistID).build();
 
 
         try {

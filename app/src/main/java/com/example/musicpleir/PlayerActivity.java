@@ -111,6 +111,9 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
                 int mCurrentPosition = musicService.getCurrentPosition() / 1000;
                 seekBar.setProgress(mCurrentPosition);
                 duration_played.setText(Util.formattedTime(mCurrentPosition));
+                if(mCurrentPosition == musicService.getDuration()-2) {
+                    nextThreadBtn();
+                }
                 //Log.e("playy", String.valueOf(musicService.isPlaying()));
                 }
                 handler.postDelayed(this, 1000);

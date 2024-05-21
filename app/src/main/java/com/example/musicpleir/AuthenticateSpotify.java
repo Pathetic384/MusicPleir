@@ -31,7 +31,7 @@ public class AuthenticateSpotify extends AppCompatActivity {
                     System.out.println("Access token: " + oauth2.accessToken);
                     Addsong addsong = new Addsong(oauth2.accessToken, oauth2.PLAYLIST_ID);
                     addsong.addSongToPlaylist("Ditto");
-                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                    Intent i = new Intent(getApplicationContext(), Login.class);
                     startActivity(i);
                     finish();
                 });

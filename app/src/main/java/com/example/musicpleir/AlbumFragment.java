@@ -91,6 +91,7 @@ public class AlbumFragment extends Fragment {
 
                 MainActivity.getAllAlbum();
                 ArrayList<String> newAlbum = MainActivity.albums;
+                //if()
                 adapter.updateList(newAlbum);
 
             }

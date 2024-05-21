@@ -37,6 +37,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.test.espresso.remote.EspressoRemoteMessage;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private class RecommenderTask extends AsyncTask<Void, Void, ArrayList<String>> {
         @Override
         protected ArrayList<String> doInBackground(Void... voids) {
-            return Recommender.recommend(SpotifyAuth.getAccessToken());
+            return Recommender.recommend(SpotifyAuth.getAccessToken(), AuthenticateSpotify.oauth2.PLAYLIST_ID);
         }
 
         @Override
@@ -273,6 +274,23 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         else {
             userMail = user.getEmail();
             userID = user.getUid();
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference userProfileRef = database.getReference("rcm-id").child(userID);
+
+            // Read from the database
+            userProfileRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String get = snapshot.getValue(String.class);
+                    if(get==null) return;
+                    AuthenticateSpotify.oauth2.PLAYLIST_ID = get;
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }
 
         if(!Objects.equals(userMail, "tester@gmail.com")) {

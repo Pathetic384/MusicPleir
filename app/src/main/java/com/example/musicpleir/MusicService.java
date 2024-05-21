@@ -181,18 +181,20 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-        if(actionPlaying != null) {
+//        mediaPlayer.stop();
+
+//        if(actionPlaying != null) {
             try {
                 actionPlaying.nextBtnClicked();
-                if(mediaPlayer != null) {
+//                if(mediaPlayer != null) {
                     createMediaPlayer(position);
                     start();
                     onCompleted();
-                }
+//                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        }
+//        }
 
     }
     void setCallBack(ActionPlaying actionPlaying) {
