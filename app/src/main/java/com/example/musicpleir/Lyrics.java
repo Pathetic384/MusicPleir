@@ -126,7 +126,8 @@ public class Lyrics {
             if (jsonObject.has("lyrics") && jsonObject.getJSONObject("lyrics").has("lyrics") &&
                     jsonObject.getJSONObject("lyrics").getJSONObject("lyrics").has("body") &&
                     jsonObject.getJSONObject("lyrics").getJSONObject("lyrics").getJSONObject("body").has("html")) {
-                return jsonObject.getJSONObject("lyrics").getJSONObject("lyrics").getJSONObject("body").getString("html");
+                String lyrics = jsonObject.getJSONObject("lyrics").getJSONObject("lyrics").getJSONObject("body").getString("html");
+                return lyrics.replaceAll("<br>", "\n").replaceAll("<[^>]+>", "");
             } else {
                 Log.e("Lyrics", "Unexpected JSON structure in lyrics response");
             }
