@@ -55,6 +55,8 @@ public class AlbumFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_album, container, false);
         recyclerView = view.findViewById(R.id.recyclerView);
+        LinearLayoutManager horizontalLayoutManagaer = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(horizontalLayoutManagaer);
         recyclerView.setHasFixedSize(true);
         if(!MainActivity.albums.isEmpty()) {
             adapter = new AlbumAdapter(getContext(), MainActivity.albums);

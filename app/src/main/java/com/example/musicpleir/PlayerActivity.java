@@ -41,6 +41,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.NotificationCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -74,6 +75,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
     public static boolean loading = false;
     Button lyricsButton;
     Dialog dialog;
+    static String sender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,6 +212,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
 
 
     void openFeedbackDialog(int gravity) {
+        if(Objects.equals(sender, "local")) return;
         dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.layout_dialog);
@@ -423,6 +426,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         if(musicService.isPlaying()) {
             playpauseBtn.setImageResource(R.drawable.ic_play);
             musicService.showNotification(R.drawable.ic_play);
+            NowPlayingFragment.playPauseBtn.setImageResource(R.drawable.ic_play);
             musicService.pause();
             seekBar.setMax(musicService.getDuration() / 1000);
             PlayerActivity.this.runOnUiThread( () -> {
@@ -435,6 +439,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         else {
             musicService.showNotification(R.drawable.ic_pause);
             playpauseBtn.setImageResource(R.drawable.ic_pause);
+            NowPlayingFragment.playPauseBtn.setImageResource(R.drawable.ic_pause);
             musicService.start();
             seekBar.setMax(musicService.getDuration() / 1000);
             PlayerActivity.this.runOnUiThread( () -> {
@@ -450,7 +455,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
     private void getIntentMethod() throws IOException {
         position = getIntent().getIntExtra("position",-1);
         Log.d("PlayerActivity", "Received position: " + position);
-        String sender = getIntent().getStringExtra("sender");
+        sender = getIntent().getStringExtra("sender");
         if(sender!= null && sender.equals("albumDetails")) {
             listSongs = AlbumDetailsAdapter.albumFiles;
         }
@@ -506,7 +511,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
                     Palette.Swatch swatch = palette.getDominantSwatch();
                     if(swatch != null) {
                         ImageView gradient = findViewById(R.id.imageViewGradient);
-                        RelativeLayout mContainer = findViewById(R.id.mContainer);
+                        ConstraintLayout mContainer = findViewById(R.id.mContainer);
                         gradient.setBackgroundResource(R.drawable.gradient_bg);
                         mContainer.setBackgroundResource(R.drawable.main_bg);
                         GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, new int[]{swatch.getRgb(), 0x00000000});
@@ -518,7 +523,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
                     }
                     else {
                         ImageView gradient = findViewById(R.id.imageViewGradient);
-                        RelativeLayout mContainer = findViewById(R.id.mContainer);
+                        ConstraintLayout mContainer = findViewById(R.id.mContainer);
                         gradient.setBackgroundResource(R.drawable.gradient_bg);
                         mContainer.setBackgroundResource(R.drawable.main_bg);
                         GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, new int[]{0xff000000, 0x00000000});
@@ -536,7 +541,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
             ImageAnimation(this, cover_art, bitmap);
 
             ImageView gradient = findViewById(R.id.imageViewGradient);
-            RelativeLayout mContainer = findViewById(R.id.mContainer);
+            ConstraintLayout mContainer = findViewById(R.id.mContainer);
             gradient.setBackgroundResource(R.drawable.gradient_bg);
             mContainer.setBackgroundResource(R.drawable.main_bg);
             song_name.setTextColor(Color.WHITE);

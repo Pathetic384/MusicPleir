@@ -78,7 +78,6 @@ public class UserFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
         TextView mail = view.findViewById(R.id.user_mail);
         Button logout = view.findViewById(R.id.logout_btn);
-        mail.setText(MainActivity.userMail);
         save = view.findViewById(R.id.save_button);
         name = view.findViewById(R.id.user_name);
         changeBtn = view.findViewById(R.id.change_pass);
@@ -160,6 +159,7 @@ public class UserFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String get = snapshot.getValue(String.class);
+                if(get!=null)
                 Glide.with(getContext()).load(get).into(imageView);
             }
 

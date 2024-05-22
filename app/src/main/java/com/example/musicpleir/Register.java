@@ -40,7 +40,7 @@ public class Register extends AppCompatActivity {
     ProgressBar progressBar;
     TextView textView;
     TextView note;
-    FirebaseAuth firebaseAuth;
+static boolean rcm;
 
     public void onStart() {
         super.onStart();
@@ -112,34 +112,32 @@ public class Register extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
+                                    if(rcm) {
+                                        Runnable myRunnable = new Runnable() {
+                                            public void run() {
 
-                                    Runnable myRunnable = new Runnable(){
-                                        public void run(){
+                                                FirebaseUser user = task.getResult().getUser();
+                                                String id1 = user.getUid();
+                                                Addsong addsong = new Addsong(AuthenticateSpotify.oauth2.accessToken, AuthenticateSpotify.oauth2.PLAYLIST_ID);
+                                                String playlist_id = addsong.createPlaylist();
 
-                                            FirebaseUser user = task.getResult().getUser();
-                                            String id1 = user.getUid();
-                                            Addsong addsong = new Addsong(AuthenticateSpotify.oauth2.accessToken, AuthenticateSpotify.oauth2.PLAYLIST_ID);
-                                            String playlist_id = addsong.createPlaylist();
+                                                DatabaseReference mDatabase;
+                                                mDatabase = FirebaseDatabase.getInstance().getReference();
+                                                mDatabase.child("rcm-id").child(id1).setValue(playlist_id).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void unused) {
+                                                        Toast.makeText(Register.this, "Account created",
+                                                                Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
 
-                                            DatabaseReference mDatabase;
-                                            mDatabase = FirebaseDatabase.getInstance().getReference();
-                                            mDatabase.child("rcm-id").child(id1).setValue(playlist_id).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void unused) {
-                                                    Toast.makeText(Register.this, "Account created",
-                                                            Toast.LENGTH_SHORT).show();
-                                                }
-                                            });
-
-                                            mDatabase.child("users").child(MainActivity.userID).child("base_album")
-                                                    .setValue("base_album");
-                                        }
-                                    };
-                                    Thread thread = new Thread(myRunnable);
-                                    thread.start();
-
-
-
+                                                mDatabase.child("users").child(MainActivity.userID).child("base_album")
+                                                        .setValue("base_album");
+                                            }
+                                        };
+                                        Thread thread = new Thread(myRunnable);
+                                        thread.start();
+                                    }
                                     progressBar.setVisibility(View.GONE);
 
                                     Intent i = new Intent(getApplicationContext(), Login.class);
@@ -147,7 +145,8 @@ public class Register extends AppCompatActivity {
                                     finish();
                                 } else {
                                     progressBar.setVisibility(View.GONE);
-                                    note.setText("Your mail must follow format: @gmail.com and the length of password must be >=6 letters");
+                                    note.setText("Your mail must follow format: @gmail.com and the length of password must be >=6 letters" +
+                                            ", or you mail has been used already");
                                     note.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.warningColor));
                                 }
                             }
