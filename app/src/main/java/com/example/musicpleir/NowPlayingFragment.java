@@ -24,13 +24,11 @@ import androidx.fragment.app.Fragment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -160,7 +158,7 @@ public class NowPlayingFragment extends Fragment implements ServiceConnection {
                         if (art != null) {
                             Glide.with(getContext()).load(art).into(albumArt);
                         } else {
-                            Glide.with(getContext()).load(R.drawable.pic).into(albumArt);
+                            Glide.with(getContext()).load(R.drawable.ic_music_note).into(albumArt);
                         }
                         artist.setText(Artist_To_Mini);
                         songName.setText(Song_To_Mini);
@@ -185,7 +183,7 @@ public class NowPlayingFragment extends Fragment implements ServiceConnection {
                         Glide.with(getContext()).load(art).into(albumArt);
                     }
                     else {
-                        Glide.with(getContext()).load(R.drawable.pic).into(albumArt);
+                        Glide.with(getContext()).load(R.drawable.ic_music_note).into(albumArt);
                     }
                     artist.setText(Artist_To_Mini);
                     songName.setText(Song_To_Mini);

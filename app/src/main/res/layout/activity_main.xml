@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="5dp"
         android:background="@drawable/rounded_player"
-        android:paddingHorizontal="20dp"
+        android:paddingHorizontal="14dp"
         app:layout_constraintBottom_toTopOf="@id/tab_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -50,8 +50,10 @@
         app:tabIndicator="@drawable/gradient_bg"
         app:tabIndicatorColor="@color/black"
         app:tabIndicatorFullWidth="true"
-        app:tabIndicatorGravity="center"
+        app:tabIndicatorGravity="bottom"
         app:tabIndicatorHeight="70dp"
+        app:tabPaddingEnd="10dp"
+        app:tabPaddingStart="10dp"
         app:tabSelectedTextColor="@color/colorAccent"
         app:tabTextColor="@color/textColorSecondary" />
 

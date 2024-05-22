@@ -56,7 +56,7 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.My
                 Glide.with(mContext).asBitmap().load(image).into(holder.album_art);
             }
             else {
-                Glide.with(mContext).asBitmap().load(R.drawable.pic).into(holder.album_art);
+                Glide.with(mContext).asBitmap().load(R.drawable.ic_music_note).into(holder.album_art);
             }
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

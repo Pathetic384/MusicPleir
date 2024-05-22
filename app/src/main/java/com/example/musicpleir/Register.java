@@ -138,8 +138,6 @@ static boolean rcm;
                                         Thread thread = new Thread(myRunnable);
                                         thread.start();
                                     }
-
-
                                     progressBar.setVisibility(View.GONE);
 
                                     Intent i = new Intent(getApplicationContext(), Login.class);

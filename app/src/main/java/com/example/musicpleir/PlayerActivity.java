@@ -41,6 +41,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.NotificationCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -508,7 +509,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
                     Palette.Swatch swatch = palette.getDominantSwatch();
                     if(swatch != null) {
                         ImageView gradient = findViewById(R.id.imageViewGradient);
-                        RelativeLayout mContainer = findViewById(R.id.mContainer);
+                        ConstraintLayout mContainer = findViewById(R.id.mContainer);
                         gradient.setBackgroundResource(R.drawable.gradient_bg);
                         mContainer.setBackgroundResource(R.drawable.main_bg);
                         GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, new int[]{swatch.getRgb(), 0x00000000});
