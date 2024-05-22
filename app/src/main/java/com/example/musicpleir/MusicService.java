@@ -232,12 +232,12 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
             manager.createNotificationChannel(chan);
         }
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_play)
+                .setSmallIcon(R.drawable.ic_music)
                 .setLargeIcon(thumb)
                 .setContentTitle(listSongs.get(position).getSongTitle())
                 .setContentText(listSongs.get(position).getArtist())
                 .addAction(R.drawable.ic_skip_previous, "Previous", prevIntent)
-                .addAction(R.drawable.ic_pause, "Pause", pauseIntent)
+                .addAction(R.drawable.ic_music, "Pause", pauseIntent)
                 .addAction(R.drawable.ic_skip_next, "Next", nextIntent)
                 .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
                         .setMediaSession(mediaSessionCompat.getSessionToken()))

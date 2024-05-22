@@ -157,7 +157,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         loadMusicFiles();
         getAllAlbum();
 
-        new RecommenderTask().execute();
+        if(Register.rcm) {
+            new RecommenderTask().execute();
+        }
     }
 
 

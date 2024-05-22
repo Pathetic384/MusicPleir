@@ -72,6 +72,9 @@ public class AlbumFragment extends Fragment {
             }
         });
         more = view.findViewById(R.id.see_more);
+        if(!Register.rcm) {
+            more.setVisibility(View.GONE);
+        }
         more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

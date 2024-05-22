@@ -239,8 +239,9 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
 
                 Addsong addsong = new Addsong(AuthenticateSpotify.oauth2.accessToken, AuthenticateSpotify.oauth2.PLAYLIST_ID);
                 addsong.addSongToPlaylist(listSongs.get(position).songTitle);
-
-                new MainActivity.RecommenderTask().execute();
+                if(Register.rcm) {
+                    new MainActivity.RecommenderTask().execute();
+                }
             }
         });
         back.setOnClickListener(new View.OnClickListener() {
@@ -521,6 +522,10 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         seekBar = findViewById(R.id.seekBar);
         addAlbum = findViewById(R.id.addAlbum);
         lyricsButton = findViewById(R.id.lyrics);
+
+        if(Objects.equals(sender, "local")) {
+            addAlbum.setVisibility(View.GONE);
+        }
     }
 
     private void metaData (Uri uri, MediaMetadataRetriever retriever) {
