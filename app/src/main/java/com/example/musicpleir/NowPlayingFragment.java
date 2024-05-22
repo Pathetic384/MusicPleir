@@ -178,7 +178,7 @@ public class NowPlayingFragment extends Fragment implements ServiceConnection {
                 try {
                     byte[] art = null;
                     if(!Objects.equals(MainActivity.userMail, "tester@gmail.com"))
-                        Util.getAlbumArt(Path_To_Mini, new MediaMetadataRetriever());
+                       art = Util.getAlbumArt(Path_To_Mini, new MediaMetadataRetriever());
                     if(art != null) {
                         Glide.with(getContext()).load(art).into(albumArt);
                     }
