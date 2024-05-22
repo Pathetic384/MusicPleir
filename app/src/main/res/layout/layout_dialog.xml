@@ -9,35 +9,40 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="send feedback"
-        android:textSize="16sp"
-        android:textColor="@color/white"
         android:background="@drawable/yellow_top"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="Choose album to add"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/cardview_background">
 
         <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/albumSpinner"
-            android:gravity="center"/>
-        <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="heyya"
-            android:id="@+id/heyya"/>
+            android:layout_marginBottom="16dp"/>
+
         <Button
+            android:id="@+id/heyya"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="pp"
-            android:id="@+id/back"/>
+            android:text="Add"
+            android:background="@drawable/mybutton"
+            android:layout_marginBottom="10dp"/>
 
-
+        <Button
+            android:id="@+id/back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:background="@drawable/mybutton"/>
     </LinearLayout>
 </LinearLayout>

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/white_corner"
     android:layout_margin="16dp"
     android:orientation="vertical">
@@ -10,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:text="send feedback"
+        android:textAllCaps="true"
+        android:text="Change Password"
         android:textSize="16sp"
         android:textColor="@color/white"
         android:background="@drawable/yellow_top"
@@ -20,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
+        android:background="@color/cardview_background"
         android:orientation="vertical">
 
         <TextView
@@ -27,37 +30,62 @@
             android:layout_height="65dp"
             android:id="@+id/note"
             android:textSize="20dp"
-            android:text="Enter all fields"
+            android:textColor="@color/warningColor"
+            android:text="Please enter all fields"
             android:gravity="center" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingVertical="10dp"
+            app:hintTextColor="@color/textColorSecondary"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/rounded_edittext">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/current_pass"
                 android:hint="Curent password"
+                android:textSize="18sp"
+                android:paddingHorizontal="10dp"
+                android:background="@android:color/transparent"
+                android:textColor="@android:color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingVertical="10dp"
+            app:hintTextColor="@color/textColorSecondary"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/rounded_edittext">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/new_pass"
                 android:hint="New password"
+                android:textSize="18sp"
+                android:paddingHorizontal="10dp"
+                android:background="@android:color/transparent"
+                android:textColor="@android:color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingVertical="10dp"
+            app:hintTextColor="@color/textColorSecondary"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/rounded_edittext">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/confirm_pass"
                 android:hint="Confirm new password"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:paddingHorizontal="10dp"
+                android:background="@android:color/transparent"
+                android:textColor="@android:color/black"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <ProgressBar
@@ -71,11 +99,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="change"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/mybutton"
             android:id="@+id/change"/>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="pp"
+            android:text="Cancel"
+            android:background="@drawable/mybutton"
+            android:layout_marginTop="16dp"
             android:id="@+id/back"/>
 
 

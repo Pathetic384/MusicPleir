@@ -99,18 +99,18 @@
         android:id="@+id/song_artist"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:ellipsize="end"
+        android:gravity="center_horizontal"
+        android:singleLine="true"
         android:text="This is song artist"
         android:textColor="@color/textColorSecondary"
-        android:gravity="center_horizontal"
         android:textSize="18sp"
         android:textStyle="italic"
-        android:singleLine="true"
-        android:ellipsize="end"
-        app:layout_constraintTop_toBottomOf="@id/song_name"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/song_name" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/seek_bar_layout"
@@ -213,13 +213,17 @@
 
     <Button
         android:id="@+id/lyrics"
-        android:layout_width="91dp"
-        android:layout_height="66dp"
-        android:layout_marginBottom="28dp"
-        android:background="@drawable/mybutton"
-        android:text="See Lyrics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="34dp"
+        android:layout_marginBottom="36dp"
+        android:background="@drawable/mybutton_transparent"
+        android:paddingHorizontal="24dp"
+        android:text="Lyrics"
         app:layout_constraintBottom_toTopOf="@+id/seek_bar_layout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/song_artist" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

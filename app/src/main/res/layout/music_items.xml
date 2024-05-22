@@ -22,6 +22,7 @@
         android:layout_toEndOf="@id/music_img"
         android:layout_marginTop="10dp"
         android:textStyle="bold"
+        android:textSize="16sp"
         android:text="File name"
         android:textColor="@color/white" />
 
@@ -34,7 +35,7 @@
         android:layout_toEndOf="@id/music_img"
         android:layout_below="@id/music_file_name"
         android:textStyle="italic"
-        android:textSize="13dp"
+        android:textSize="14dp"
         android:text="Artist"
         android:textColor="@color/white" />
 

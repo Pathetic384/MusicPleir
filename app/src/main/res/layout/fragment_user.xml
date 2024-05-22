@@ -25,14 +25,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="139dp"
         android:layout_height="142dp"
         android:layout_below="@id/title"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="35dp"
         android:layout_marginEnd="138dp"
         app:srcCompat="@mipmap/ic_launcher_foreground" />
 
@@ -49,6 +48,17 @@
         android:textSize="16sp"
         android:textStyle="italic" />
 
+    <EditText
+        android:id="@+id/user_name"
+        android:layout_width="231dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user_email"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@id/name_label"
+        android:text="name"
+        android:textSize="20sp" />
+
     <TextView
         android:id="@+id/name_label"
         android:layout_width="wrap_content"
@@ -56,22 +66,11 @@
         android:layout_below="@id/user_email"
         android:layout_alignParentStart="true"
         android:layout_marginStart="18dp"
-        android:layout_marginTop="43dp"
+        android:layout_marginTop="31dp"
         android:text="Name:"
-        android:textStyle="bold"
         android:textColor="@color/white"
-        android:textSize="20sp" />
-
-    <EditText
-        android:id="@+id/user_name"
-        android:layout_width="231dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/user_email"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:layout_toEndOf="@id/name_label"
-        android:text="name"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/save_button"
@@ -80,7 +79,7 @@
         android:layout_below="@id/user_email"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="11dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="22dp"
         android:layout_toEndOf="@+id/user_name"
         android:background="@color/transparent"
