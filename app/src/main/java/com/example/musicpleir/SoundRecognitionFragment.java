@@ -12,8 +12,6 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Environment;
 import android.os.Handler;
@@ -53,14 +51,9 @@ public class SoundRecognitionFragment extends Fragment {
     private String coverImageUrl = "https://ih1.redbubble.net/image.3800727619.4531/st,small,845x845-pad,1000x1000,f8f8f8.jpg";
     private Boolean playBtnEnabled = false;
     private String title = null;
-    private OnPlayButtonClickListener listener;
-
 
     public SoundRecognitionFragment() {
 
-    }
-    public interface OnPlayButtonClickListener {
-        void onPlayButtonClicked();
     }
 
     @Override
@@ -87,7 +80,7 @@ public class SoundRecognitionFragment extends Fragment {
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            infoText.setText("Can't identity the song.\nTry again.");
+                            infoText.setText("Error: JSON parsing failed");
                         }
                     }, 5000);
                     return;
@@ -118,7 +111,7 @@ public class SoundRecognitionFragment extends Fragment {
                             new SendAudioTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, AudioSavePath);
 
                         }
-                    }, 6000);
+                    }, 5000);
                 }
             }
         });
@@ -128,11 +121,7 @@ public class SoundRecognitionFragment extends Fragment {
             public void onClick(View v) {
                 // Notify MainActivity
                 notifySongRecognized(title);
-//                Toast.makeText(getContext(), "Check yo music tabs ASAP!", Toast.LENGTH_SHORT)
-//                .show();
-                if (listener != null) {
-                    listener.onPlayButtonClicked();
-                }
+                Toast.makeText(getContext(), "Check yo music tabs ASAP!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -178,12 +167,6 @@ public class SoundRecognitionFragment extends Fragment {
         } else {
             throw new RuntimeException(context.toString() + " must implement OnSongRecognizedListener");
         }
-        if (context instanceof OnPlayButtonClickListener) {
-            listener = (OnPlayButtonClickListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnPlayButtonClickListener");
-        }
     }
 
     private void notifySongRecognized(String songTitle) {
@@ -195,7 +178,7 @@ public class SoundRecognitionFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            infoText.setText("Hmm...");
+            infoText.setText("Sending...");
         }
 
         @Nullable
@@ -264,13 +247,13 @@ public class SoundRecognitionFragment extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
                 playBtnEnabled = false;
-                return "Can't identity the song.\nTry again.";  // Handle JSON parsing exceptions
+                return "Error: JSON parsing failed";  // Handle JSON parsing exceptions
             }
         }
         @Override
         protected void onPostExecute(String result) {
             if (result != null) {
-                infoText.setText(result);
+                infoText.setText("Response: \n" + result);
                 // Load the image using Glide
                 Glide.with(SoundRecognitionFragment.this)
                         .load(coverImageUrl)

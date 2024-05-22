@@ -74,9 +74,9 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener,
-        SoundRecognitionFragment.OnSongRecognizedListener, SoundRecognitionFragment.OnPlayButtonClickListener {
+        SoundRecognitionFragment.OnSongRecognizedListener {
 
-private SongsFragment songsFragment;
+    private SongsFragment songsFragment;
     private static final int REQUEST_PERMISSION_CODE = 10;
     static ArrayList<MusicFiles> musicFiles = new ArrayList<>();
     static ArrayList<MusicFiles> localMusicFiles = new ArrayList<>();
@@ -111,12 +111,6 @@ private SongsFragment songsFragment;
 
     // Recommended songs from Spotify API
     public static ArrayList<String> recommendedSongs = new ArrayList<>();
-
-    @Override
-    public void onPlayButtonClicked() {
-        // Chuyển đến tab SongsFragment khi nút play được nhấn
-        viewPager.setCurrentItem(0); // Đặt tab index tương ứng với SongsFragment
-    }
 
     public static class RecommenderTask extends AsyncTask<Void, Void, ArrayList<String>> {
         @Override
