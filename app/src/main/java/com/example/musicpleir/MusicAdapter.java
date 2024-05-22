@@ -50,6 +50,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
     @Override
     public void onBindViewHolder(@NonNull MusicAdapter.MyViewHolder holder, int position) {
         holder.file_name.setText(mFiles.get(position).getSongTitle());
+        holder.artist.setText(mFiles.get(position).getArtist());
         try {
             Glide.with(mContext).asBitmap().load(R.drawable.ic_music_note).into(holder.album_art);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -110,7 +111,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
 
     public class MyViewHolder extends  RecyclerView.ViewHolder {
 
-        TextView file_name;
+        TextView file_name, artist;
         ImageView album_art, menu;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -118,6 +119,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
             file_name = itemView.findViewById(R.id.music_file_name);
             album_art = itemView.findViewById(R.id.music_img);
             menu = itemView.findViewById(R.id.menuMore);
+            artist = itemView.findViewById(R.id.music_artist_name);
         }
     }
 

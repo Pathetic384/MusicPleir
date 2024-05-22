@@ -48,7 +48,7 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.My
     @Override
     public void onBindViewHolder(@NonNull LocalMusicAdapter.MyViewHolder holder, int position) {
         holder.file_name.setText(mFiles.get(holder.getAdapterPosition()).getSongTitle());
-
+        holder.artist.setText(mFiles.get(position).getArtist());
         try {
             if(mFiles.get(holder.getAdapterPosition()).getSongLink() == null) return;
             byte[] image = getAlbumArt(mFiles.get(position).getSongLink(), new MediaMetadataRetriever());
@@ -82,7 +82,7 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.My
 
     public class MyViewHolder extends  RecyclerView.ViewHolder {
 
-        TextView file_name;
+        TextView file_name, artist;
         ImageView album_art, menu;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -90,6 +90,7 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.My
             file_name = itemView.findViewById(R.id.music_file_name);
             album_art = itemView.findViewById(R.id.music_img);
             menu = itemView.findViewById(R.id.menuMore);
+            artist = itemView.findViewById(R.id.music_artist_name);
         }
     }
 
