@@ -78,7 +78,7 @@ public class UserFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
         mail = view.findViewById(R.id.user_email);
         logout = view.findViewById(R.id.logout_btn);
-        mail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        mail.setText(MainActivity.userMail);
         save = view.findViewById(R.id.save_button);
         name = view.findViewById(R.id.user_name);
         changeBtn = view.findViewById(R.id.change_pass);
