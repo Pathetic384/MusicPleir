@@ -65,7 +65,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
     public ImageView cover_art, nextBtn, prevBtn, backBtn, shuffleBtn, repeatBtn, addAlbum;
     public FloatingActionButton playpauseBtn;
     public SeekBar seekBar;
-    int position = -1;
+    static int position = -1;
     static Uri uri;
     static ArrayList<MusicFiles> listSongs = new ArrayList<>();
     private Handler handler = new Handler();
@@ -113,9 +113,6 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
                 int mCurrentPosition = musicService.getCurrentPosition() / 1000;
                 seekBar.setProgress(mCurrentPosition);
                 duration_played.setText(Util.formattedTime(mCurrentPosition));
-                if(mCurrentPosition == musicService.getDuration()-2) {
-                    nextThreadBtn();
-                }
                 //Log.e("playy", String.valueOf(musicService.isPlaying()));
                 }
                 handler.postDelayed(this, 1000);
@@ -308,7 +305,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         prevThread.start();
     }
 
-    void MediaThread() {
+    void MediaThread(int i) {
         musicService.stop();
         musicService.release();
         PlayerActivity.this.runOnUiThread( () -> {
@@ -317,14 +314,18 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
                 seekBar.setProgress(mCurrentPosition);
             }
         } );
-        musicService.createMediaPlayer(position);
-        musicService.onCompleted();
+        if(i==0) {
+            musicService.createMediaPlayer(position);
+            musicService.onCompleted();
+        }
         try {
             musicService.showNotification(R.drawable.ic_pause);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        musicService.start();
+        if(i==0) {
+            musicService.start();
+        }
         loading = false;
     }
 
@@ -345,7 +346,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
 
         Runnable myRunnable = new Runnable(){
             public void run(){
-                MediaThread();
+                MediaThread(0);
             }
         };
         Thread thread = new Thread(myRunnable);
@@ -389,7 +390,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
 
             Runnable myRunnable = new Runnable(){
                 public void run(){
-                    MediaThread();
+                    MediaThread(0);
                 }
             };
             Thread thread = new Thread(myRunnable);
@@ -449,6 +450,30 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
                 }
             } );
         }
+    }
+
+    @Override
+    public void endClicked() throws IOException {
+        loading = true;
+        playpauseBtn.setImageResource(R.drawable.ic_pause);
+        if(MainActivity.shuffleBoolean && !MainActivity.repeatBoolean) {
+            position = getRandom(listSongs.size() - 1);
+        }
+        else if(!MainActivity.shuffleBoolean && !MainActivity.repeatBoolean) {
+            position = ((position + 1) % listSongs.size());
+        }
+        uri = Uri.parse(listSongs.get(position).getSongLink());
+        metaData(uri, new MediaMetadataRetriever());
+        song_name.setText(listSongs.get(position).getSongTitle());
+        artist_name.setText(listSongs.get(position).getArtist());
+
+        Runnable myRunnable = new Runnable(){
+            public void run(){
+                MediaThread(1);
+            }
+        };
+        Thread thread = new Thread(myRunnable);
+        thread.start();
     }
 
 

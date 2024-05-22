@@ -6,4 +6,5 @@ public interface ActionPlaying {
     void prevBtnClicked() throws IOException;
     void nextBtnClicked() throws IOException;
     void playPauseBtnClicked() throws IOException;
+    void endClicked() throws IOException;
 }
