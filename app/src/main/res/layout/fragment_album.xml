@@ -3,31 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
     tools:context=".AlbumFragment">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="621dp"
-        android:layout_below="@+id/albumName"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="114dp"
-        android:background="@color/cardview_dark_background"
-        android:orientation="horizontal"/>
-
-    <Button
-        android:id="@+id/addAlbum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="49dp"
-        android:layout_marginEnd="7dp"
-        android:text="Button" />
 
     <EditText
         android:id="@+id/albumName"
@@ -35,17 +11,39 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="-4dp"
-        android:layout_marginTop="52dp"
-        android:hint="enter ur wanted album name"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="11dp"
+        android:hint="Enter your wanted album name"
         android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/addAlbum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="7dp"
+        android:layout_toEndOf="@id/albumName"
+        android:text="Add Album" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@id/albumName"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="@color/background"
+        android:layout_above="@id/see_more"/>
 
     <Button
         android:id="@+id/see_more"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="42dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="46dp"
         android:text="See recommended songs" />
 
 </RelativeLayout>

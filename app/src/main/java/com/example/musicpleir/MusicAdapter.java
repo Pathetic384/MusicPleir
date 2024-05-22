@@ -18,12 +18,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int ITEM_TYPE_NORMAL = 0;
     private static final int ITEM_TYPE_EMPTY = 1;
-    private static final int EMPTY_ITEMS_COUNT = 2;
+    private static final int EMPTY_ITEMS_COUNT = 3;
 
     private Context mContext;
     static ArrayList<MusicFiles> mFiles;
@@ -31,6 +33,16 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     MusicAdapter(Context context, ArrayList<MusicFiles> mFiles) {
         this.mContext = context;
         this.mFiles = new ArrayList<>(mFiles);
+        sortMusicFilesByTitle();
+    }
+    // Phương thức sắp xếp danh sách mFiles theo tên bài hát
+    private void sortMusicFilesByTitle() {
+        Collections.sort(mFiles, new Comparator<MusicFiles>() {
+            @Override
+            public int compare(MusicFiles o1, MusicFiles o2) {
+                return o1.getSongTitle().compareTo(o2.getSongTitle());
+            }
+        });
     }
 
     @Override
@@ -139,6 +151,7 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     void updateList(ArrayList<MusicFiles> musicFilesArrayList) {
         mFiles = new ArrayList<>(musicFilesArrayList);
+        sortMusicFilesByTitle();  // Sắp xếp danh sách sau khi cập nhật
         notifyDataSetChanged();
     }
 
@@ -147,6 +160,7 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     public void updateMusicFiles(ArrayList<MusicFiles> newFiles) {
+        sortMusicFilesByTitle();  // Sắp xếp danh sách sau khi cập nhật
         this.mFiles = new ArrayList<>(newFiles);
     }
 }
