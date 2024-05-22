@@ -10,14 +10,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/card_bottom_player"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/playerColor"
         android:padding="5dp">
+
         <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/pic"
             android:id="@+id/bottom_art"
-            android:scaleType="centerCrop"/>
+            android:layout_width="48dp"
+            android:layout_height="44dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_music_note" />
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -51,15 +52,16 @@
             android:id="@+id/song_name_mini"
             android:layout_width="201dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="36dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="39dp"
             android:layout_toStartOf="@id/play_pause_mini"
             android:layout_toEndOf="@id/bottom_art"
             android:maxLines="1"
             android:text="Song name"
+            android:textStyle="bold"
             android:textColor="#fff"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/song_artist_mini"
@@ -67,14 +69,15 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/song_name_mini"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="5dp"
+            android:textStyle="italic"
+            android:layout_marginTop="3dp"
             android:layout_marginEnd="42dp"
             android:layout_toStartOf="@id/play_pause_mini"
             android:layout_toEndOf="@id/bottom_art"
             android:maxLines="1"
             android:text="Song artist"
             android:textColor="#fff"
-            android:textSize="15sp" />
+            android:textSize="12sp" />
 
     </RelativeLayout>
 

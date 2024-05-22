@@ -308,10 +308,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         songsFragment = new SongsFragment();
         viewPagerAdapter.addFragments(songsFragment, "Songs");
-        viewPagerAdapter.addFragments(new LocalSongFragment(this), "Playlist");
+        viewPagerAdapter.addFragments(new LocalSongFragment(this), "Local\nsongs");
         viewPagerAdapter.addFragments(new AlbumFragment(), "Albums");
         viewPagerAdapter.addFragments(new SoundRecognitionFragment(), "Shazam");
-        viewPagerAdapter.addFragments(new UserFragment(this), "User");
+        viewPagerAdapter.addFragments(new UserFragment(this), "Profile");
 
         viewPager.setOffscreenPageLimit(5);
         viewPager.setAdapter(viewPagerAdapter);
@@ -334,11 +334,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     public void initViewPager() {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPagerAdapter.addFragments(new SongsFragment(), "Songs");
-        viewPagerAdapter.addFragments(new LocalSongFragment(this), "Playlist");
+        viewPagerAdapter.addFragments(songsFragment, "Songs");
+        viewPagerAdapter.addFragments(new LocalSongFragment(this), "Local\nsongs");
         viewPagerAdapter.addFragments(new AlbumFragment(), "Albums");
         viewPagerAdapter.addFragments(new SoundRecognitionFragment(), "Shazam");
-        viewPagerAdapter.addFragments(new UserFragment(this), "User");
+        viewPagerAdapter.addFragments(new UserFragment(this), "Profile");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
