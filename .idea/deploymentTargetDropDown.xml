@@ -2,10 +2,22 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="FunctionPlayerTest">
+      <entry key="FunctionModifyAlbumSong">
         <State />
       </entry>
-      <entry key="MainActivityTest3">
+      <entry key="FunctionNowPlayingTest">
+        <State />
+      </entry>
+      <entry key="MainActivityTest5">
+        <State />
+      </entry>
+      <entry key="MainActivityTest6">
+        <State />
+      </entry>
+      <entry key="UINowPlayingFragmentTest">
+        <State />
+      </entry>
+      <entry key="app">
         <State>
           <runningDeviceTargetSelectedWithDropDown>
             <Target>
@@ -18,20 +30,8 @@
               </deviceKey>
             </Target>
           </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-05-22T13:32:15.822604500Z" />
+          <timeTargetWasSelectedWithDropDown value="2024-05-22T19:38:09.657091200Z" />
         </State>
-      </entry>
-      <entry key="MainActivityTest5">
-        <State />
-      </entry>
-      <entry key="UIPlayerTest">
-        <State />
-      </entry>
-      <entry key="UISongFragmentTest">
-        <State />
-      </entry>
-      <entry key="app">
-        <State />
       </entry>
     </value>
   </component>

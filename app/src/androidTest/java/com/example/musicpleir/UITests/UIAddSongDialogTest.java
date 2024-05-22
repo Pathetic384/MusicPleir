@@ -1,22 +1,18 @@
-package com.example.musicpleir;
+package com.example.musicpleir.UITests;
 
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
-import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static com.example.musicpleir.Util.waitFor;
 import static com.example.musicpleir.Util.waitId;
 import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
 import android.view.View;
@@ -28,69 +24,52 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 
+import com.example.musicpleir.MainActivity;
+import com.example.musicpleir.R;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTest3 {
+public class UIAddSongDialogTest {
 
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
-    public void mainActivityTest3() {
+    public void mainActivityTest5() {
         onView(isRoot()).perform(waitId(R.id.music_img, 30000));
-        ViewInteraction tabView = onView(
-                allOf(withContentDescription("Profile"),
+        ViewInteraction recyclerView = onView(
+                allOf(withId(R.id.recyclerView),
                         childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.tab_layout),
-                                        0),
-                                4),
-                        isDisplayed()));
-        tabView.perform(click());
-
-        ViewInteraction appCompatButton = onView(
-                allOf(withId(R.id.change_pass), withText(containsString("password")),
+                                withClassName(is("android.widget.RelativeLayout")),
+                                0)));
+        recyclerView.perform(actionOnItemAtPosition(0, click()));
+        onView(isRoot()).perform(waitId(R.id.addAlbum, 30000));
+        ViewInteraction appCompatImageView = onView(
+                allOf(withId(R.id.addAlbum),
                         childAtPosition(
-                                withParent(withId(R.id.viewpager)),
-                                6),
+                                allOf(withId(R.id.layout_top_btn),
+                                        childAtPosition(
+                                                withId(R.id.mContainer),
+                                                0)),
+                                2),
                         isDisplayed()));
-        appCompatButton.perform(click());
-
-        onView(isRoot()).perform(waitFor(3000));
-        ViewInteraction textInputEditText = onView(
-                allOf(withId(R.id.current_pass),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("com.google.android.material.textfield.TextInputLayout")),
-                                        0),
-                                0),
-                        isDisplayed()));
-        textInputEditText.perform(replaceText("12345"), closeSoftKeyboard());
-
-        ViewInteraction appCompatButton2 = onView(
-                allOf(withId(R.id.change), withText("change"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.LinearLayout")),
-                                        1),
-                                5),
-                        isDisplayed()));
-        appCompatButton2.perform(click());
+        appCompatImageView.perform(click());
 
         ViewInteraction textView = onView(
-                allOf(withId(R.id.note), withText("Please enter all fields!"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class))),
+                allOf(withText("CHOOSE ALBUM TO ADD"),
+                        withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
-        textView.check(matches(withText("Please enter all fields!")));
+        textView.check(matches(withText("CHOOSE ALBUM TO ADD")));
+
+
     }
 
     private static Matcher<View> childAtPosition(

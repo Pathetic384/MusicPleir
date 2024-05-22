@@ -468,7 +468,9 @@ private SongsFragment songsFragment;
                 myLocalFiles.add(song);
             }
         }
-        LocalSongFragment.musicAdapter2.updateList(myLocalFiles);
+        if(!Objects.equals(userMail, "tester@gmail.com")) {
+            LocalSongFragment.musicAdapter2.updateList(myLocalFiles);
+        }
         return true;
     }
 

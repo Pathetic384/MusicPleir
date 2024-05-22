@@ -1,8 +1,10 @@
-package com.example.musicpleir.UITests;
+package com.example.musicpleir.FunctionTests;
 
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
@@ -10,6 +12,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static com.example.musicpleir.Util.waitFor;
 import static com.example.musicpleir.Util.waitId;
 import static org.hamcrest.Matchers.allOf;
 
@@ -34,74 +37,55 @@ import org.junit.runner.RunWith;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class UIUserFragmentTest {
+public class FunctionAddAlbumTest {
 
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
-    public void userTextTest() {
+    public void functionAddAlbumTest() {
         onView(isRoot()).perform(waitId(R.id.music_img, 30000));
         ViewInteraction tabView = onView(
-                allOf(withContentDescription("Profile"),
+                allOf(withContentDescription("Albums"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.tab_layout),
                                         0),
-                                4),
+                                2),
                         isDisplayed()));
         tabView.perform(click());
+        onView(isRoot()).perform(waitFor(3000));
+        ViewInteraction appCompatEditText = onView(
+                allOf(withId(R.id.albumName),
+                        childAtPosition(
+                                withParent(withId(R.id.viewpager)),
+                                0),
+                        isDisplayed()));
+        appCompatEditText.perform(replaceText("new"), closeSoftKeyboard());
 
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(R.id.addAlbum), withText("Add Album"),
+                        childAtPosition(
+                                withParent(withId(R.id.viewpager)),
+                                1),
+                        isDisplayed()));
+        appCompatButton.perform(click());
+        onView(isRoot()).perform(waitFor(5000));
         ViewInteraction textView = onView(
-                allOf(withId(R.id.title), withText("Edit Profile"),
-                        withParent(withParent(withId(R.id.viewpager))),
+                allOf(withId(R.id.album_name), withText("new"),
+                        withParent(allOf(withId(R.id.relative_layout),
+                                withParent(withId(R.id.album_items)))),
                         isDisplayed()));
-        textView.check(matches(withText("Edit Profile")));
-    }
+        textView.check(matches(withText("new")));
+        
 
-    @Test
-    public void userChangeButtonTest() {
-        onView(isRoot()).perform(waitId(R.id.music_img, 30000));
-        ViewInteraction tabView = onView(
-                allOf(withContentDescription("Profile"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.tab_layout),
-                                        0),
-                                4),
+        ViewInteraction textView2 = onView(
+                allOf(withId(R.id.album_name), withText("ba"),
+                        withParent(allOf(withId(R.id.relative_layout),
+                                withParent(withId(R.id.album_items)))),
                         isDisplayed()));
-        tabView.perform(click());
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.change_pass), withText("Change password"),
-                        withParent(withParent(withId(R.id.viewpager))),
-                        isDisplayed()));
-        textView.check(matches(withText("Change password")));
-    }
-
-    @Test
-    public void userLogOutButtonTest() {
-        onView(isRoot()).perform(waitId(R.id.music_img, 30000));
-        ViewInteraction tabView = onView(
-                allOf(withContentDescription("Profile"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.tab_layout),
-                                        0),
-                                4),
-                        isDisplayed()));
-        tabView.perform(click());
-        ViewInteraction button3 = onView(
-                allOf(withId(R.id.logout_btn), withText("LOG OUT"),
-                        withParent(withParent(withId(R.id.viewpager))),
-                        isDisplayed()));
-        button3.check(matches(isDisplayed()));
-
-        ViewInteraction imageView = onView(
-                allOf(withId(R.id.imageView),
-                        withParent(withParent(withId(R.id.viewpager))),
-                        isDisplayed()));
-        imageView.check(matches(isDisplayed()));
+        textView2.check(matches(withText("ba")));
     }
 
     private static Matcher<View> childAtPosition(

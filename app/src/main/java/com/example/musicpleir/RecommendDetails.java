@@ -48,7 +48,7 @@ public class RecommendDetails extends AppCompatActivity {
         }
         albumSongs = tmp;
         more.setText(txt);
-        Toast.makeText(this, txt, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, txt, Toast.LENGTH_SHORT).show();
 
         Runnable myRunnable = new Runnable(){
             public void run(){

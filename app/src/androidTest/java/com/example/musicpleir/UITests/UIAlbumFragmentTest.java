@@ -10,6 +10,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static com.example.musicpleir.Util.waitFor;
 import static com.example.musicpleir.Util.waitId;
 import static org.hamcrest.Matchers.allOf;
 
@@ -34,74 +35,52 @@ import org.junit.runner.RunWith;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class UIUserFragmentTest {
+public class UIAlbumFragmentTest {
 
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
-    public void userTextTest() {
+    public void AlbumTextTest() {
         onView(isRoot()).perform(waitId(R.id.music_img, 30000));
         ViewInteraction tabView = onView(
-                allOf(withContentDescription("Profile"),
+                allOf(withContentDescription("Albums"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.tab_layout),
                                         0),
-                                4),
+                                2),
                         isDisplayed()));
         tabView.perform(click());
+        onView(isRoot()).perform(waitFor(2000));
 
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.title), withText("Edit Profile"),
+        ViewInteraction button = onView(
+                allOf(withId(R.id.addAlbum), withText("ADD ALBUM"),
                         withParent(withParent(withId(R.id.viewpager))),
                         isDisplayed()));
-        textView.check(matches(withText("Edit Profile")));
+        button.check(matches(isDisplayed()));
     }
 
-    @Test
-    public void userChangeButtonTest() {
-        onView(isRoot()).perform(waitId(R.id.music_img, 30000));
-        ViewInteraction tabView = onView(
-                allOf(withContentDescription("Profile"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.tab_layout),
-                                        0),
-                                4),
-                        isDisplayed()));
-        tabView.perform(click());
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.change_pass), withText("Change password"),
-                        withParent(withParent(withId(R.id.viewpager))),
-                        isDisplayed()));
-        textView.check(matches(withText("Change password")));
-    }
 
-    @Test
-    public void userLogOutButtonTest() {
-        onView(isRoot()).perform(waitId(R.id.music_img, 30000));
-        ViewInteraction tabView = onView(
-                allOf(withContentDescription("Profile"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.tab_layout),
-                                        0),
-                                4),
-                        isDisplayed()));
-        tabView.perform(click());
-        ViewInteraction button3 = onView(
-                allOf(withId(R.id.logout_btn), withText("LOG OUT"),
+        @Test
+        public void AlbumListTest() {
+            onView(isRoot()).perform(waitId(R.id.music_img, 30000));
+            ViewInteraction tabView = onView(
+                    allOf(withContentDescription("Albums"),
+                            childAtPosition(
+                                    childAtPosition(
+                                            withId(R.id.tab_layout),
+                                            0),
+                                    2),
+                            isDisplayed()));
+            tabView.perform(click());
+            onView(isRoot()).perform(waitFor(2000));
+        ViewInteraction recyclerView = onView(
+                allOf(withId(R.id.recyclerView),
                         withParent(withParent(withId(R.id.viewpager))),
                         isDisplayed()));
-        button3.check(matches(isDisplayed()));
-
-        ViewInteraction imageView = onView(
-                allOf(withId(R.id.imageView),
-                        withParent(withParent(withId(R.id.viewpager))),
-                        isDisplayed()));
-        imageView.check(matches(isDisplayed()));
+        recyclerView.check(matches(isDisplayed()));
     }
 
     private static Matcher<View> childAtPosition(

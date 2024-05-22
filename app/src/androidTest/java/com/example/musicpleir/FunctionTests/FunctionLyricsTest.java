@@ -1,17 +1,20 @@
-package com.example.musicpleir.UITests;
+package com.example.musicpleir.FunctionTests;
 
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
-import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static com.example.musicpleir.Util.waitFor;
 import static com.example.musicpleir.Util.waitId;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.is;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,74 +37,66 @@ import org.junit.runner.RunWith;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class UIUserFragmentTest {
+public class FunctionLyricsTest {
 
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
-    public void userTextTest() {
+    public void LyricsTextTest() {
         onView(isRoot()).perform(waitId(R.id.music_img, 30000));
-        ViewInteraction tabView = onView(
-                allOf(withContentDescription("Profile"),
+        ViewInteraction recyclerView = onView(
+                allOf(withId(R.id.recyclerView),
                         childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.tab_layout),
-                                        0),
-                                4),
+                                withClassName(is("android.widget.RelativeLayout")),
+                                0)));
+        recyclerView.perform(actionOnItemAtPosition(0, click()));
+        onView(isRoot()).perform(waitFor(3000));
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(R.id.lyrics), withText("Lyrics"),
+                        childAtPosition(
+                                allOf(withId(R.id.mContainer),
+                                        childAtPosition(
+                                                withId(android.R.id.content),
+                                                0)),
+                                6),
                         isDisplayed()));
-        tabView.perform(click());
+        appCompatButton.perform(click());
 
         ViewInteraction textView = onView(
-                allOf(withId(R.id.title), withText("Edit Profile"),
-                        withParent(withParent(withId(R.id.viewpager))),
+                allOf(withText("LYRICS"),
+                        withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
-        textView.check(matches(withText("Edit Profile")));
+        textView.check(matches(withText("LYRICS")));
     }
 
-    @Test
-    public void userChangeButtonTest() {
-        onView(isRoot()).perform(waitId(R.id.music_img, 30000));
-        ViewInteraction tabView = onView(
-                allOf(withContentDescription("Profile"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.tab_layout),
-                                        0),
-                                4),
-                        isDisplayed()));
-        tabView.perform(click());
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.change_pass), withText("Change password"),
-                        withParent(withParent(withId(R.id.viewpager))),
-                        isDisplayed()));
-        textView.check(matches(withText("Change password")));
-    }
 
     @Test
-    public void userLogOutButtonTest() {
+    public void LyricsCloseTest() {
         onView(isRoot()).perform(waitId(R.id.music_img, 30000));
-        ViewInteraction tabView = onView(
-                allOf(withContentDescription("Profile"),
+        ViewInteraction recyclerView = onView(
+                allOf(withId(R.id.recyclerView),
                         childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.tab_layout),
-                                        0),
-                                4),
+                                withClassName(is("android.widget.RelativeLayout")),
+                                0)));
+        recyclerView.perform(actionOnItemAtPosition(0, click()));
+        onView(isRoot()).perform(waitFor(3000));
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(R.id.lyrics), withText("Lyrics"),
+                        childAtPosition(
+                                allOf(withId(R.id.mContainer),
+                                        childAtPosition(
+                                                withId(android.R.id.content),
+                                                0)),
+                                6),
                         isDisplayed()));
-        tabView.perform(click());
-        ViewInteraction button3 = onView(
-                allOf(withId(R.id.logout_btn), withText("LOG OUT"),
-                        withParent(withParent(withId(R.id.viewpager))),
+        appCompatButton.perform(click());
+        ViewInteraction button = onView(
+                allOf(withId(R.id.back), withText("CLOSE"),
+                        withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
-        button3.check(matches(isDisplayed()));
-
-        ViewInteraction imageView = onView(
-                allOf(withId(R.id.imageView),
-                        withParent(withParent(withId(R.id.viewpager))),
-                        isDisplayed()));
-        imageView.check(matches(isDisplayed()));
+        button.check(matches(isDisplayed()));
     }
 
     private static Matcher<View> childAtPosition(

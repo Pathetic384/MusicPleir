@@ -65,7 +65,8 @@ public class UserFragment extends Fragment {
     }
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final int STORAGE_PERMISSION_CODE = 2;
-    Button save, changeBtn, logout;
+    Button save,  logout;
+    TextView changeBtn;
     TextView mail;
     EditText name;
     ImageView imageView;
@@ -123,7 +124,7 @@ public class UserFragment extends Fragment {
                 .setValue(name.getText().toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-
+                        Toast.makeText(context, "Username updated!", Toast.LENGTH_SHORT).show();
                         updateNameValue();
 
                     }

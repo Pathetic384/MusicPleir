@@ -52,6 +52,7 @@ public class AlbumDetailsAdapter extends RecyclerView.Adapter<AlbumDetailsAdapte
     @Override
     public void onBindViewHolder(@NonNull AlbumDetailsAdapter.MyHolder holder, int position) {
         holder.album_name.setText(albumFiles.get(holder.getAdapterPosition()).getSongTitle());
+        holder.artist.setText(albumFiles.get(position).getArtist());
         try {
             byte[] image = null;
             if(!Objects.equals(MainActivity.userMail, "tester@gmail.com"))
@@ -89,7 +90,7 @@ public class AlbumDetailsAdapter extends RecyclerView.Adapter<AlbumDetailsAdapte
                     switch(item.getItemId()) {
                         case R.id.delete:
                             delete(holder.getAdapterPosition());
-                            Toast.makeText(mContext, "del clicked", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, "Song deleted", Toast.LENGTH_SHORT).show();
                             break;
                     }
                     return true;
@@ -119,13 +120,14 @@ public class AlbumDetailsAdapter extends RecyclerView.Adapter<AlbumDetailsAdapte
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {
-        TextView album_name;
+        TextView album_name, artist;
         ImageView album_image, menu;
         public MyHolder(@NonNull View itemView) {
             super(itemView);
             album_image = itemView.findViewById(R.id.music_img);
             album_name = itemView.findViewById(R.id.music_file_name);
             menu = itemView.findViewById(R.id.menuMore);
+            artist = itemView.findViewById(R.id.music_artist_name);
         }
     }
     void updateList() {

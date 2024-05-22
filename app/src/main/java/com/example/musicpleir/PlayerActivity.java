@@ -2,6 +2,7 @@ package com.example.musicpleir;
 
 
 import static com.example.musicpleir.MainActivity.musicFiles;
+import static com.example.musicpleir.MainActivity.userMail;
 
 import android.app.Dialog;
 import android.content.ComponentName;
@@ -209,20 +210,33 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         }
         else search = listSongs.get(position).songTitle.trim();
 
-        Lyrics.lyrics(search, new Lyrics.LyricsCallback() {
-            @Override
-            public void onLyricsRetrieved(final String songlyrics) {
-                // Ensure UI update on the main thread
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        lyrics.setText(songlyrics);
-                        progressBar.setVisibility(View.GONE);
-                    }
-                });
-            }
 
-        });
+        if(!Objects.equals(MainActivity.userMail, "tester@gmail.com")) {
+
+            Lyrics.lyrics(search, new Lyrics.LyricsCallback() {
+                @Override
+                public void onLyricsRetrieved(final String songlyrics) {
+                    // Ensure UI update on the main thread
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            lyrics.setText(songlyrics);
+                            progressBar.setVisibility(View.GONE);
+                        }
+                    });
+                }
+
+            });
+        }
+        else {
+            lyrics.setText("[Intro]\n" + "Ooh\n" + "Na-na, yeah\n" + "\n" + "[Verse 1]\n" + "I saw you dancing in a crowded room (Uh)\n" + "You look so happy when I'm not with you\n" + "But then you saw me, caught you by surprise\n" + "A single teardrop falling from your eye\n" + "\n" + "[Refrain]\n" + "I don't know why I run away\n" +
+                    "I make you cry when I run away\n" + "\n" + "[Verse 2]\n" + "You could've asked me why I broke your heart\n" +
+                    "You could've told me that you fell apart\n" + "But you walked past me like I wasn't there\n" + "And just pretended like you didn't care\n" + "\n" + "[Refrain]\n" +
+                    "I don't know why I run away\n" + "I make you cry when I run away\n" + "\n" + "[Pre-Chorus]\n" + "Take me back 'cause I wanna stay\n" + "Save your tears for another\n" + "\n" + "[Chorus]\n" + "Save your tears for another day\n" + "Save your tears for another day (So)\n" + "\n" + "[Verse 3]\n" + "I made you think that I would always stay\n" + "I said some things that I should never say\n" +
+                    "Yeah, I broke your heart like someone did to mine\n" + "And now you won't love me for a second time\n" + "\n" + "[Refrain]\n" + "I don't know why I run away, oh, girl\n" + "Said, I make you cry when I run away\n" + "\n" + "[Pre-Chorus]\n" + "Girl, take me back 'cause I wanna stay\n" + "Save your tears for another\n" + "I realize that I'm much too late\n" +
+                    "And you deserve someone better\n" + "\n" + "[Chorus]\n" + "Save your tears for another day (Oh yeah)\n" + "Save your tears for another day (Yeah)\n" + "\n" + "[Refrain]\n" + "I don't know why I run away\n" + "I'll make you cry when I run away\n" + "\n" + "[Chorus]\n" + "Save your tears for another day\n" + "Ooh, girl, I said (Ah)\n" + "Save your tears for another day (Ah)\n" + "\n" + "[Outro]\n" + "Save your tears for another day (Ah)\n" + "Save your tears for another day (Ah)");
+            progressBar.setVisibility(View.GONE);
+        }
 
         dialog.show();
     }
@@ -256,10 +270,12 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
                 mDatabase = FirebaseDatabase.getInstance().getReference();
                 mDatabase.child("users").child(MainActivity.userID).child(selectedAlbum)
                         .child(listSongs.get(position).songTitle).setValue(listSongs.get(position));
-                Toast.makeText(PlayerActivity.this, "aaaccc", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(PlayerActivity.this, "aaaccc", Toast.LENGTH_SHORT).show();
 
-                Addsong addsong = new Addsong(AuthenticateSpotify.oauth2.accessToken, AuthenticateSpotify.oauth2.PLAYLIST_ID);
-                addsong.addSongToPlaylist(listSongs.get(position).songTitle);
+                if(!Objects.equals(userMail, "tester@gmail.com")) {
+                    Addsong addsong = new Addsong(AuthenticateSpotify.oauth2.accessToken, AuthenticateSpotify.oauth2.PLAYLIST_ID);
+                    addsong.addSongToPlaylist(listSongs.get(position).songTitle);
+                }
                 if(Register.rcm) {
                     new MainActivity.RecommenderTask().execute();
                 }
@@ -276,7 +292,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getItemAtPosition(position).toString();
                 selectedAlbum = item;
-                Toast.makeText(PlayerActivity.this, "hehe" + item, Toast.LENGTH_SHORT).show();
+                Toast.makeText(PlayerActivity.this, item + " selected", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -514,6 +530,9 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         }
         else if (sender != null && sender.equals("fire")){
             listSongs = MusicAdapter.mFiles;
+        }
+        else if (sender != null && sender.equals("rcmDetails")){
+            listSongs = RecommendDetails.albumSongs;
         }
         if(listSongs != null && position >= 0 && position < listSongs.size()) { // Check if position is valid
             playpauseBtn.setImageResource(R.drawable.ic_pause);
