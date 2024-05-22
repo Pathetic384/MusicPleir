@@ -521,7 +521,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
                     }
                     else {
                         ImageView gradient = findViewById(R.id.imageViewGradient);
-                        RelativeLayout mContainer = findViewById(R.id.mContainer);
+                        ConstraintLayout mContainer = findViewById(R.id.mContainer);
                         gradient.setBackgroundResource(R.drawable.gradient_bg);
                         mContainer.setBackgroundResource(R.drawable.main_bg);
                         GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, new int[]{0xff000000, 0x00000000});
@@ -539,7 +539,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
             ImageAnimation(this, cover_art, bitmap);
 
             ImageView gradient = findViewById(R.id.imageViewGradient);
-            RelativeLayout mContainer = findViewById(R.id.mContainer);
+            ConstraintLayout mContainer = findViewById(R.id.mContainer);
             gradient.setBackgroundResource(R.drawable.gradient_bg);
             mContainer.setBackgroundResource(R.drawable.main_bg);
             song_name.setTextColor(Color.WHITE);
