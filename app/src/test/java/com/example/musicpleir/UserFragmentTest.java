@@ -7,6 +7,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +18,10 @@ import java.util.zip.Inflater;
 
 public class UserFragmentTest {
 
-    @Test public void testOnCreateView() {
+    @Test public void testOpenChangePassDialog() {
         UserFragment userFragment = mock(UserFragment.class);
-        ViewGroup viewGroup = mock(ViewGroup.class);
-        LayoutInflater layoutInflater = mock(LayoutInflater.class);
-        Bundle bundle = mock(Bundle.class);;;
-        assertTrue(userFragment.onCreateView(layoutInflater, viewGroup, bundle) instanceof View);
-
+        userFragment.openChangePassDialog(Gravity.CENTER);
+        verify(userFragment, times(1)).openChangePassDialog(Gravity.CENTER);
     }
     @Test
     public void testUpdateNameValue() {
