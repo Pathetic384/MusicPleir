@@ -45,7 +45,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyHolder> {
     }
 
     private void deleteSelect(int position) {
-        if(position == 0) {
+        if(Objects.equals(albumNames.get(position), "base_album")) {
             Toast.makeText(mContext, "You can not delete base album", Toast.LENGTH_SHORT).show();
             return;
         }

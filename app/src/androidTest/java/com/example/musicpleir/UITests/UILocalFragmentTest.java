@@ -1,10 +1,8 @@
-package com.example.musicpleir;
+package com.example.musicpleir.UITests;
 
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
@@ -14,6 +12,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.example.musicpleir.Util.waitId;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.containsString;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +23,9 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 
+import com.example.musicpleir.MainActivity;
+import com.example.musicpleir.R;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
@@ -33,80 +35,49 @@ import org.junit.runner.RunWith;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTest3 {
+public class UILocalFragmentTest {
 
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
-    public void FunctionChangeProfileTest() {
+    public void localViewTest() {
         onView(isRoot()).perform(waitId(R.id.music_img, 30000));
         ViewInteraction tabView = onView(
-                allOf(withContentDescription("Profile"),
+                allOf(withContentDescription(containsString("Local")),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.tab_layout),
                                         0),
-                                4),
+                                1),
                         isDisplayed()));
         tabView.perform(click());
 
-        ViewInteraction editText = onView(
-                allOf(withId(R.id.user_name), withText("kira yoshikage"),
+        ViewInteraction recyclerView = onView(
+                allOf(withId(R.id.recyclerView2),
                         withParent(withParent(withId(R.id.viewpager))),
                         isDisplayed()));
-        editText.check(matches(withText("kira yoshikage")));
-
-        ViewInteraction appCompatEditText = onView(
-                allOf(withId(R.id.user_name), withText("kira yoshikage"),
-                        childAtPosition(
-                                withParent(withId(R.id.viewpager)),
-                                5),
-                        isDisplayed()));
-        appCompatEditText.perform(replaceText("kira yoshikage"));
-
-        ViewInteraction appCompatEditText2 = onView(
-                allOf(withId(R.id.user_name), withText("kira yoshikage"),
-                        childAtPosition(
-                                withParent(withId(R.id.viewpager)),
-                                5),
-                        isDisplayed()));
-        appCompatEditText2.perform(closeSoftKeyboard());
-
-        ViewInteraction appCompatButton = onView(
-                allOf(withId(R.id.save_button),
-                        childAtPosition(
-                                withParent(withId(R.id.viewpager)),
-                                2),
-                        isDisplayed()));
-        appCompatButton.perform(click());
-
-        ViewInteraction editText2 = onView(
-                allOf(withId(R.id.user_name), withText("kira yoshikage"),
-                        withParent(withParent(withId(R.id.viewpager))),
-                        isDisplayed()));
-        editText2.check(matches(withText("kira yoshikage")));
+        recyclerView.check(matches(isDisplayed()));
     }
 
     @Test
-    public void FunctionCheckProfileTest() {
+    public void localButtonTest() {
         onView(isRoot()).perform(waitId(R.id.music_img, 30000));
         ViewInteraction tabView = onView(
-                allOf(withContentDescription("Profile"),
+                allOf(withContentDescription(containsString("Local")),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.tab_layout),
                                         0),
-                                4),
+                                1),
                         isDisplayed()));
         tabView.perform(click());
-
-        ViewInteraction editText = onView(
-                allOf(withId(R.id.user_name), withText("kira yoshikage"),
+        ViewInteraction button = onView(
+                allOf(withId(R.id.reload), withText("RELOAD"),
                         withParent(withParent(withId(R.id.viewpager))),
                         isDisplayed()));
-        editText.check(matches(withText("kira yoshikage")));
+        button.check(matches(isDisplayed()));
     }
 
     private static Matcher<View> childAtPosition(

@@ -34,80 +34,106 @@ import org.junit.runner.RunWith;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class UIUserFragmentTest {
+public class UIShazamFragmentTest {
 
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
-    public void userTextTest() {
+    public void shazamTitleTest() {
         onView(isRoot()).perform(waitId(R.id.music_img, 30000));
         ViewInteraction tabView = onView(
-                allOf(withContentDescription("Profile"),
+                allOf(withContentDescription("Shazam"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.tab_layout),
                                         0),
-                                4),
+                                3),
                         isDisplayed()));
         tabView.perform(click());
 
         ViewInteraction textView = onView(
-                allOf(withId(R.id.title), withText("Edit Profile"),
+                allOf(withId(R.id.title), withText("Music Recognition"),
                         withParent(withParent(withId(R.id.viewpager))),
                         isDisplayed()));
-        textView.check(matches(withText("Edit Profile")));
+        textView.check(matches(withText("Music Recognition")));
     }
 
     @Test
-    public void userChangeButtonTest() {
+    public void shazamResultTextTest() {
         onView(isRoot()).perform(waitId(R.id.music_img, 30000));
         ViewInteraction tabView = onView(
-                allOf(withContentDescription("Profile"),
+                allOf(withContentDescription("Shazam"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.tab_layout),
                                         0),
-                                4),
+                                3),
                         isDisplayed()));
         tabView.perform(click());
-        ViewInteraction button = onView(
-                allOf(withId(R.id.save_button),
+        ViewInteraction textView2 = onView(
+                allOf(withId(R.id.info_text), withText("Input a sound sequence."),
                         withParent(withParent(withId(R.id.viewpager))),
                         isDisplayed()));
-        button.check(matches(isDisplayed()));
-
-        ViewInteraction button2 = onView(
-                allOf(withId(R.id.change_pass), withText("CHANGE PASSWORD"),
-                        withParent(withParent(withId(R.id.viewpager))),
-                        isDisplayed()));
-        button2.check(matches(isDisplayed()));
+        textView2.check(matches(withText("Input a sound sequence.")));
     }
 
     @Test
-    public void userLogOutButtonTest() {
+    public void shazamArtButtonTest() {
         onView(isRoot()).perform(waitId(R.id.music_img, 30000));
         ViewInteraction tabView = onView(
-                allOf(withContentDescription("Profile"),
+                allOf(withContentDescription("Shazam"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.tab_layout),
                                         0),
-                                4),
+                                3),
                         isDisplayed()));
         tabView.perform(click());
-        ViewInteraction button3 = onView(
-                allOf(withId(R.id.logout_btn), withText("LOG OUT"),
-                        withParent(withParent(withId(R.id.viewpager))),
-                        isDisplayed()));
-        button3.check(matches(isDisplayed()));
-
         ViewInteraction imageView = onView(
-                allOf(withId(R.id.imageView),
+                allOf(withId(R.id.cover_art),
                         withParent(withParent(withId(R.id.viewpager))),
                         isDisplayed()));
         imageView.check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void shazamRecordButtonTest() {
+        onView(isRoot()).perform(waitId(R.id.music_img, 30000));
+        ViewInteraction tabView = onView(
+                allOf(withContentDescription("Shazam"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.tab_layout),
+                                        0),
+                                3),
+                        isDisplayed()));
+        tabView.perform(click());
+        ViewInteraction button = onView(
+                allOf(withId(R.id.start_recording), withText("Start Recording"),
+                        withParent(withParent(withId(R.id.viewpager))),
+                        isDisplayed()));
+        button.check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void shazamSearchButtonTest() {
+        onView(isRoot()).perform(waitId(R.id.music_img, 30000));
+        ViewInteraction tabView = onView(
+                allOf(withContentDescription("Shazam"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.tab_layout),
+                                        0),
+                                3),
+                        isDisplayed()));
+        tabView.perform(click());
+        ViewInteraction button2 = onView(
+                allOf(withId(R.id.play_btn), withText("Search"),
+                        withParent(withParent(withId(R.id.viewpager))),
+                        isDisplayed()));
+        button2.check(matches(isDisplayed()));
     }
 
     private static Matcher<View> childAtPosition(

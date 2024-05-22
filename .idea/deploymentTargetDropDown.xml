@@ -18,13 +18,19 @@
           <timeTargetWasSelectedWithDropDown value="2024-05-22T13:32:15.822604500Z" />
         </State>
       </entry>
-      <entry key="UIUserFragmentTest">
+      <entry key="MainActivityTest4">
+        <State />
+      </entry>
+      <entry key="UILocalFragmentTest">
+        <State />
+      </entry>
+      <entry key="UIShazamFragmentTest">
+        <State />
+      </entry>
+      <entry key="UISongFragmentTest">
         <State />
       </entry>
       <entry key="app">
-        <State />
-      </entry>
-      <entry key="userSaveButtonTest()">
         <State />
       </entry>
     </value>
