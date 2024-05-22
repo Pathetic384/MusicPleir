@@ -239,6 +239,8 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
 
                 Addsong addsong = new Addsong(AuthenticateSpotify.oauth2.accessToken, AuthenticateSpotify.oauth2.PLAYLIST_ID);
                 addsong.addSongToPlaylist(listSongs.get(position).songTitle);
+
+                new MainActivity.RecommenderTask().execute();
             }
         });
         back.setOnClickListener(new View.OnClickListener() {
@@ -310,8 +312,8 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         musicService.release();
         PlayerActivity.this.runOnUiThread( () -> {
             if(musicService != null) {
-                int mCurrentPosition = musicService.getCurrentPosition() / 1000;
-                seekBar.setProgress(mCurrentPosition);
+                //int mCurrentPosition = musicService.getCurrentPosition() / 1000;
+                seekBar.setProgress(0);
             }
         } );
         if(i==0) {
@@ -326,6 +328,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         if(i==0) {
             musicService.start();
         }
+        seekBar.setMax(musicService.getDuration() / 1000);
         loading = false;
     }
 

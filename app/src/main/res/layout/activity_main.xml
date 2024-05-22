@@ -26,7 +26,8 @@
         android:paddingHorizontal="14dp"
         app:layout_constraintBottom_toTopOf="@id/tab_layout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="100dp">
 
         <fragment
             android:name="com.example.musicpleir.NowPlayingFragment"

@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     // Recommended songs from Spotify API
     public static ArrayList<String> recommendedSongs = new ArrayList<>();
 
-    private class RecommenderTask extends AsyncTask<Void, Void, ArrayList<String>> {
+    public static class RecommenderTask extends AsyncTask<Void, Void, ArrayList<String>> {
         @Override
         protected ArrayList<String> doInBackground(Void... voids) {
             Addsong addsong = new Addsong(AuthenticateSpotify.oauth2.accessToken, AuthenticateSpotify.oauth2.PLAYLIST_ID);
@@ -128,7 +128,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             for (int i = 0; i < recommendedSongs.size(); ++ i) {
                 System.out.println("Recommended Song" + ": " + recommendedSongs.get(i));
             }
-            Toast.makeText(MainActivity.this, String.valueOf(recommendedSongs), Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -149,7 +148,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         createViewPager();
 
-        localMusicFiles = getAllLocalAudio(this);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_AUDIO)
+                == PackageManager.PERMISSION_GRANTED) {
+            localMusicFiles = getAllLocalAudio(this);
+        }
+
+        //localMusicFiles = getAllLocalAudio(this);
         loadMusicFiles();
         getAllAlbum();
 
@@ -162,7 +166,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     }
     private class LoadAudioTask extends AsyncTask<Void, Void, ArrayList<MusicFiles>> {
         private Context context;
-
         public LoadAudioTask(Context context) {
             this.context = context;
         }
