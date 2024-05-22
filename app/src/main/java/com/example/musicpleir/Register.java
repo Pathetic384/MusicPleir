@@ -131,13 +131,13 @@ static boolean rcm;
                                                     }
                                                 });
 
-                                                mDatabase.child("users").child(MainActivity.userID).child("base_album")
+                                                mDatabase.child("users").child(id1).child("base_album")
                                                         .setValue("base_album");
                                             }
                                         };
                                         Thread thread = new Thread(myRunnable);
                                         thread.start();
-                                    
+
                                     progressBar.setVisibility(View.GONE);
 
                                     Intent i = new Intent(getApplicationContext(), Login.class);
