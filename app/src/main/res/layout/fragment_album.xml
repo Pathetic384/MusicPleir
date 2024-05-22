@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,43 +8,59 @@
 
     <EditText
         android:id="@+id/albumName"
-        android:layout_width="312dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="11dp"
-        android:hint="Enter your wanted album name"
-        android:textSize="20sp" />
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="5dp"
+        android:hint="Enter album name"
+        android:textColorHint="@color/textColorSecondary"
+        android:textSize="18sp"
+        android:textColor="@color/textColorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/addAlbum"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteY="216d p" />
 
     <Button
         android:id="@+id/addAlbum"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/albumName"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="7dp"
-        android:layout_toEndOf="@id/albumName"
-        android:text="Add Album" />
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="5dp"
+        android:text="Add Album"
+        android:background="@drawable/mybutton"
+        android:paddingHorizontal="12dp"
+        tools:layout_editor_absoluteX="81dp"
+        tools:layout_editor_absoluteY="313dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_below="@id/albumName"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="12dp"
         android:background="@color/background"
-        android:layout_above="@id/see_more"/>
+        app:layout_constraintBottom_toTopOf="@+id/see_more"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addAlbum"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/see_more"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="46dp"
-        android:text="See recommended songs" />
+        android:layout_marginBottom="120dp"
+        android:paddingHorizontal="12dp"
+        android:background="@drawable/mybutton"
+        android:text="See recommended songs"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

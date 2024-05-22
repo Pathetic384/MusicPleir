@@ -11,12 +11,16 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/buttonInApp"
         android:id="@+id/relative_layout">
         <Button
             android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_height ="50dp"
             android:text="X"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:background="@color/transparent"
             android:layout_marginLeft="120dp"
             android:id="@+id/delete_album"/>
         <ImageView
@@ -30,7 +34,7 @@
             android:id="@+id/album_name"
             android:layout_alignParentBottom="true"
             android:text="Album"
-            android:textColor="#fff"
+            android:textColor="@color/textColorPrimary"
             android:singleLine="true"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
