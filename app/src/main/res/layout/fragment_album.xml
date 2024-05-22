@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="horizontal"
     tools:context=".AlbumFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -15,7 +16,8 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="114dp"
-        android:background="@color/cardview_dark_background" />
+        android:background="@color/cardview_dark_background"
+        android:orientation="horizontal"/>
 
     <Button
         android:id="@+id/addAlbum"

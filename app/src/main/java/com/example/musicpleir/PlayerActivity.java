@@ -74,6 +74,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
     public static boolean loading = false;
     Button lyricsButton;
     Dialog dialog;
+    static String sender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,6 +211,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
 
 
     void openFeedbackDialog(int gravity) {
+        if(Objects.equals(sender, "local")) return;
         dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.layout_dialog);
@@ -450,7 +452,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
     private void getIntentMethod() throws IOException {
         position = getIntent().getIntExtra("position",-1);
         Log.d("PlayerActivity", "Received position: " + position);
-        String sender = getIntent().getStringExtra("sender");
+        sender = getIntent().getStringExtra("sender");
         if(sender!= null && sender.equals("albumDetails")) {
             listSongs = AlbumDetailsAdapter.albumFiles;
         }

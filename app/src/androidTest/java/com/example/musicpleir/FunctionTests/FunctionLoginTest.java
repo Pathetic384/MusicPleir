@@ -1,4 +1,4 @@
-package com.example.musicpleir;
+package com.example.musicpleir.FunctionTests;
 
 
 import static androidx.test.espresso.Espresso.onView;
@@ -7,11 +7,12 @@ import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
+import static com.example.musicpleir.Util.waitFor;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
@@ -23,63 +24,27 @@ import androidx.test.espresso.ViewInteraction;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
-import androidx.test.uiautomator.UiDevice;
-import androidx.test.uiautomator.UiObject;
-import androidx.test.uiautomator.UiObjectNotFoundException;
-import androidx.test.uiautomator.UiSelector;
+
+import com.example.musicpleir.Login;
+import com.example.musicpleir.R;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class LoginTest {
-    @BeforeClass
-    public static void dismissANRSystemDialog() throws UiObjectNotFoundException {
-        UiDevice device = UiDevice.getInstance(getInstrumentation());
-        // If the device is running in English Locale
-        UiObject waitButton = device.findObject(new UiSelector().textContains("wait"));
-        if (waitButton.exists()) {
-            waitButton.click();
-        }
-        // If the device is running in Japanese Locale
-        waitButton = device.findObject(new UiSelector().textContains("待機"));
-        if (waitButton.exists()) {
-            waitButton.click();
-        }
-    }
+public class FunctionLoginTest {
 
     @Rule
     public ActivityScenarioRule<Login> mActivityScenarioRule =
             new ActivityScenarioRule<>(Login.class);
 
     @Test
-    public void loginNoFieldTest() {
-        ViewInteraction appCompatButton = onView(
-                allOf(withId(R.id.login_btn), withText("Login"),
-                        childAtPosition(
-                                allOf(withId(R.id.main),
-                                        childAtPosition(
-                                                withId(android.R.id.content),
-                                                0)),
-                                5),
-                        isDisplayed()));
-        appCompatButton.perform(click());
-
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.note), withText("Please enter your Email"),
-                        withParent(allOf(withId(R.id.main),
-                                withParent(withId(android.R.id.content)))),
-                        isDisplayed()));
-        textView.check(matches(withText("Please enter your Email")));
-    }
-    @Test
-    public void loginPasswordTest() {
+    public void loginNoPassTest() {
         ViewInteraction textInputEditText = onView(
                 allOf(withId(R.id.email),
                         childAtPosition(
@@ -90,27 +55,58 @@ public class LoginTest {
                         isDisplayed()));
         textInputEditText.perform(replaceText("rick"), closeSoftKeyboard());
 
-        ViewInteraction appCompatButton2 = onView(
+        ViewInteraction appCompatButton = onView(
                 allOf(withId(R.id.login_btn), withText("Login"),
                         childAtPosition(
                                 allOf(withId(R.id.main),
                                         childAtPosition(
                                                 withId(android.R.id.content),
                                                 0)),
-                                5),
+                                6),
                         isDisplayed()));
-        appCompatButton2.perform(click());
+        appCompatButton.perform(click());
 
-        ViewInteraction textView2 = onView(
+        ViewInteraction textView = onView(
                 allOf(withId(R.id.note), withText("Please enter your Password"),
                         withParent(allOf(withId(R.id.main),
                                 withParent(withId(android.R.id.content)))),
                         isDisplayed()));
-        textView2.check(matches(withText("Please enter your Password")));
+        textView.check(matches(withText("Please enter your Password")));
     }
 
     @Test
-    public void loginTest2() {
+    public void loginNoMailTest() {
+        ViewInteraction textInputEditText = onView(
+                allOf(withId(R.id.password),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("com.google.android.material.textfield.TextInputLayout")),
+                                        0),
+                                0),
+                        isDisplayed()));
+        textInputEditText.perform(replaceText("123"), closeSoftKeyboard());
+
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(R.id.login_btn), withText("Login"),
+                        childAtPosition(
+                                allOf(withId(R.id.main),
+                                        childAtPosition(
+                                                withId(android.R.id.content),
+                                                0)),
+                                6),
+                        isDisplayed()));
+        appCompatButton.perform(click());
+
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.note), withText("Please enter your Email"),
+                        withParent(allOf(withId(R.id.main),
+                                withParent(withId(android.R.id.content)))),
+                        isDisplayed()));
+        textView.check(matches(withText("Please enter your Email")));
+    }
+
+    @Test
+    public void loginWrongInfoTest() {
         ViewInteraction textInputEditText = onView(
                 allOf(withId(R.id.email),
                         childAtPosition(
@@ -119,7 +115,7 @@ public class LoginTest {
                                         0),
                                 0),
                         isDisplayed()));
-        textInputEditText.perform(replaceText("pcsqw"), closeSoftKeyboard());
+        textInputEditText.perform(replaceText("r"), closeSoftKeyboard());
 
         ViewInteraction textInputEditText2 = onView(
                 allOf(withId(R.id.password),
@@ -129,7 +125,7 @@ public class LoginTest {
                                         0),
                                 0),
                         isDisplayed()));
-        textInputEditText2.perform(replaceText("sada"), closeSoftKeyboard());
+        textInputEditText2.perform(replaceText("l"), closeSoftKeyboard());
 
         ViewInteraction appCompatButton = onView(
                 allOf(withId(R.id.login_btn), withText("Login"),
@@ -138,9 +134,11 @@ public class LoginTest {
                                         childAtPosition(
                                                 withId(android.R.id.content),
                                                 0)),
-                                5),
+                                6),
                         isDisplayed()));
         appCompatButton.perform(click());
+
+        onView(isRoot()).perform(waitFor(5000));
 
         ViewInteraction textView = onView(
                 allOf(withId(R.id.note), withText("Wrong Email or Password"),
@@ -150,6 +148,26 @@ public class LoginTest {
         textView.check(matches(withText("Wrong Email or Password")));
     }
 
+    @Test
+    public void loginNoFieldTest() {
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(R.id.login_btn), withText("Login"),
+                        childAtPosition(
+                                allOf(withId(R.id.main),
+                                        childAtPosition(
+                                                withId(android.R.id.content),
+                                                0)),
+                                6),
+                        isDisplayed()));
+        appCompatButton.perform(click());
+
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.note), withText("Please enter your Email"),
+                        withParent(allOf(withId(R.id.main),
+                                withParent(withId(android.R.id.content)))),
+                        isDisplayed()));
+        textView.check(matches(withText("Please enter your Email")));
+    }
 
     private static Matcher<View> childAtPosition(
             final Matcher<View> parentMatcher, final int position) {

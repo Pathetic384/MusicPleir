@@ -147,7 +147,8 @@ public class Register extends AppCompatActivity {
                                     finish();
                                 } else {
                                     progressBar.setVisibility(View.GONE);
-                                    note.setText("Your mail must follow format: @gmail.com and the length of password must be >=6 letters");
+                                    note.setText("Your mail must follow format: @gmail.com and the length of password must be >=6 letters" +
+                                            ", or you mail has been used already");
                                     note.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.warningColor));
                                 }
                             }

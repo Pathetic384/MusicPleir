@@ -1,5 +1,7 @@
 package com.example.musicpleir;
 
+import static com.example.musicpleir.Util.getAlbumArt;
+
 import android.app.DownloadManager;
 import android.app.*;
 import android.content.Context;
@@ -46,10 +48,10 @@ public class LocalMusicAdapter extends RecyclerView.Adapter<LocalMusicAdapter.My
     @Override
     public void onBindViewHolder(@NonNull LocalMusicAdapter.MyViewHolder holder, int position) {
         holder.file_name.setText(mFiles.get(holder.getAdapterPosition()).getSongTitle());
+
         try {
             if(mFiles.get(holder.getAdapterPosition()).getSongLink() == null) return;
-            byte[] image = null;
-            //getAlbumArt(mFiles.get(position).getSongLink());
+            byte[] image = getAlbumArt(mFiles.get(position).getSongLink(), new MediaMetadataRetriever());
             if(image!=null) {
                 Glide.with(mContext).asBitmap().load(image).into(holder.album_art);
             }

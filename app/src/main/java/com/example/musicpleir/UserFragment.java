@@ -160,6 +160,7 @@ public class UserFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String get = snapshot.getValue(String.class);
+                if(get!=null)
                 Glide.with(getContext()).load(get).into(imageView);
             }
 

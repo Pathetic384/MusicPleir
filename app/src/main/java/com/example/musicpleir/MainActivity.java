@@ -146,8 +146,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         localMusicFiles = getAllLocalAudio(this);
         loadMusicFiles();
         getAllAlbum();
-
-        new RecommenderTask().execute();
+        if(!Objects.equals(userMail, "tester@gmail.com")) {
+            new RecommenderTask().execute();
+        }
     }
 
 

@@ -2,13 +2,19 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="LogoutTest">
+      <entry key="FunctionLoginTest">
         <State />
       </entry>
-      <entry key="PlayerTest">
+      <entry key="FunctionRegisterTest (1)">
         <State />
       </entry>
-      <entry key="PlaylistTest">
+      <entry key="UILoginTest">
+        <State />
+      </entry>
+      <entry key="UIRegisterTest">
+        <State />
+      </entry>
+      <entry key="UIRegisterTest (1)">
         <State />
       </entry>
       <entry key="app">
