@@ -55,7 +55,7 @@
         android:id="@+id/see_more"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="120dp"
+        android:layout_marginBottom="140dp"
         android:paddingHorizontal="12dp"
         android:background="@drawable/mybutton"
         android:text="See recommended songs"

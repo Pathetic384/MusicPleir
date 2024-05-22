@@ -5,45 +5,57 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/background"
     tools:context=".RecommendDetails">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        android:id="@+id/recyclerView" />
+        android:layout_alignParentTop="true"
+        android:padding="8dp"
+        android:scrollbars="vertical" />
 
     <ScrollView
+        android:id="@+id/sv"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_below="@id/recyclerView"
-        android:id="@+id/sv">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:id="@+id/rcm_layout"
-        android:orientation="vertical">
-        <TextView
+        android:layout_below="@id/recyclerView">
+        <LinearLayout
+            android:id="@+id/rcm_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="recommended songs that arent in the database"
-            android:textSize="18dp" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:id="@+id/rcm_songs"
-            android:text="songs"
-            android:textSize="20dp"
-            android:gravity="center"
-            />
-    </LinearLayout>
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/colorAccent"
+                android:text="Other Recommendations"
+                android:paddingVertical="12dp"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/rcm_songs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="songs"
+                android:textColor="@color/white"
+                android:textStyle="italic"
+                android:textSize="16sp" />
+        </LinearLayout>
     </ScrollView>
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/sv"
         android:id="@+id/back_from_rcm"
-        android:text="Back"/>
-
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sv"
+        android:background="@drawable/mybutton"
+        android:layout_marginHorizontal="8dp"
+        android:text="Back"
+        android:layout_marginTop="16dp"/>
 </RelativeLayout>
