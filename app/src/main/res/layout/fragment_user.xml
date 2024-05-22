@@ -75,13 +75,13 @@
 
     <Button
         android:id="@+id/save_button"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
+        android:layout_width="54dp"
+        android:layout_height="58dp"
         android:layout_below="@id/user_email"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="21dp"
-        android:layout_marginEnd="23dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="22dp"
         android:layout_toEndOf="@+id/user_name"
         android:background="@color/transparent"
         android:drawableBottom="@drawable/ic_check" />
