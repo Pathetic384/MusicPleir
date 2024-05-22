@@ -3,28 +3,27 @@ package com.example.musicpleir;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Environment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 
-public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder> {
+public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private static final int ITEM_TYPE_NORMAL = 0;
+    private static final int ITEM_TYPE_EMPTY = 1;
+    private static final int EMPTY_ITEMS_COUNT = 2;
 
     private Context mContext;
     static ArrayList<MusicFiles> mFiles;
@@ -34,59 +33,68 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
         this.mFiles = new ArrayList<>(mFiles);
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        if (position >= mFiles.size()) {
+            return ITEM_TYPE_EMPTY;
+        } else {
+            return ITEM_TYPE_NORMAL;
+        }
+    }
+
     @NonNull
     @Override
-    public MusicAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.music_items, parent, false);
-        return new MyViewHolder(view);
-    }
-    public ArrayList<MusicFiles> getMusicFiles() {
-        return mFiles;
-    }
-    public void updateMusicFiles(ArrayList<MusicFiles> newFiles) {
-        this.mFiles = new ArrayList<>(newFiles);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (viewType == ITEM_TYPE_EMPTY) {
+            View view = LayoutInflater.from(mContext).inflate(R.layout.empty_item_layout, parent, false);
+            return new EmptyViewHolder(view);
+        } else {
+            View view = LayoutInflater.from(mContext).inflate(R.layout.music_items, parent, false);
+            return new MyViewHolder(view);
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MusicAdapter.MyViewHolder holder, int position) {
-        holder.file_name.setText(mFiles.get(position).getSongTitle());
-        holder.artist.setText(mFiles.get(position).getArtist());
-        try {
-            Glide.with(mContext).asBitmap().load(R.drawable.ic_music_note).into(holder.album_art);
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(mContext, PlayerActivity.class);
-                    i.putExtra("position", holder.getAdapterPosition());
-                    i.putExtra("sender", "fire");
-                    mContext.startActivity(i);
-                }
-            });
-            holder.menu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    PopupMenu popupMenu = new PopupMenu(mContext, v);
-                    popupMenu.getMenuInflater().inflate(R.menu.popup, popupMenu.getMenu());
-                    popupMenu.show();
-                    popupMenu.setOnMenuItemClickListener((item -> {
-                        switch(item.getItemId()) {
-                            case R.id.download:
-                                downloading(mFiles.get(holder.getAdapterPosition()).songLink.trim(), mFiles.get(holder.getAdapterPosition()).songTitle
-                                        , mFiles.get(holder.getAdapterPosition()).artist);
-                                //Toast.makeText(mContext, "Download clicked", Toast.LENGTH_SHORT).show();
-                                break;
-                        }
-                        return true;
-                    }));
-                }
-            });
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if (holder.getItemViewType() == ITEM_TYPE_NORMAL) {
+            MyViewHolder myHolder = (MyViewHolder) holder;
+            myHolder.file_name.setText(mFiles.get(position).getSongTitle());
+            try {
+                Glide.with(mContext).asBitmap().load(R.drawable.ic_music_note).into(myHolder.album_art);
+                myHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(mContext, PlayerActivity.class);
+                        i.putExtra("position", myHolder.getAdapterPosition());
+                        i.putExtra("sender", "fire");
+                        mContext.startActivity(i);
+                    }
+                });
+                myHolder.menu.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        PopupMenu popupMenu = new PopupMenu(mContext, v);
+                        popupMenu.getMenuInflater().inflate(R.menu.popup, popupMenu.getMenu());
+                        popupMenu.show();
+                        popupMenu.setOnMenuItemClickListener((item -> {
+                            switch (item.getItemId()) {
+                                case R.id.download:
+                                    downloading(mFiles.get(myHolder.getAdapterPosition()).songLink.trim(),
+                                            mFiles.get(myHolder.getAdapterPosition()).songTitle,
+                                            mFiles.get(myHolder.getAdapterPosition()).artist);
+                                    break;
+                            }
+                            return true;
+                        }));
+                    }
+                });
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     void downloading(String link, String name, String artist) {
-        //Toast.makeText(mContext, link, Toast.LENGTH_SHORT).show();
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(link));
         request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI);
         request.setTitle(name);
@@ -94,7 +102,6 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         request.setMimeType("audio/mpeg");
 
-// Ensure the file has a .mp3 extension
         String fileName = System.currentTimeMillis() + ".mp3";
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
 
@@ -106,7 +113,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
 
     @Override
     public int getItemCount() {
-        return mFiles.size();
+        return mFiles.size() + EMPTY_ITEMS_COUNT;
     }
 
     public class MyViewHolder extends  RecyclerView.ViewHolder {
@@ -123,10 +130,22 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
         }
     }
 
-
-        void updateList(ArrayList<MusicFiles> musicFilesArrayList) {
-        mFiles = new ArrayList<>();
-        mFiles.addAll(musicFilesArrayList);
-        notifyDataSetChanged();
+    public static class EmptyViewHolder extends RecyclerView.ViewHolder {
+        public EmptyViewHolder(@NonNull View itemView) {
+            super(itemView);
         }
+    }
+
+    void updateList(ArrayList<MusicFiles> musicFilesArrayList) {
+        mFiles = new ArrayList<>(musicFilesArrayList);
+        notifyDataSetChanged();
+    }
+
+    public ArrayList<MusicFiles> getMusicFiles() {
+        return mFiles;
+    }
+
+    public void updateMusicFiles(ArrayList<MusicFiles> newFiles) {
+        this.mFiles = new ArrayList<>(newFiles);
+    }
 }

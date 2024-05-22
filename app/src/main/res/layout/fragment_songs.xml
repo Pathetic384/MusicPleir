@@ -4,36 +4,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SongsFragment">
-<!--    <RelativeLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:id="@+id/finder_tab"-->
-<!--        android:background="@color/cardview_light_background"-->
-<!--        android:padding="5dp">-->
 
-<!--        <EditText-->
-<!--            android:layout_width="300dp"-->
-<!--            android:layout_height="50dp"-->
-<!--            android:hint="Enter song name"-->
-<!--            android:id="@+id/song_find"/>-->
-
-<!--        <Button-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="50dp"-->
-<!--            android:layout_toEndOf="@id/song_find"-->
-<!--            android:text="Find"-->
-<!--            android:id="@+id/enter_find"-->
-<!--            android:layout_marginLeft="20dp"/>-->
-
-
-<!--    </RelativeLayout>-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scrollbars="vertical"
         android:id="@+id/recyclerView"
-        android:background="@color/cardview_dark_background"
+        android:background="@color/background"
 />
-
-
 </RelativeLayout>
+
+    <!--    <RelativeLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:id="@+id/finder_tab"-->
+    <!--        android:background="@color/cardview_light_background"-->
+    <!--        android:padding="5dp">-->
+
+    <!--        <EditText-->
+    <!--            android:layout_width="300dp"-->
+    <!--            android:layout_height="50dp"-->
+    <!--            android:hint="Enter song name"-->
+    <!--            android:id="@+id/song_find"/>-->
+
+    <!--        <Button-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="50dp"-->
+    <!--            android:layout_toEndOf="@id/song_find"-->
+    <!--            android:text="Find"-->
+    <!--            android:id="@+id/enter_find"-->
+    <!--            android:layout_marginLeft="20dp"/>-->
+
+
+    <!--    </RelativeLayout>-->

@@ -203,8 +203,13 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
             }
         });
 
-        Lyrics.lyrics(listSongs.get(position).songTitle.trim() + " " +
-                listSongs.get(position).getArtist().trim(), new Lyrics.LyricsCallback() {
+        String search = "";
+        if(listSongs.get(position).getArtist() != null) {
+            search = listSongs.get(position).songTitle.trim() + " " + listSongs.get(position).getArtist().trim();
+        }
+        else search = listSongs.get(position).songTitle.trim();
+
+        Lyrics.lyrics(search, new Lyrics.LyricsCallback() {
             @Override
             public void onLyricsRetrieved(final String songlyrics) {
                 // Ensure UI update on the main thread
