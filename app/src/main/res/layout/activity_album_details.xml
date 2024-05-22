@@ -5,13 +5,13 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/background"
     tools:context=".AlbumDetails">
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:id="@+id/albumPhoto"
-        android:src="@drawable/pic"
+        android:src="@mipmap/ic_launcher_foreground"
         android:scaleType="centerCrop"/>
 
     <ImageView
