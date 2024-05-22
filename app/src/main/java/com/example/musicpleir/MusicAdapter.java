@@ -59,6 +59,7 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         if (holder.getItemViewType() == ITEM_TYPE_NORMAL) {
             MyViewHolder myHolder = (MyViewHolder) holder;
             myHolder.file_name.setText(mFiles.get(position).getSongTitle());
+            myHolder.artist.setText(mFiles.get(position).getArtist());
             try {
                 Glide.with(mContext).asBitmap().load(R.drawable.ic_music_note).into(myHolder.album_art);
                 myHolder.itemView.setOnClickListener(new View.OnClickListener() {
