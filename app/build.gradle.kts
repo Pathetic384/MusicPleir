@@ -76,6 +76,6 @@ dependencies {
     implementation ("org.json:json:20210307")
     implementation("org.jsoup:jsoup:1.13.1")
     implementation("se.michaelthelin.spotify:spotify-web-api-java:6.5.4")
-    implementation("com.squareup.okhttp3:okhttp:4.9.2")
+    implementation("com.squareup.okhttp3:okhttp:4.9.1")
     implementation("net.openid:appauth:0.9.1")
 }

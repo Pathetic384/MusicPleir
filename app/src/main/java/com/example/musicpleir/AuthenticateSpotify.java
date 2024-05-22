@@ -2,9 +2,13 @@ package com.example.musicpleir;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
 
 public class AuthenticateSpotify extends AppCompatActivity {
     static OAuth2 oauth2;
@@ -29,8 +33,9 @@ public class AuthenticateSpotify extends AppCompatActivity {
 
                 oauth2.authorizationComplete.thenRun(() -> {
                     System.out.println("Access token: " + oauth2.accessToken);
+                    //Addsong addsong = new Addsong(oauth2.accessToken, oauth2.PLAYLIST_ID);
+                    //addsong.addSongToPlaylist("Ditto");
                     Addsong addsong = new Addsong(oauth2.accessToken, oauth2.PLAYLIST_ID);
-                    addsong.addSongToPlaylist("Ditto");
                     Intent i = new Intent(getApplicationContext(), Login.class);
                     startActivity(i);
                     finish();

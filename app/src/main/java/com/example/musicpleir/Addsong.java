@@ -1,10 +1,19 @@
 package com.example.musicpleir;
 
+import android.widget.Toast;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -192,5 +201,80 @@ public class Addsong {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<String> getTrackIdsFromPlaylist(String playlistId) throws IOException {
+        OkHttpClient httpClient = new OkHttpClient();
+        String url = "https://api.spotify.com/v1/playlists/" + playlistId + "/tracks";
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("Authorization", "Bearer " + accessToken)
+                .build();
+
+        List<String> trackIds = new ArrayList<>();
+        try (Response response = httpClient.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                throw new IOException("Unexpected code " + response);
+            }
+
+            JsonObject jsonObject = JsonParser.parseString(response.body().string()).getAsJsonObject();
+            JsonArray items = jsonObject.getAsJsonArray("items");
+
+            for (int i = 0; i < items.size(); i++) {
+                JsonObject track = items.get(i).getAsJsonObject().getAsJsonObject("track");
+                trackIds.add(track.get("id").getAsString());
+            }
+        }
+
+        return trackIds;
+    }
+
+    public ArrayList getRecommendations(List<String> trackIds) throws IOException {
+        OkHttpClient httpClient = new OkHttpClient();
+        String seedTracks = String.join(",", trackIds);
+        String url = "https://api.spotify.com/v1/recommendations?seed_tracks=" + seedTracks + "&limit=5";
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("Authorization", "Bearer " + accessToken)
+                .build();
+
+        ArrayList<String> recommendedTracks = new ArrayList<>();
+        try (Response response = httpClient.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                throw new IOException("Unexpected code " + response);
+            }
+
+            JsonObject jsonObject = JsonParser.parseString(response.body().string()).getAsJsonObject();
+            JsonArray tracks = jsonObject.getAsJsonArray("tracks");
+
+            for (int i = 0; i < tracks.size(); i++) {
+                JsonObject track = tracks.get(i).getAsJsonObject();
+                recommendedTracks.add(track.get("name").getAsString());
+            }
+        }
+
+        return recommendedTracks;
+    }
+
+    public ArrayList getRecommendations() {
+        List<String> trackIds = null;
+        try {
+            trackIds = getTrackIdsFromPlaylist(PLAYLIST_ID);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        ArrayList<String> recommendedTracks = null;
+        try {
+            recommendedTracks = getRecommendations(trackIds);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        if (recommendedTracks == null) {
+            System.out.println("No recommendations found");
+        }
+        for (String track : recommendedTracks) {
+            System.out.println(track);
+        }
+        return recommendedTracks;
     }
 }

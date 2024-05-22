@@ -111,10 +111,15 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     // Recommended songs from Spotify API
     public static ArrayList<String> recommendedSongs = new ArrayList<>();
+
     private class RecommenderTask extends AsyncTask<Void, Void, ArrayList<String>> {
         @Override
         protected ArrayList<String> doInBackground(Void... voids) {
-            return Recommender.recommend(SpotifyAuth.getAccessToken(), AuthenticateSpotify.oauth2.PLAYLIST_ID);
+            Addsong addsong = new Addsong(AuthenticateSpotify.oauth2.accessToken, AuthenticateSpotify.oauth2.PLAYLIST_ID);
+            System.out.println("add song: " + addsong.accessToken);
+            return addsong.getRecommendations();
+
+            //return new Recommender().recommend(AuthenticateSpotify.oauth2.accessToken, AuthenticateSpotify.oauth2.PLAYLIST_ID);
         }
 
         @Override
@@ -125,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             }
             Toast.makeText(MainActivity.this, String.valueOf(recommendedSongs), Toast.LENGTH_SHORT).show();
         }
+
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,9 +152,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         localMusicFiles = getAllLocalAudio(this);
         loadMusicFiles();
         getAllAlbum();
-        if(!Objects.equals(userMail, "tester@gmail.com")) {
-            new RecommenderTask().execute();
-        }
+
+        new RecommenderTask().execute();
     }
 
 
