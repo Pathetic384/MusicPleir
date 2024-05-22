@@ -187,9 +187,9 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
             try {
                 actionPlaying.nextBtnClicked();
 //                if(mediaPlayer != null) {
-                    createMediaPlayer(position);
-                    start();
-                    onCompleted();
+//                    createMediaPlayer(position);
+//                    start();
+//                    onCompleted();
 //                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
