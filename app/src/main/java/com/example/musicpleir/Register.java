@@ -112,7 +112,7 @@ static boolean rcm;
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    if(rcm) {
+
                                         Runnable myRunnable = new Runnable() {
                                             public void run() {
 
@@ -137,7 +137,7 @@ static boolean rcm;
                                         };
                                         Thread thread = new Thread(myRunnable);
                                         thread.start();
-                                    }
+                                    
                                     progressBar.setVisibility(View.GONE);
 
                                     Intent i = new Intent(getApplicationContext(), Login.class);
