@@ -16,6 +16,11 @@
         android:textColor="@color/white"
         android:background="@drawable/yellow_top"
         android:gravity="center"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="pp"
+        android:id="@+id/back"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -34,14 +39,14 @@
             android:text="Song lyrics"
             android:textColor="#000000"
             android:textSize="18dp" />
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="pp"
-            android:id="@+id/back"/>
     </LinearLayout>
     </ScrollView>
 
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lyrics_progress"
+        android:layout_gravity="center"/>
 
 
 </LinearLayout>

@@ -32,6 +32,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -187,6 +188,9 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
 
         Button back = dialog.findViewById(R.id.back);
         TextView lyrics = dialog.findViewById(R.id.lyric_dialog);
+        ProgressBar progressBar = dialog.findViewById(R.id.lyrics_progress);
+
+        progressBar.setVisibility(View.VISIBLE);
 
         if (back == null || lyrics == null) {
             throw new NullPointerException("Dialog views not properly initialized.");
@@ -199,7 +203,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
             }
         });
 
-        Lyrics.lyrics("Save your tears", new Lyrics.LyricsCallback() {
+        Lyrics.lyrics(listSongs.get(position).songTitle.trim(), new Lyrics.LyricsCallback() {
             @Override
             public void onLyricsRetrieved(final String songlyrics) {
                 // Ensure UI update on the main thread
@@ -207,12 +211,14 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
                     @Override
                     public void run() {
                         lyrics.setText(songlyrics);
-                        dialog.show();
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
             }
 
         });
+
+        dialog.show();
     }
 
 
