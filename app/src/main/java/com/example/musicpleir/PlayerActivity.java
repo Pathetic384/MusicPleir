@@ -426,6 +426,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         if(musicService.isPlaying()) {
             playpauseBtn.setImageResource(R.drawable.ic_play);
             musicService.showNotification(R.drawable.ic_play);
+            NowPlayingFragment.playPauseBtn.setImageResource(R.drawable.ic_play);
             musicService.pause();
             seekBar.setMax(musicService.getDuration() / 1000);
             PlayerActivity.this.runOnUiThread( () -> {
@@ -438,6 +439,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         else {
             musicService.showNotification(R.drawable.ic_pause);
             playpauseBtn.setImageResource(R.drawable.ic_pause);
+            NowPlayingFragment.playPauseBtn.setImageResource(R.drawable.ic_pause);
             musicService.start();
             seekBar.setMax(musicService.getDuration() / 1000);
             PlayerActivity.this.runOnUiThread( () -> {

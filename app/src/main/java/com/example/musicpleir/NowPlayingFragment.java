@@ -40,7 +40,7 @@ public class NowPlayingFragment extends Fragment implements ServiceConnection {
 
     ImageView nextBtn, albumArt, prevBtn;
     TextView artist, songName;
-    FloatingActionButton playPauseBtn;
+    static FloatingActionButton playPauseBtn;
     View view;
     MusicService musicService;
     static int load = 0;
