@@ -175,7 +175,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         dialog.setContentView(R.layout.lyrics_dialog);
 
         Window window = dialog.getWindow();
-        if(window == null) return;
+        if (window == null) return;
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -188,7 +188,9 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         Button back = dialog.findViewById(R.id.back);
         TextView lyrics = dialog.findViewById(R.id.lyric_dialog);
 
-
+        if (back == null || lyrics == null) {
+            throw new NullPointerException("Dialog views not properly initialized.");
+        }
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,13 +198,20 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
                 dialog.dismiss();
             }
         });
+
         Lyrics.lyrics("Save your tears", new Lyrics.LyricsCallback() {
             @Override
-            public void onLyricsRetrieved(String songlyrics) {
-                // Update UI with the lyrics
-                lyrics.setText(songlyrics);
-                dialog.show();
+            public void onLyricsRetrieved(final String songlyrics) {
+                // Ensure UI update on the main thread
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        lyrics.setText(songlyrics);
+                        dialog.show();
+                    }
+                });
             }
+
         });
     }
 
