@@ -6,8 +6,10 @@
     <color name="transparent">#00000000</color>
     <color name="colorPrimary">#191A19</color>
     <color name="colorAccent">#03DAC6</color>
-    <color name="background">#505050</color>
-        <color name="surface">#1E1E1E</color>
+    <color name="buttonInApp">#404040</color>
+    <color name="buttonInAppPressed">#707070</color>
+    <color name="background">#1E1E1E</color>
+    <color name="surface">#1E1E1E</color>
     <color name="onPrimary">#FFFFFF</color>
     <color name="onBackground">#FFFFFF</color>
     <color name="onSurface">#FFFFFF</color>Z

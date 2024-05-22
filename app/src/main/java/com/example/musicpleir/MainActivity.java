@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         authenticateUser();
 
 
-        progressBar = findViewById(R.id.progressBar);
+//        progressBar = findViewById(R.id.progressBar);
         bottom = findViewById(R.id.frag_bottom);
 
         viewPager = findViewById(R.id.viewpager);
@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
+//            progressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         @Override
         protected void onPostExecute(ArrayList<MusicFiles> musicFiles) {
             super.onPostExecute(musicFiles);
-            progressBar.setVisibility(View.GONE);
+//            progressBar.setVisibility(View.GONE);
             MainActivity.musicFiles = musicFiles;
             initViewPager();
         }
@@ -264,7 +264,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         if (newFiles != null) {
             MainActivity.musicFiles.addAll(newFiles);
         }
-        progressBar.setVisibility(View.GONE);
+//        progressBar.setVisibility(View.GONE);
         if (songsFragment != null) {
             songsFragment.onMusicDataLoaded(MainActivity.musicFiles);
         }

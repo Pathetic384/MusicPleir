@@ -65,8 +65,8 @@ public class UserFragment extends Fragment {
     }
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final int STORAGE_PERMISSION_CODE = 2;
-    Button save;
-    Button changeBtn;
+    Button save, changeBtn, logout;
+    TextView mail;
     EditText name;
     ImageView imageView;
     Context context;
@@ -76,8 +76,9 @@ public class UserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
-        TextView mail = view.findViewById(R.id.user_mail);
-        Button logout = view.findViewById(R.id.logout_btn);
+        mail = view.findViewById(R.id.user_email);
+        logout = view.findViewById(R.id.logout_btn);
+        mail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
         save = view.findViewById(R.id.save_button);
         name = view.findViewById(R.id.user_name);
         changeBtn = view.findViewById(R.id.change_pass);

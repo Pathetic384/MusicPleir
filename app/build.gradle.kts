@@ -68,7 +68,7 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-
+    implementation ("com.google.android.material:material:1.6.0") // Material Design library
     implementation ("com.github.bumptech.glide:glide:4.13.0") // Glide library
     annotationProcessor ("com.github.bumptech.glide:compiler:4.13.0") // Glide annotation processor
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
