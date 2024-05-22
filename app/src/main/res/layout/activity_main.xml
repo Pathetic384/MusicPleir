@@ -35,22 +35,25 @@
             tools:layout="@layout/fragment_now_playing" />
     </FrameLayout>
 
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="0dp"
         android:layout_height="70dp"
         android:background="@drawable/gradient_bg"
-        app:tabIndicatorColor="@color/black"
-        app:tabIndicator="@drawable/gradient_bg"
-        app:tabIndicatorFullWidth="true"
-        app:tabIndicatorHeight="70dp"
-        app:tabIndicatorGravity="center"
-        app:tabSelectedTextColor="@color/colorAccent"
-        app:tabTextColor="@color/textColorSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:tabIndicator="@drawable/gradient_bg"
+        app:tabIndicatorColor="@color/black"
+        app:tabIndicatorFullWidth="true"
+        app:tabIndicatorGravity="center"
+        app:tabIndicatorHeight="70dp"
+        app:tabSelectedTextColor="@color/colorAccent"
+        app:tabTextColor="@color/textColorSecondary" />
 
     <ProgressBar
         android:id="@+id/progressBar"

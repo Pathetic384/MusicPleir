@@ -24,6 +24,7 @@ public class StartActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Register.rcm = true;
                 Intent i = new Intent(getApplicationContext(), AuthenticateSpotify.class);
                 startActivity(i);
                 finish();
@@ -32,6 +33,7 @@ public class StartActivity extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Register.rcm = false;
                 Intent i = new Intent(getApplicationContext(), Login.class);
                 startActivity(i);
                 finish();
