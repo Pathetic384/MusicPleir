@@ -2,21 +2,6 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="FuctionChangePassAuthenTest">
-        <State />
-      </entry>
-      <entry key="FunctionAddAlbumTest">
-        <State />
-      </entry>
-      <entry key="FunctionChangePassTest">
-        <State />
-      </entry>
-      <entry key="StartActivityTest">
-        <State />
-      </entry>
-      <entry key="UIStartTest">
-        <State />
-      </entry>
       <entry key="app">
         <State />
       </entry>

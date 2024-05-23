@@ -278,7 +278,7 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
                         });
                 //Toast.makeText(PlayerActivity.this, "aaaccc", Toast.LENGTH_SHORT).show();
 
-                if(!Objects.equals(userMail, "tester@gmail.com")) {
+                if(!Objects.equals(userMail, "tester@gmail.com") && Register.rcm) {
                     Addsong addsong = new Addsong(AuthenticateSpotify.oauth2.accessToken, AuthenticateSpotify.oauth2.PLAYLIST_ID);
                     addsong.addSongToPlaylist(listSongs.get(position).songTitle);
                 }
