@@ -5,6 +5,7 @@ import static com.example.musicpleir.MusicService.Music_File;
 import static com.example.musicpleir.MusicService.Music_Last_Played;
 import static com.example.musicpleir.MusicService.Song_Name;
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -99,6 +100,7 @@ private SongsFragment songsFragment;
     public static String userMail;
     public static boolean testing = false;
     private SearchView searchView;
+    static Dialog dialog;
 
     // Sound recognition fragment callback
     @Override

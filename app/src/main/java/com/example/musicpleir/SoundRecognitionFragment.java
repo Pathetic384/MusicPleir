@@ -195,7 +195,7 @@ public class SoundRecognitionFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            infoText.setText("Hmm...");
+            infoText.setText("Hmm... Let see...");
         }
 
         @Nullable

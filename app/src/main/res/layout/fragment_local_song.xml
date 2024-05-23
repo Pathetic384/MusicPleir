@@ -23,5 +23,4 @@
         android:background="@color/background"
         android:scrollbars="vertical" />
 
-
 </LinearLayout>

@@ -1,40 +1,59 @@
 package com.example.musicpleir;
 
+import static com.example.musicpleir.MainActivity.userMail;
+
+import android.app.Dialog;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Environment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Objects;
 
 public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int ITEM_TYPE_NORMAL = 0;
     private static final int ITEM_TYPE_EMPTY = 1;
     private static final int EMPTY_ITEMS_COUNT = 3;
-
+    private static final int MAX_SIZE = 20;
     private Context mContext;
     static ArrayList<MusicFiles> mFiles;
+    String selectedAlbum;
 
     MusicAdapter(Context context, ArrayList<MusicFiles> mFiles) {
         this.mContext = context;
-        this.mFiles = new ArrayList<>(mFiles);
+        this.mFiles = new ArrayList<>(mFiles.size() > MAX_SIZE ? mFiles.subList(0, MAX_SIZE) : mFiles);
         sortMusicFilesByTitle();
     }
+
     // Phương thức sắp xếp danh sách mFiles theo tên bài hát
     private void sortMusicFilesByTitle() {
         Collections.sort(mFiles, new Comparator<MusicFiles>() {
@@ -47,7 +66,8 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemViewType(int position) {
-        if (position >= mFiles.size()) {
+        // Nếu vị trí nằm trong khoảng các items trống cuối cùng
+        if (position >= mFiles.size() && position < mFiles.size() + EMPTY_ITEMS_COUNT) {
             return ITEM_TYPE_EMPTY;
         } else {
             return ITEM_TYPE_NORMAL;
@@ -96,6 +116,9 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                             mFiles.get(myHolder.getAdapterPosition()).songTitle,
                                             mFiles.get(myHolder.getAdapterPosition()).artist);
                                     break;
+                                case R.id.add:
+                                    openFeedbackDialog(Gravity.CENTER, myHolder.getAdapterPosition());
+                                    break;
                             }
                             return true;
                         }));
@@ -104,7 +127,77 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
+        } else if (holder.getItemViewType() == ITEM_TYPE_EMPTY) {
+            // Xử lý ràng buộc cho view holder trống nếu cần thiết
         }
+    }
+
+    void openFeedbackDialog(int gravity, int position) {
+        Dialog dialog = new Dialog(mContext);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.layout_dialog);
+
+        Window window = dialog.getWindow();
+        if (window == null) return;
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = gravity;
+        window.setAttributes(windowAttributes);
+
+        dialog.setCancelable(true);
+
+        Button saveBtn = dialog.findViewById(R.id.heyya);
+        Button back = dialog.findViewById(R.id.back);
+        Spinner spinner = dialog.findViewById(R.id.albumSpinner);
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseReference mDatabase;
+                mDatabase = FirebaseDatabase.getInstance().getReference();
+                mDatabase.child("users").child(MainActivity.userID).child(selectedAlbum)
+                        .child(mFiles.get(position).songTitle).setValue(mFiles.get(position)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(mContext, "Song added!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                if (!Objects.equals(userMail, "tester@gmail.com")) {
+                    Addsong addsong = new Addsong(AuthenticateSpotify.oauth2.accessToken, AuthenticateSpotify.oauth2.PLAYLIST_ID);
+                    addsong.addSongToPlaylist(mFiles.get(position).songTitle);
+                }
+                if (Register.rcm) {
+                    new MainActivity.RecommenderTask().execute();
+                }
+            }
+        });
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String item = parent.getItemAtPosition(position).toString();
+                selectedAlbum = item;
+                Toast.makeText(mContext, item + " selected", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_item, MainActivity.albums);
+        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+        spinner.setAdapter(adapter);
+
+        dialog.show();
     }
 
     void downloading(String link, String name, String artist) {
@@ -126,10 +219,11 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return mFiles.size() + EMPTY_ITEMS_COUNT;
+        // Tổng số item bao gồm cả các item trống, giới hạn tối đa 23 item
+        return Math.min(mFiles.size() + EMPTY_ITEMS_COUNT, MAX_SIZE + EMPTY_ITEMS_COUNT);
     }
 
-    public class MyViewHolder extends  RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView file_name, artist;
         ImageView album_art, menu;
@@ -150,7 +244,7 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     void updateList(ArrayList<MusicFiles> musicFilesArrayList) {
-        mFiles = new ArrayList<>(musicFilesArrayList);
+        mFiles = new ArrayList<>(musicFilesArrayList.size() > MAX_SIZE ? musicFilesArrayList.subList(0, MAX_SIZE) : musicFilesArrayList);
         sortMusicFilesByTitle();  // Sắp xếp danh sách sau khi cập nhật
         notifyDataSetChanged();
     }
@@ -160,7 +254,8 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     public void updateMusicFiles(ArrayList<MusicFiles> newFiles) {
+        mFiles = new ArrayList<>(newFiles.size() > MAX_SIZE ? newFiles.subList(0, MAX_SIZE) : newFiles);
         sortMusicFilesByTitle();  // Sắp xếp danh sách sau khi cập nhật
-        this.mFiles = new ArrayList<>(newFiles);
+        notifyDataSetChanged();
     }
 }

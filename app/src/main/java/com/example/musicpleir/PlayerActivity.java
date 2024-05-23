@@ -51,6 +51,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.palette.graphics.Palette;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -260,16 +261,21 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
 
         dialog.setCancelable(true);
 
-        Button heya = dialog.findViewById(R.id.heyya);
+        Button saveBtn = dialog.findViewById(R.id.heyya);
         Button back = dialog.findViewById(R.id.back);
         Spinner spinner = dialog.findViewById(R.id.albumSpinner);
-        heya.setOnClickListener(new View.OnClickListener() {
+        saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DatabaseReference mDatabase;
                 mDatabase = FirebaseDatabase.getInstance().getReference();
                 mDatabase.child("users").child(MainActivity.userID).child(selectedAlbum)
-                        .child(listSongs.get(position).songTitle).setValue(listSongs.get(position));
+                        .child(listSongs.get(position).songTitle).setValue(listSongs.get(position)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(PlayerActivity.this, "Song added", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                 //Toast.makeText(PlayerActivity.this, "aaaccc", Toast.LENGTH_SHORT).show();
 
                 if(!Objects.equals(userMail, "tester@gmail.com")) {

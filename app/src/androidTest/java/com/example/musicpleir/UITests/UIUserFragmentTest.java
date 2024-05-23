@@ -54,10 +54,10 @@ public class UIUserFragmentTest {
         tabView.perform(click());
 
         ViewInteraction textView = onView(
-                allOf(withId(R.id.title), withText("Edit Profile"),
+                allOf(withId(R.id.title), withText("Profile"),
                         withParent(withParent(withId(R.id.viewpager))),
                         isDisplayed()));
-        textView.check(matches(withText("Edit Profile")));
+        textView.check(matches(withText("Profile")));
     }
 
     @Test

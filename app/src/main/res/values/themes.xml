@@ -8,6 +8,7 @@
         <item name="android:colorBackground">@color/background</item>
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
         <item name="android:textColorSecondary">@color/textColorSecondary</item>
+        <item name="android:textColorHint">@color/hintTextColor</item>
     </style>
 
     <style name="Theme.MusicPleir" parent="Base.Theme.MusicPleir" />
