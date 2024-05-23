@@ -505,11 +505,20 @@ private SongsFragment songsFragment;
 
     @Override
     protected void onDestroy() {
+        if(dialog!=null) {
+            dialog.dismiss();
+        }
         super.onDestroy();
         if(valueEventListener != null) {
             databaseReference.removeEventListener(valueEventListener);
         }
     }
 
-
+    @Override
+    protected void onPause() {
+        if(dialog!=null) {
+            dialog.dismiss();
+        }
+        super.onPause();
+    }
 }

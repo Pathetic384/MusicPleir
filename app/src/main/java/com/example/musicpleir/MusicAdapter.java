@@ -116,9 +116,6 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                             mFiles.get(myHolder.getAdapterPosition()).songTitle,
                                             mFiles.get(myHolder.getAdapterPosition()).artist);
                                     break;
-                                case R.id.add:
-                                    openFeedbackDialog(Gravity.CENTER, myHolder.getAdapterPosition());
-                                    break;
                             }
                             return true;
                         }));
