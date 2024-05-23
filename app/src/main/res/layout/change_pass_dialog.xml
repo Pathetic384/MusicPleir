@@ -38,7 +38,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="10dp"
-            app:hintTextColor="@color/textColorSecondary"
+            android:color="#000000"
+            app:hintTextColor="@color/black"
             android:layout_marginBottom="16dp"
             android:background="@drawable/rounded_edittext">
             <com.google.android.material.textfield.TextInputEditText
@@ -56,7 +57,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="10dp"
-            app:hintTextColor="@color/textColorSecondary"
+            app:hintTextColor="@color/black"
+            android:color="#000000"
             android:layout_marginBottom="16dp"
             android:background="@drawable/rounded_edittext">
             <com.google.android.material.textfield.TextInputEditText
@@ -74,7 +76,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="10dp"
-            app:hintTextColor="@color/textColorSecondary"
+            app:hintTextColor="@color/black"
+            android:color="#000000"
             android:layout_marginBottom="16dp"
             android:background="@drawable/rounded_edittext">
             <com.google.android.material.textfield.TextInputEditText

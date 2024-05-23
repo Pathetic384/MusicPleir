@@ -26,7 +26,7 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private static final int ITEM_TYPE_NORMAL = 0;
     private static final int ITEM_TYPE_EMPTY = 1;
     private static final int EMPTY_ITEMS_COUNT = 3;
-
+    private static final int MAX_SIZE = 20;
     private Context mContext;
     static ArrayList<MusicFiles> mFiles;
 
@@ -68,6 +68,7 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if(position > MAX_SIZE) return;
         if (holder.getItemViewType() == ITEM_TYPE_NORMAL) {
             MyViewHolder myHolder = (MyViewHolder) holder;
             myHolder.file_name.setText(mFiles.get(position).getSongTitle());
@@ -126,7 +127,10 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return mFiles.size() + EMPTY_ITEMS_COUNT;
+        if(mFiles.size() + EMPTY_ITEMS_COUNT > MAX_SIZE ) {
+            return MAX_SIZE;
+        }
+        else  return mFiles.size() + EMPTY_ITEMS_COUNT;
     }
 
     public class MyViewHolder extends  RecyclerView.ViewHolder {
