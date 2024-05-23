@@ -107,9 +107,10 @@
         android:id="@+id/logout_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/change_pass"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="155dp"
+        android:layout_marginBottom="160dp"
         android:background="@drawable/mybutton"
         android:text="Log out" />
 

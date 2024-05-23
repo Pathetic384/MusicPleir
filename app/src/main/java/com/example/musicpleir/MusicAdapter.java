@@ -53,6 +53,7 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         this.mFiles = new ArrayList<>(mFiles);
         sortMusicFilesByTitle();
     }
+
     // Phương thức sắp xếp danh sách mFiles theo tên bài hát
     private void sortMusicFilesByTitle() {
         Collections.sort(mFiles, new Comparator<MusicFiles>() {
@@ -65,7 +66,8 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemViewType(int position) {
-        if (position >= mFiles.size()) {
+        // Nếu vị trí nằm trong khoảng các items trống cuối cùng
+        if (position >= mFiles.size() && position < mFiles.size() + EMPTY_ITEMS_COUNT) {
             return ITEM_TYPE_EMPTY;
         } else {
             return ITEM_TYPE_NORMAL;
@@ -86,7 +88,6 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if(position > MAX_SIZE) return;
         if (holder.getItemViewType() == ITEM_TYPE_NORMAL) {
             MyViewHolder myHolder = (MyViewHolder) holder;
             myHolder.file_name.setText(mFiles.get(position).getSongTitle());
@@ -126,6 +127,8 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
+        } else if (holder.getItemViewType() == ITEM_TYPE_EMPTY) {
+            // Xử lý ràng buộc cho view holder trống nếu cần thiết
         }
     }
 
@@ -160,7 +163,6 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                 Toast.makeText(mContext, "Song added!", Toast.LENGTH_SHORT).show();
                             }
                         });
-                //Toast.makeText(PlayerActivity.this, "aaaccc", Toast.LENGTH_SHORT).show();
 
                 if(!Objects.equals(userMail, "tester@gmail.com")) {
                     Addsong addsong = new Addsong(AuthenticateSpotify.oauth2.accessToken, AuthenticateSpotify.oauth2.PLAYLIST_ID);
@@ -217,13 +219,11 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        if(mFiles.size() + EMPTY_ITEMS_COUNT > MAX_SIZE ) {
-            return MAX_SIZE;
-        }
-        else  return mFiles.size() + EMPTY_ITEMS_COUNT;
+        // Tổng số item bao gồm cả các item trống
+        return mFiles.size() + EMPTY_ITEMS_COUNT;
     }
 
-    public class MyViewHolder extends  RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView file_name, artist;
         ImageView album_art, menu;
