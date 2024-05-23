@@ -50,7 +50,7 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     MusicAdapter(Context context, ArrayList<MusicFiles> mFiles) {
         this.mContext = context;
-        this.mFiles = new ArrayList<>(mFiles);
+        this.mFiles = new ArrayList<>(mFiles.size() > MAX_SIZE ? mFiles.subList(0, MAX_SIZE) : mFiles);
         sortMusicFilesByTitle();
     }
 
@@ -138,7 +138,7 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         dialog.setContentView(R.layout.layout_dialog);
 
         Window window = dialog.getWindow();
-        if(window == null) return;
+        if (window == null) return;
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -164,11 +164,11 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             }
                         });
 
-                if(!Objects.equals(userMail, "tester@gmail.com")) {
+                if (!Objects.equals(userMail, "tester@gmail.com")) {
                     Addsong addsong = new Addsong(AuthenticateSpotify.oauth2.accessToken, AuthenticateSpotify.oauth2.PLAYLIST_ID);
                     addsong.addSongToPlaylist(mFiles.get(position).songTitle);
                 }
-                if(Register.rcm) {
+                if (Register.rcm) {
                     new MainActivity.RecommenderTask().execute();
                 }
             }
@@ -219,8 +219,8 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        // Tổng số item bao gồm cả các item trống
-        return mFiles.size() + EMPTY_ITEMS_COUNT;
+        // Tổng số item bao gồm cả các item trống, giới hạn tối đa 23 item
+        return Math.min(mFiles.size() + EMPTY_ITEMS_COUNT, MAX_SIZE + EMPTY_ITEMS_COUNT);
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -244,7 +244,7 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     void updateList(ArrayList<MusicFiles> musicFilesArrayList) {
-        mFiles = new ArrayList<>(musicFilesArrayList);
+        mFiles = new ArrayList<>(musicFilesArrayList.size() > MAX_SIZE ? musicFilesArrayList.subList(0, MAX_SIZE) : musicFilesArrayList);
         sortMusicFilesByTitle();  // Sắp xếp danh sách sau khi cập nhật
         notifyDataSetChanged();
     }
@@ -254,7 +254,8 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     public void updateMusicFiles(ArrayList<MusicFiles> newFiles) {
+        mFiles = new ArrayList<>(newFiles.size() > MAX_SIZE ? newFiles.subList(0, MAX_SIZE) : newFiles);
         sortMusicFilesByTitle();  // Sắp xếp danh sách sau khi cập nhật
-        this.mFiles = new ArrayList<>(newFiles);
+        notifyDataSetChanged();
     }
 }
