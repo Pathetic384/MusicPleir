@@ -5,4 +5,8 @@
         android:title="Download"
         android:id="@+id/download"
         app:showAsAction="never"/>
+    <item
+        android:title="Add to album"
+        android:id="@+id/addAlbum"
+        app:showAsAction="never"/>
 </menu>
