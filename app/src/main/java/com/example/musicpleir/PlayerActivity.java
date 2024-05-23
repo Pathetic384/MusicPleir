@@ -260,10 +260,10 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
 
         dialog.setCancelable(true);
 
-        Button heya = dialog.findViewById(R.id.heyya);
+        Button saveBtn = dialog.findViewById(R.id.heyya);
         Button back = dialog.findViewById(R.id.back);
         Spinner spinner = dialog.findViewById(R.id.albumSpinner);
-        heya.setOnClickListener(new View.OnClickListener() {
+        saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DatabaseReference mDatabase;
