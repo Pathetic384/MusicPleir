@@ -29,7 +29,16 @@ public class AuthenticateSpotify extends AppCompatActivity {
             String authorizationCode = uri.getQueryParameter("code");
             if (authorizationCode != null) {
                 // Sử dụng authorization code để trao đổi lấy access token
-                oauth2.exchangeAuthorizationCode(authorizationCode);
+                try {
+                    oauth2.exchangeAuthorizationCode(authorizationCode);
+                }
+                catch (Exception e) {
+                    Toast.makeText(this, "Authentication Failed", Toast.LENGTH_SHORT).show();
+                    Register.rcm = false;
+                    Intent i = new Intent(getApplicationContext(), Login.class);
+                    startActivity(i);
+                    finish();
+                }
 
                 oauth2.authorizationComplete.thenRun(() -> {
                     System.out.println("Access token: " + oauth2.accessToken);

@@ -245,7 +245,10 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
 
 
     void openFeedbackDialog(int gravity) {
-        if(Objects.equals(sender, "local")) return;
+        if(Objects.equals(sender, "local")) {
+            Toast.makeText(PlayerActivity.this, "Local songs can't be added to albums", Toast.LENGTH_SHORT).show();
+            return;
+        }
         dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.layout_dialog);
@@ -569,9 +572,6 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
         addAlbum = findViewById(R.id.addAlbum);
         lyricsButton = findViewById(R.id.lyrics);
 
-        if(Objects.equals(sender, "local")) {
-            addAlbum.setVisibility(View.GONE);
-        }
     }
 
     private void metaData (Uri uri, MediaMetadataRetriever retriever) {
