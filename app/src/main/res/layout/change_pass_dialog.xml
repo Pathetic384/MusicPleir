@@ -40,6 +40,7 @@
             android:paddingVertical="10dp"
             app:hintTextColor="@color/secondary_text"
             android:color="@color/secondary_text"
+
             android:layout_marginBottom="16dp"
             android:background="@drawable/rounded_edittext">
             <com.google.android.material.textfield.TextInputEditText
