@@ -26,4 +26,5 @@
     <color name="tabSelectedTextColor">@color/colorPrimary</color>
     <color name="buttonColor">#2E7E3E</color>
     <color name="playerColor">#3C3C3C</color>
+    <color name="secondary_text">#040404</color>
 </resources>

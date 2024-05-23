@@ -51,6 +51,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.palette.graphics.Palette;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -269,7 +270,12 @@ public class PlayerActivity extends AppCompatActivity implements  ActionPlaying,
                 DatabaseReference mDatabase;
                 mDatabase = FirebaseDatabase.getInstance().getReference();
                 mDatabase.child("users").child(MainActivity.userID).child(selectedAlbum)
-                        .child(listSongs.get(position).songTitle).setValue(listSongs.get(position));
+                        .child(listSongs.get(position).songTitle).setValue(listSongs.get(position)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(PlayerActivity.this, "Song added", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                 //Toast.makeText(PlayerActivity.this, "aaaccc", Toast.LENGTH_SHORT).show();
 
                 if(!Objects.equals(userMail, "tester@gmail.com")) {

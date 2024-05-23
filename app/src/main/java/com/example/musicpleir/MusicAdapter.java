@@ -1,25 +1,42 @@
 package com.example.musicpleir;
 
+import static com.example.musicpleir.MainActivity.userMail;
+
+import android.app.Dialog;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Environment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Objects;
 
 public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -29,6 +46,7 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private static final int MAX_SIZE = 20;
     private Context mContext;
     static ArrayList<MusicFiles> mFiles;
+    String selectedAlbum;
 
     MusicAdapter(Context context, ArrayList<MusicFiles> mFiles) {
         this.mContext = context;
@@ -97,6 +115,9 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                             mFiles.get(myHolder.getAdapterPosition()).songTitle,
                                             mFiles.get(myHolder.getAdapterPosition()).artist);
                                     break;
+                                case R.id.add:
+                                    openFeedbackDialog(Gravity.CENTER, myHolder.getAdapterPosition());
+                                    break;
                             }
                             return true;
                         }));
@@ -106,6 +127,75 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    void openFeedbackDialog(int gravity, int position) {
+        Dialog dialog = new Dialog(mContext);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.layout_dialog);
+
+        Window window = dialog.getWindow();
+        if(window == null) return;
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = gravity;
+        window.setAttributes(windowAttributes);
+
+        dialog.setCancelable(true);
+
+        Button saveBtn = dialog.findViewById(R.id.heyya);
+        Button back = dialog.findViewById(R.id.back);
+        Spinner spinner = dialog.findViewById(R.id.albumSpinner);
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseReference mDatabase;
+                mDatabase = FirebaseDatabase.getInstance().getReference();
+                mDatabase.child("users").child(MainActivity.userID).child(selectedAlbum)
+                        .child(mFiles.get(position).songTitle).setValue(mFiles.get(position)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(mContext, "Song added!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                //Toast.makeText(PlayerActivity.this, "aaaccc", Toast.LENGTH_SHORT).show();
+
+                if(!Objects.equals(userMail, "tester@gmail.com")) {
+                    Addsong addsong = new Addsong(AuthenticateSpotify.oauth2.accessToken, AuthenticateSpotify.oauth2.PLAYLIST_ID);
+                    addsong.addSongToPlaylist(mFiles.get(position).songTitle);
+                }
+                if(Register.rcm) {
+                    new MainActivity.RecommenderTask().execute();
+                }
+            }
+        });
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String item = parent.getItemAtPosition(position).toString();
+                selectedAlbum = item;
+                Toast.makeText(mContext, item + " selected", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_item, MainActivity.albums);
+        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+        spinner.setAdapter(adapter);
+
+        dialog.show();
     }
 
     void downloading(String link, String name, String artist) {
