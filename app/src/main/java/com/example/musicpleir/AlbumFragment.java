@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -87,6 +88,11 @@ public class AlbumFragment extends Fragment {
     }
 
     private void uploadAlbum() {
+        String albumName = editText.getText().toString().trim();
+        if (albumName.isEmpty()) {
+            Toast.makeText(getContext(), "Please enter the album name", Toast.LENGTH_SHORT).show();
+            return;
+        }
         DatabaseReference mDatabase;
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("users").child(MainActivity.userID).child(editText.getText().toString())
