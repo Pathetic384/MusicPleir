@@ -39,6 +39,15 @@ public class RecommendDetails extends AppCompatActivity {
         more = findViewById(R.id.rcm_songs);
         albumName = getIntent().getStringExtra("albumName");
 
+        ArrayList<MusicFiles> tmp = new ArrayList<>();
+        MainActivity.txt = "" ;
+        for(int i=0;i < MainActivity.recommendedSongs.size(); i++) {
+            MusicFiles get = Util.stringToSong(MainActivity.recommendedSongs.get(i));
+            if(get != null) tmp.add(get);
+            else MainActivity.txt += MainActivity.recommendedSongs.get(i) + '\n';
+        }
+        MainActivity.rcmSongs = tmp;
+
         albumSongs = MainActivity.rcmSongs;
         more.setText(MainActivity.txt);
         //Toast.makeText(this, txt, Toast.LENGTH_SHORT).show();

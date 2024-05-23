@@ -30,7 +30,7 @@ public class Util {
 
     public static MusicFiles stringToSong(String find) {
         for(MusicFiles song : MainActivity.musicFiles) {
-            if(song.getSongTitle().toLowerCase().contains(find.toLowerCase())) {
+            if(find.contains(song.getSongTitle())) {
                 return song;
             }
         }

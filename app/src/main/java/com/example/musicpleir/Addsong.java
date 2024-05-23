@@ -232,7 +232,7 @@ public class Addsong {
     public ArrayList getRecommendations(List<String> trackIds) throws IOException {
         OkHttpClient httpClient = new OkHttpClient();
         String seedTracks = String.join(",", trackIds);
-        String url = "https://api.spotify.com/v1/recommendations?seed_tracks=" + seedTracks + "&limit=10";
+        String url = "https://api.spotify.com/v1/recommendations?seed_tracks=" + seedTracks + "&limit=30";
         Request request = new Request.Builder()
                 .url(url)
                 .addHeader("Authorization", "Bearer " + accessToken)
@@ -275,6 +275,7 @@ public class Addsong {
         for (String track : recommendedTracks) {
             System.out.println(track);
         }
+        recommendedTracks.add("Baddie");
         return recommendedTracks;
     }
 }
