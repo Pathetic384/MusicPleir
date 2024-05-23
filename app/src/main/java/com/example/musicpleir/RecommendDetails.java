@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class RecommendDetails extends AppCompatActivity {
     RecyclerView recyclerView;
     String albumName;
-    Button back, reload;
+    Button back;
     TextView more;
     static ArrayList<MusicFiles> albumSongs = new ArrayList<>();
     AlbumDetailsAdapter albumDetailsAdapter;
@@ -36,7 +36,6 @@ public class RecommendDetails extends AppCompatActivity {
         setContentView(R.layout.recommend_details);
         recyclerView = findViewById(R.id.recyclerView);
         back = findViewById(R.id.back_from_rcm);
-        reload = findViewById(R.id.reload);
         more = findViewById(R.id.rcm_songs);
         albumName = getIntent().getStringExtra("albumName");
 

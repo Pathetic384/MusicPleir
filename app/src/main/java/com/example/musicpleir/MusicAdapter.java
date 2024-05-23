@@ -116,9 +116,9 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                             mFiles.get(myHolder.getAdapterPosition()).songTitle,
                                             mFiles.get(myHolder.getAdapterPosition()).artist);
                                     break;
-                                case R.id.addAlbum:
-                                    openAddToAlbumDialog(myHolder.getAdapterPosition());
-                                    break;
+//                                case R.id.addAlbum:
+ //                                   openAddToAlbumDialog(myHolder.getAdapterPosition());
+//                                    break;
                             }
                             return true;
                         }));
@@ -191,71 +191,71 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         notifyDataSetChanged();
     }
 
-    private void openAddToAlbumDialog(int position) {
-        Dialog dialog = new Dialog(mContext);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.layout_dialog);
-
-        Window window = dialog.getWindow();
-        if (window == null) return;
-        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        WindowManager.LayoutParams windowAttributes = window.getAttributes();
-        windowAttributes.gravity = Gravity.CENTER;
-        window.setAttributes(windowAttributes);
-
-        dialog.setCancelable(true);
-
-        Button saveBtn = dialog.findViewById(R.id.heyya);
-        Button back = dialog.findViewById(R.id.back);
-        Spinner spinner = dialog.findViewById(R.id.albumSpinner);
-        saveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatabaseReference mDatabase;
-                mDatabase = FirebaseDatabase.getInstance().getReference();
-                mDatabase.child("users").child(MainActivity.userID).child(selectedAlbum)
-                        .child(mFiles.get(position).getSongTitle()).setValue(mFiles.get(position)).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                Toast.makeText(mContext, "Song added", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
-                if (!Objects.equals(userMail, "tester@gmail.com") && Register.rcm) {
-                    Addsong addsong = new Addsong(AuthenticateSpotify.oauth2.accessToken, AuthenticateSpotify.oauth2.PLAYLIST_ID);
-                    addsong.addSongToPlaylist(mFiles.get(position).getSongTitle());
-                }
-                if (Register.rcm) {
-                    new MainActivity.RecommenderTask().execute();
-                }
-            }
-        });
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String item = parent.getItemAtPosition(position).toString();
-                selectedAlbum = item;
-                Toast.makeText(mContext, item + " selected", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_item, MainActivity.albums);
-        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        spinner.setAdapter(adapter);
-
-        dialog.show();
-    }
+//    private void openAddToAlbumDialog(int position) {
+//        Dialog dialog = new Dialog(mContext);
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.setContentView(R.layout.layout_dialog);
+//
+//        Window window = dialog.getWindow();
+//        if (window == null) return;
+//        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+//        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//
+//        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+//        windowAttributes.gravity = Gravity.CENTER;
+//        window.setAttributes(windowAttributes);
+//
+//        dialog.setCancelable(true);
+//
+//        Button saveBtn = dialog.findViewById(R.id.heyya);
+//        Button back = dialog.findViewById(R.id.back);
+//        Spinner spinner = dialog.findViewById(R.id.albumSpinner);
+//        saveBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                DatabaseReference mDatabase;
+//                mDatabase = FirebaseDatabase.getInstance().getReference();
+//                mDatabase.child("users").child(MainActivity.userID).child(selectedAlbum)
+//                        .child(mFiles.get(position).getSongTitle()).setValue(mFiles.get(position)).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                            @Override
+//                            public void onSuccess(Void unused) {
+//                                Toast.makeText(mContext, "Song added", Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//
+//                if (!Objects.equals(userMail, "tester@gmail.com") && Register.rcm) {
+//                    Addsong addsong = new Addsong(AuthenticateSpotify.oauth2.accessToken, AuthenticateSpotify.oauth2.PLAYLIST_ID);
+//                    addsong.addSongToPlaylist(mFiles.get(position).getSongTitle());
+//                }
+//                if (Register.rcm) {
+//                    new MainActivity.RecommenderTask().execute();
+//                }
+//            }
+//        });
+//        back.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog.dismiss();
+//            }
+//        });
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                String item = parent.getItemAtPosition(position).toString();
+//                selectedAlbum = item;
+//                Toast.makeText(mContext, item + " selected", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+//        ArrayAdapter<String> adapter =
+//                new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_item, MainActivity.albums);
+//        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+//        spinner.setAdapter(adapter);
+//
+//        dialog.show();
+//    }
 }

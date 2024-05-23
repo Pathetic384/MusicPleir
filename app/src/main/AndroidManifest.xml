@@ -75,7 +75,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
-                    android:host="callback"
+                    android:host="callbacks"
                     android:scheme="myapp" />
             </intent-filter>
         </activity>
