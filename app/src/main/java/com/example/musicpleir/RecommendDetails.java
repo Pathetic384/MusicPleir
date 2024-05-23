@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class RecommendDetails extends AppCompatActivity {
     RecyclerView recyclerView;
     String albumName;
-    Button back;
+    Button back, reload;
     TextView more;
     static ArrayList<MusicFiles> albumSongs = new ArrayList<>();
     AlbumDetailsAdapter albumDetailsAdapter;
@@ -36,18 +36,12 @@ public class RecommendDetails extends AppCompatActivity {
         setContentView(R.layout.recommend_details);
         recyclerView = findViewById(R.id.recyclerView);
         back = findViewById(R.id.back_from_rcm);
+        reload = findViewById(R.id.reload);
         more = findViewById(R.id.rcm_songs);
         albumName = getIntent().getStringExtra("albumName");
 
-        ArrayList<MusicFiles> tmp = new ArrayList<>();
-        String txt = "" ;
-        for(int i=0;i < MainActivity.recommendedSongs.size(); i++) {
-            MusicFiles get = Util.stringToSong(MainActivity.recommendedSongs.get(i));
-            if(get != null) tmp.add(get);
-            else txt += MainActivity.recommendedSongs.get(i) + '\n';
-        }
-        albumSongs = tmp;
-        more.setText(txt);
+        albumSongs = MainActivity.rcmSongs;
+        more.setText(MainActivity.txt);
         //Toast.makeText(this, txt, Toast.LENGTH_SHORT).show();
 
         Runnable myRunnable = new Runnable(){
@@ -65,6 +59,7 @@ public class RecommendDetails extends AppCompatActivity {
                 finish();
             }
         });
+
 
     }
 

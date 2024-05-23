@@ -87,6 +87,8 @@ private SongsFragment songsFragment;
     FrameLayout bottom;
     static boolean shuffleBoolean = false, repeatBoolean = false;
     static ArrayList<String> albums = new ArrayList<>();
+    static ArrayList<MusicFiles> rcmSongs = new ArrayList<>();
+    static String txt = "";
     public static boolean Show_Mini_Player = false;
     public static String Path_To_Mini = null;
     public static String Song_To_Mini = null;
@@ -136,6 +138,14 @@ private SongsFragment songsFragment;
             for (int i = 0; i < recommendedSongs.size(); ++ i) {
                 System.out.println("Recommended Song" + ": " + recommendedSongs.get(i));
             }
+            ArrayList<MusicFiles> tmp = new ArrayList<>();
+            txt = "" ;
+            for(int i=0;i < MainActivity.recommendedSongs.size(); i++) {
+                MusicFiles get = Util.stringToSong(MainActivity.recommendedSongs.get(i));
+                if(get != null) tmp.add(get);
+                else txt += MainActivity.recommendedSongs.get(i) + '\n';
+            }
+            rcmSongs = tmp;
         }
 
     }

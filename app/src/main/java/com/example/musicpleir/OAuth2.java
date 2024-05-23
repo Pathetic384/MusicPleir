@@ -28,14 +28,14 @@ import okhttp3.Response;
 
 public class OAuth2 {
     public String accessToken;
-    private static final String CLIENT_ID = "aa559da14bbe4dff912072e383a11fb2";
-    private static final String CLIENT_SECRET = "59313ed1298d4b5eb9c4eabd104e1fa0";
+    private static final String CLIENT_ID = "9c821732621146049f940992a842df5d";
+    private static final String CLIENT_SECRET = "490a185ae18e444d9f60219d9c0db5b9";
     private static final String REDIRECT_URI = "myapp://callback";
     private static final String AUTHORIZATION_ENDPOINT = "https://accounts.spotify.com/authorize";
     private static final String TOKEN_ENDPOINT = "https://accounts.spotify.com/api/token";
     private static final String SCOPES = "playlist-modify-public playlist-modify-private user-library-read playlist-read-private playlist-read-collaborative";
 
-    public static String PLAYLIST_ID = "3MCN9VZFMvjkVcuM22nzEQ";
+    public static String PLAYLIST_ID = "4fyevfmGfG4Sa85sOsZ5y3";
     public CompletableFuture<String> authorizationComplete = new CompletableFuture<>();
     private AuthorizationService authService;
     private String codeVerifier;
