@@ -68,6 +68,8 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
+
+    implementation ("de.hdodenhof:circleimageview:3.1.0") // CircleImageView library
     implementation ("com.google.android.material:material:1.6.0") // Material Design library
     implementation ("com.github.bumptech.glide:glide:4.13.0") // Glide library
     annotationProcessor ("com.github.bumptech.glide:compiler:4.13.0") // Glide annotation processor
