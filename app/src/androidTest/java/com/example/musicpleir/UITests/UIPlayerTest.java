@@ -94,7 +94,7 @@ public class UIPlayerTest {
 
         onView(isRoot()).perform(waitId(R.id.song_name, 30000));
         ViewInteraction button = onView(
-                allOf(withId(R.id.lyrics), withText("SEE LYRICS"),
+                allOf(withId(R.id.lyrics), withText("Lyrics"),
                         withParent(allOf(withId(R.id.mContainer),
                                 withParent(withId(android.R.id.content)))),
                         isDisplayed()));

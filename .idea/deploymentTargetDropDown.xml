@@ -2,36 +2,23 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="FunctionModifyAlbumSong">
+      <entry key="FuctionChangePassAuthenTest">
         <State />
       </entry>
-      <entry key="FunctionNowPlayingTest">
+      <entry key="FunctionAddAlbumTest">
         <State />
       </entry>
-      <entry key="MainActivityTest5">
+      <entry key="FunctionChangePassTest">
         <State />
       </entry>
-      <entry key="MainActivityTest6">
+      <entry key="StartActivityTest">
         <State />
       </entry>
-      <entry key="UINowPlayingFragmentTest">
+      <entry key="UIStartTest">
         <State />
       </entry>
       <entry key="app">
-        <State>
-          <runningDeviceTargetSelectedWithDropDown>
-            <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\Asus\.android\avd\Pixel_3a_API_34_extension_level_7_x86_64.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-05-22T19:38:09.657091200Z" />
-        </State>
+        <State />
       </entry>
     </value>
   </component>
